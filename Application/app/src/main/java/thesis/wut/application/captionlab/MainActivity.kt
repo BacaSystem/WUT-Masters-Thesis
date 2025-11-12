@@ -21,18 +21,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import thesis.wut.application.captionlab.providers.LocalProviderTFLite
-import thesis.wut.application.captionlab.providers.LocalProviderTFLiteNoMeta
-import thesis.wut.application.captionlab.providers.OnnxFlorenceProvider
+import thesis.wut.application.captionlab.providers.local.Florence2OnnxProvider
 
 class MainActivity : AppCompatActivity() {
     private lateinit var vb: ActivityMainBinding
     private var pickedUri: Uri? = null
 
 
-    private lateinit var localProvider: CaptioningProvider
+    private lateinit var florence2Provider: CaptioningProvider
     private lateinit var cloudProvider: CaptioningProvider
-    private lateinit var onnxProvider: CaptioningProvider
 
 
     private val pickLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { res ->
@@ -53,10 +50,9 @@ class MainActivity : AppCompatActivity() {
         vb.etApiKey.setText(prefs.getString("openai_key", ""))
 
 
-//        localProvider = LocalProviderTFLite(this)
-        localProvider = LocalProviderTFLiteNoMeta(this)
+        // Initialize providers
+        florence2Provider = Florence2OnnxProvider(this)
         cloudProvider = CloudProviderOpenAI { prefs.getString("openai_key", null) }
-        onnxProvider = OnnxFlorenceProvider(this)
 
 
         vb.btnPick.setOnClickListener { pickImage() }
@@ -65,9 +61,8 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Saved key", Toast.LENGTH_SHORT).show()
         }
 
-
-//        vb.btnLocal.setOnClickListener { runProvider(localProvider) }
-        vb.btnLocal.setOnClickListener { runProvider(onnxProvider) }
+        // Button click listeners
+        vb.btnLocal.setOnClickListener { runProvider(florence2Provider) }
         vb.btnOpenAI.setOnClickListener { runProvider(cloudProvider) }
     }
 
@@ -98,10 +93,15 @@ class MainActivity : AppCompatActivity() {
             vb.tvOut.text = buildString {
                 appendLine("Provider: ${provider.id}")
                 appendLine("Opis: ${result.text}")
-                result.extra["pre_ms"]?.let { appendLine("pre_ms: ${"%.1f".format(it as Double)}") }
-                result.extra["infer_ms"]?.let { appendLine("infer_ms: ${"%.1f".format(it as Double)}") }
-                result.extra["post_ms"]?.let { appendLine("post_ms: ${"%.1f".format(it as Double)}") }
-                result.extra["e2e_ms"]?.let { appendLine("e2e_ms: ${"%.1f".format(it as Double)}") }            }
+                appendLine()
+                appendLine("Metryki:")
+                result.extra["pre_ms"]?.let { appendLine("  pre_ms: ${"%.1f".format(it as Double)}") }
+                result.extra["enc_ms"]?.let { appendLine("  enc_ms: ${"%.1f".format(it as Double)}") }
+                result.extra["dec_ms"]?.let { appendLine("  dec_ms: ${"%.1f".format(it as Double)}") }
+                result.extra["post_ms"]?.let { appendLine("  post_ms: ${"%.1f".format(it as Double)}") }
+                result.extra["e2e_ms"]?.let { appendLine("  e2e_ms: ${"%.1f".format(it as Double)}") }
+                result.extra["tokens_generated"]?.let { appendLine("  tokens: $it") }
+            }
         }
     }
 }

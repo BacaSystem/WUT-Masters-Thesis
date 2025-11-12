@@ -38,6 +38,11 @@ android {
         viewBinding = true
         mlModelBinding = true
     }
+    
+    // Prevent compression of ONNX model files in assets
+    androidResources {
+        noCompress += listOf("onnx", "tflite", "txt", "json")
+    }
 }
 
 dependencies {
