@@ -1,3 +1,40 @@
 <resources>
     <string name="app_name">CaptionLab</string>
+    
+    <!-- Main screen -->
+    <string name="pick_image">Wybierz obraz</string>
+    <string name="select_provider">Wybierz provider:</string>
+    <string name="generate_caption">Generuj opis</string>
+    <string name="no_image_selected">Najpierw wybierz obraz</string>
+    <string name="processing">Przetwarzanie…</string>
+    
+    <!-- Providers -->
+    <string name="provider_florence_local">Florence-2 (ONNX, local)</string>
+    <string name="provider_vitgpt2_local">ViT-GPT2 (ONNX, local)</string>
+    <string name="provider_blip_local">BLIP (ONNX, local)</string>
+    <string name="provider_moondream_local">Moondream2 (ONNX, local)</string>
+    <string name="provider_openai_cloud">OpenAI GPT-4o (cloud)</string>
+    <string name="provider_azure_vision_cloud">Azure Vision (cloud)</string>
+    <string name="provider_gemini_cloud">Google Gemini (cloud)</string>
+    <string name="provider_azure">Azure Vision (cloud)</string>
+    <string name="provider_gemini">Vertex Gemini (cloud)</string>
+    
+    <!-- Results -->
+    <string name="results_title">Wyniki:</string>
+    <string name="provider_label">Provider:</string>
+    <string name="caption_label">Opis:</string>
+    <string name="metrics_title">Metryki:</string>
+    
+    <!-- Settings -->
+    <string name="settings">Ustawienia</string>
+    <string name="api_key_hint">Klucz API</string>
+    <string name="save_key">Zapisz klucz</string>
+    <string name="key_saved">Klucz zapisany</string>
+    
+    <!-- Buttons -->
+    <string name="batch_tests">Testy batchowe</string>
+    <string name="export_results">Eksport wyników</string>
+    
+    <!-- Image preview -->
+    <string name="image_preview_description">Podgląd wybranego obrazu</string>
 </resources>

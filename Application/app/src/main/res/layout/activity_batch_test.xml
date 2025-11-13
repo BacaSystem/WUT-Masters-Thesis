@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fitsSystemWindows="true">
+
+    <!-- Toolbar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/background"
+            app:title="Batch Tests"
+            app:titleTextColor="@color/text_primary"
+            app:navigationIcon="@drawable/abc_ic_ab_back_material" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Main content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Dataset Selection -->
+            <TextView
+                android:text="1. Dataset Selection"
+                style="@style/SectionHeader" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="Dataset:"
+                        style="@style/InputLabel" />
+
+                    <Spinner
+                        android:id="@+id/spinnerDataset"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="12dp" />
+
+                    <TextView
+                        android:text="Number of images:"
+                        style="@style/InputLabel" />
+
+                    <EditText
+                        android:id="@+id/editImageCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text="100"
+                        android:hint="Enter number of images" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonLoadDataset"
+                        style="@style/PrimaryButton"
+                        android:layout_marginTop="12dp"
+                        android:text="Load Dataset" />
+
+                    <TextView
+                        android:id="@+id/textDatasetStatus"
+                        style="@style/StatusText"
+                        android:text="No dataset loaded" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Provider Selection -->
+            <TextView
+                android:text="2. Provider Selection"
+                style="@style/SectionHeader" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="Local Models:"
+                        style="@style/InputLabel"
+                        android:layout_marginBottom="4dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkboxFlorence2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Florence-2 (ONNX)" />
+
+                    <CheckBox
+                        android:id="@+id/checkboxVitGpt2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ViT-GPT2 (ONNX)" />
+
+                    <CheckBox
+                        android:id="@+id/checkboxBlip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="BLIP (ONNX)" />
+
+                    <TextView
+                        android:text="Cloud Models:"
+                        style="@style/InputLabel"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="4dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkboxOpenAI"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="OpenAI GPT-4 Vision" />
+
+                    <CheckBox
+                        android:id="@+id/checkboxAzure"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Azure Computer Vision" />
+
+                    <CheckBox
+                        android:id="@+id/checkboxGemini"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Google Gemini Pro Vision" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/buttonSelectAll"
+                            style="@style/ActionButton"
+                            android:layout_marginEnd="4dp"
+                            android:text="Select All" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/buttonSelectNone"
+                            style="@style/ActionButton"
+                            android:layout_marginStart="4dp"
+                            android:text="Select None" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Configuration -->
+            <TextView
+                android:text="3. Configuration"
+                style="@style/SectionHeader" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="Preset:"
+                        style="@style/InputLabel" />
+
+                    <Spinner
+                        android:id="@+id/spinnerPreset"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp" />
+
+                    <TextView
+                        android:text="Number of runs per image:"
+                        style="@style/InputLabel" />
+
+                    <EditText
+                        android:id="@+id/editNumRuns"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text="10"
+                        android:hint="Default: 10" />
+
+                    <TextView
+                        android:text="Warm-up runs:"
+                        style="@style/InputLabel"
+                        android:layout_marginTop="8dp" />
+
+                    <EditText
+                        android:id="@+id/editWarmupRuns"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text="3"
+                        android:hint="Default: 3" />
+
+                    <TextView
+                        android:text="Timeout (seconds):"
+                        style="@style/InputLabel"
+                        android:layout_marginTop="8dp" />
+
+                    <EditText
+                        android:id="@+id/editTimeoutSeconds"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text="30"
+                        android:hint="Default: 30" />
+
+                    <TextView
+                        android:text="Benchmark name (optional):"
+                        style="@style/InputLabel"
+                        android:layout_marginTop="8dp" />
+
+                    <EditText
+                        android:id="@+id/editBenchmarkName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:hint="e.g., local_vs_cloud_comparison" />
+
+                    <CheckBox
+                        android:id="@+id/checkboxAutoExport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Auto-export results"
+                        android:checked="true"
+                        android:layout_marginTop="12dp" />
+
+                    <TextView
+                        android:text="Export format:"
+                        style="@style/InputLabel"
+                        android:layout_marginTop="8dp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerExportFormat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Execution -->
+            <TextView
+                android:text="4. Execution"
+                style="@style/SectionHeader" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/buttonStartBenchmark"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Start"
+                            android:layout_marginEnd="4dp"
+                            android:backgroundTint="@android:color/holo_green_dark" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/buttonCancelBenchmark"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Cancel"
+                            android:layout_marginStart="4dp"
+                            android:backgroundTint="@android:color/holo_red_dark"
+                            android:enabled="false" />
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:max="100"
+                        android:progress="0" />
+
+                    <TextView
+                        android:id="@+id/textProgress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ready to start"
+                        android:textAlignment="center"
+                        android:layout_marginTop="8dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary" />
+
+                    <TextView
+                        android:id="@+id/textCurrentProvider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Provider: -"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginTop="8dp" />
+
+                    <TextView
+                        android:id="@+id/textCurrentImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Image: -"
+                        android:textColor="@color/text_secondary" />
+
+                    <TextView
+                        android:id="@+id/textElapsedTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Elapsed: 0:00"
+                        android:textColor="@color/text_secondary"
+                        android:textStyle="italic" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Results -->
+            <TextView
+                android:text="5. Results"
+                style="@style/SectionHeader" />
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ScrollView
+                        android:id="@+id/scrollViewResults"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/textResults"
+                            style="@style/MetricText"
+                            android:textSize="12sp"
+                            android:padding="8dp"
+                            android:background="@color/border_light" />
+                    </ScrollView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Results will appear here after benchmark completion"
+                        android:textStyle="italic"
+                        android:textAlignment="center"
+                        android:padding="16dp"
+                        android:textColor="@color/text_secondary" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/buttonExportResults"
+                            style="@style/ActionButton"
+                            android:layout_marginEnd="4dp"
+                            android:text="Export"
+                            android:enabled="false" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/buttonShareResults"
+                            style="@style/ActionButton"
+                            android:layout_marginStart="4dp"
+                            android:text="Share"
+                            android:enabled="false" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- External files directory for exports -->
+    <external-files-path
+        name="exports"
+        path="exports/" />
+    
+    <!-- External files directory for datasets -->
+    <external-files-path
+        name="datasets"
+        path="datasets/" />
+    
+    <!-- All external files -->
+    <external-files-path
+        name="external_files"
+        path="." />
+</paths>

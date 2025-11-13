@@ -43,6 +43,16 @@ android {
     androidResources {
         noCompress += listOf("onnx", "tflite", "txt", "json")
     }
+
+    packaging {
+        jniLibs.useLegacyPackaging = true
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            // Exclude FP32 models (too large), keep INT8 versions
+            excludes += "**/moondream-0.5b/vision_encoder.onnx"
+            excludes += "**/moondream-0.5b/embed_tokens.onnx"
+        }
+    }
 }
 
 dependencies {
