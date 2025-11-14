@@ -695,241 +695,9 @@ thesis.wut.application.captionlab.metrics/
 
 ---
 
-## 7. Flow danych
+## 7. Konfiguracja i deployment
 
-### 7.1. Pojedyncze generowanie opisu (MainActivity)
-
-```
-                        ┌──────────────────┐
-                        │   User Action    │
-                        │  Select Image    │
-                        └────────┬─────────┘
-                                 │
-                                 ▼
-                    ┌────────────────────────┐
-                    │  MainActivity          │
-                    │  pickImage()           │
-                    │  - Launch gallery      │
-                    │  - Store URI           │
-                    └────────┬───────────────┘
-                             │
-                             ▼
-                    ┌────────────────────────┐
-                    │  User Interaction      │
-                    │  - Select provider     │
-                    │  - Click "Generate"    │
-                    └────────┬───────────────┘
-                             │
-                             ▼
-                    ┌────────────────────────┐
-                    │  MainActivity          │
-                    │  runCaption()          │
-                    │  - Get provider        │
-                    │  - Load bitmap         │
-                    └────────┬───────────────┘
-                             │
-                             ▼
-                    ┌────────────────────────┐
-                    │  MetricsCollector      │
-                    │  collectSingle()       │
-                    │  - Monitor memory      │
-                    │  - Time execution      │
-                    └────────┬───────────────┘
-                             │
-                 ┌───────────┴───────────┐
-                 │                       │
-                 ▼                       ▼
-    ┌─────────────────────┐   ┌─────────────────────┐
-    │  Local Provider     │   │  Cloud Provider     │
-    │  (ONNX Runtime)     │   │  (HTTP API)         │
-    └──────────┬──────────┘   └──────────┬──────────┘
-               │                          │
-               ▼                          ▼
-    ┌─────────────────────┐   ┌─────────────────────┐
-    │  Preprocessing      │   │  Image Compression  │
-    │  - Resize image     │   │  - JPEG encode      │
-    │  - Normalize pixels │   │  - Base64 encode    │
-    └──────────┬──────────┘   └──────────┬──────────┘
-               │                          │
-               ▼                          ▼
-    ┌─────────────────────┐   ┌─────────────────────┐
-    │  Vision Encoding    │   │  Build HTTP Request │
-    │  - Load model       │   │  - JSON payload     │
-    │  - Forward pass     │   │  - API key header   │
-    └──────────┬──────────┘   └──────────┬──────────┘
-               │                          │
-               ▼                          ▼
-    ┌─────────────────────┐   ┌─────────────────────┐
-    │  Text Encoding      │   │  HTTP POST          │
-    │  - Prompt embed     │   │  - Network I/O      │
-    │  - Concat features  │   │  - Wait response    │
-    └──────────┬──────────┘   └──────────┬──────────┘
-               │                          │
-               ▼                          ▼
-    ┌─────────────────────┐   ┌─────────────────────┐
-    │  Autoregressive     │   │  Parse JSON         │
-    │  Decoding Loop      │   │  - Extract caption  │
-    │  - Generate tokens  │   │  - Extract usage    │
-    │  - Until EOS        │   │  - Calculate cost   │
-    └──────────┬──────────┘   └──────────┬──────────┘
-               │                          │
-               ▼                          ▼
-    ┌─────────────────────┐   ┌─────────────────────┐
-    │  Detokenization     │   │  Return Result      │
-    │  - Token to text    │   │  + HTTP metrics     │
-    │  - Clean output     │   │  + Cost data        │
-    └──────────┬──────────┘   └──────────┬──────────┘
-               │                          │
-               └───────────┬──────────────┘
-                           │
-                           ▼
-                ┌──────────────────────┐
-                │  CaptionResult       │
-                │  - text: String      │
-                │  - metrics: Map      │
-                └──────────┬───────────┘
-                           │
-                           ▼
-                ┌──────────────────────┐
-                │  MainActivity        │
-                │  displayResult()     │
-                │  - Show caption      │
-                │  - Show metrics      │
-                │  - Enable export     │
-                └──────────────────────┘
-```
-
-### 7.2. Test batchowy z warm-up (BatchTestActivity)
-
-```
-        ┌─────────────────┐
-        │  User Action    │
-        │  Load Dataset   │
-        └────────┬────────┘
-                 │
-                 ▼
-        ┌─────────────────────┐
-        │  DatasetLoader      │
-        │  - Query MediaStore │
-        │  - Load bitmaps     │
-        │  - Store metadata   │
-        └────────┬────────────┘
-                 │
-                 ▼
-        ┌─────────────────────┐
-        │  User Configuration │
-        │  - Select providers │
-        │  - Set parameters   │
-        │  - Export settings  │
-        └────────┬────────────┘
-                 │
-                 ▼
-        ┌─────────────────────┐
-        │  Start Benchmark    │
-        │  - Build config     │
-        │  - Launch coroutine │
-        └────────┬────────────┘
-                 │
-                 ▼
-        ┌─────────────────────────────────────────┐
-        │  BenchmarkRunner                        │
-        │  FOR EACH provider:                     │
-        │    ├─ onProviderStart()                 │
-        │    │                                     │
-        │    ├─ WARM-UP PHASE                     │
-        │    │  └─ Run first image N times        │
-        │    │     (discard results)               │
-        │    │                                     │
-        │    ├─ MEASUREMENT PHASE                 │
-        │    │  FOR EACH image:                   │
-        │    │    ├─ onImageStart()                │
-        │    │    │                                │
-        │    │    ├─ MULTIPLE RUNS                │
-        │    │    │  FOR run in 1..runsPerImage:  │
-        │    │    │    ├─ collectSingle()          │
-        │    │    │    ├─ provider.caption()       │
-        │    │    │    └─ store metrics            │
-        │    │    │                                │
-        │    │    ├─ AGGREGATE                     │
-        │    │    │  └─ Calculate stats            │
-        │    │    │     (median, p90, std)         │
-        │    │    │                                │
-        │    │    ├─ onImageComplete()             │
-        │    │    └─ cooldown delay                │
-        │    │                                     │
-        │    └─ onProviderComplete()               │
-        │                                          │
-        └────────┬───────────────────────────────┘
-                 │
-                 ▼
-        ┌─────────────────────┐
-        │  BenchmarkResult    │
-        │  - All metrics      │
-        │  - Aggregated stats │
-        │  - Device info      │
-        └────────┬────────────┘
-                 │
-                 ├─────────────────┐
-                 │                 │
-                 ▼                 ▼
-        ┌────────────────┐  ┌────────────────┐
-        │  Export CSV    │  │  Export JSON   │
-        │  - Per-run data│  │  - Full results│
-        │  - Flat format │  │  - Nested tree │
-        └────────────────┘  └────────────────┘
-```
-
-### 7.3. Progress callback flow
-
-```
-BenchmarkRunner                        UI Thread (BatchTestActivity)
-      │                                        │
-      ├──── onBenchmarkStart() ───────────────►│
-      │                                        ├─ Show "Starting benchmark..."
-      │                                        ├─ Reset progress bar
-      │                                        └─ Clear log
-      │                                        │
-      ├──── onProviderStart(florence2) ───────►│
-      │                                        ├─ Update: "Testing Florence-2"
-      │                                        └─ Show provider icon
-      │                                        │
-      ├──── onImageStart(img_001) ────────────►│
-      │                                        ├─ Progress: 1/100
-      │                                        └─ Show thumbnail
-      │                                        │
-      │     [Multiple runs for statistics]     │
-      │                                        │
-      ├──── onImageComplete(metrics) ─────────►│
-      │                                        ├─ Append to log:
-      │                                        │  "img_001: 581ms (median)"
-      │                                        └─ Update chart
-      │                                        │
-      │     [Process remaining images...]      │
-      │                                        │
-      ├──── onProviderComplete() ─────────────►│
-      │                                        ├─ Update: "Florence-2 complete"
-      │                                        ├─ Show summary stats
-      │                                        └─ Enable next provider
-      │                                        │
-      │     [Test remaining providers...]      │
-      │                                        │
-      ├──── onBenchmarkComplete(result) ──────►│
-      │                                        ├─ Show results dialog
-      │                                        ├─ Enable export buttons
-      │                                        ├─ Display aggregated stats
-      │                                        └─ Notification: "Benchmark done"
-      │                                        │
-      └──── (OR) onBenchmarkError(error) ─────►│
-                                               ├─ Show error dialog
-                                               ├─ Log stack trace
-                                               └─ Ask: Retry or Cancel?
-```
-
----
-
-## 8. Konfiguracja i deployment
-
-### 8.1. Zależności projektu
+### 7.1. Zależności projektu
 
 **Android Core:**
 - AndroidX Core KTX 1.12.0 - Kotlin extensions dla Android SDK
@@ -963,7 +731,7 @@ BenchmarkRunner                        UI Thread (BatchTestActivity)
 - KSP (Kotlin Symbol Processing) 1.9.20-1.0.14
 - ViewBinding enabled
 
-### 8.2. Wymagania systemowe
+### 7.2. Wymagania systemowe
 
 **Minimalne wymagania:**
 - Android 8.0 Oreo (API 26)
@@ -979,7 +747,7 @@ BenchmarkRunner                        UI Thread (BatchTestActivity)
 - Procesor: Snapdragon 8 Gen 2 lub nowszy (dla akceleracji NNAPI/QNN)
 - Szybkie połączenie Wi-Fi/5G
 
-### 8.3. Instalacja modeli
+### 7.3. Instalacja modeli
 
 Aplikacja wykorzystuje modele ONNX, które muszą być umieszczone w katalogu `app/src/main/assets/models/` przed kompilacją.
 
@@ -1021,7 +789,7 @@ app/src/main/assets/models/
     └── config.json
 ```
 
-### 8.4. Rozmiar aplikacji
+### 7.4. Rozmiar aplikacji
 
 **Pomierzone rozmiary (rzeczywiste):**
 
@@ -1040,7 +808,7 @@ app/src/main/assets/models/
 - **Model compression** - dodatkowa kompresja ONNX graph (możliwa optymalizacja)
 - **Selective inclusion** - użytkownicy mogą wybrać tylko wybrane modele podczas instalacji
 
-### 8.5. Konfiguracja kluczy API
+### 7.5. Konfiguracja kluczy API
 
 Dla cloud providers wymagane są klucze API. W wersji deweloperskiej konfigurowane przez SharedPreferences:
 
@@ -1062,7 +830,7 @@ Dla cloud providers wymagane są klucze API. W wersji deweloperskiej konfigurowa
 
 **Uwaga bezpieczeństwa:** W produkcji klucze API powinny być przechowywane w bezpieczny sposób (np. Android Keystore, backend proxy).
 
-### 8.6. Build i uruchomienie
+### 7.6. Build i uruchomienie
 
 **Klonowanie repozytorium:**
 ```bash
@@ -1093,7 +861,7 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 
 ---
 
-## 9. Bibliografia
+## 8. Bibliografia
 
 ### Dokumentacja techniczna
 1. **Android Developers** - https://developer.android.com/

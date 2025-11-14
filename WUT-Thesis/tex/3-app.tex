@@ -1,0 +1,77 @@
+\newpage % Rozdziały zaczynamy od nowej strony.
+\section{Aplikacja badawcza CaptionLab}\label{s:Aplikacja badawcza CaptionLab}
+\noindent
+W celu przeprowadzenia kompleksowych badań porównawczych modeli AI została zaprojektowana i zaimplementowana dedykowana aplikacja badawcza CaptionLab na platformę Android. Aplikacja umożliwia testowanie zarówno modeli lokalnych działających w środowisku ONNX Runtime, jak i modeli chmurowych dostępnych poprzez API, przy jednoczesnym zbieraniu szczegółowych metryk wydajnościowych. 
+
+W tym rozdziale opisano proces projektowania i implementacji systemu, jego architekturę oraz kluczowe komponenty odpowiedzialne za generowanie opisów obrazów i pomiar parametrów wydajności.
+
+\subsection{Architektura systemu}\label{ss:Architektura systemu}
+\noindent
+Aplikacja CaptionLab została zaprojektowana zgodnie z zasadami czystej architektury (Clean Architecture) oraz wykorzystuje wzorce projektowe ułatwiające rozszerzalność i testowanie kodu.
+
+\noindent
+Architektura wysokiego poziomu składa się z trzech głównych warstw:
+
+\begin{verbatim}
++======================================================+
+|           WARSTWA PREZENTACJI                        |
+|  +------------------+  +------------------------+    |
+|  |  MainActivity    |  |  BatchTestActivity     |    |
+|  |  - Single image  |  |  - Automated testing   |    |
+|  |  - UI controls   |  |  - Progress tracking   |    |
+|  +------------------+  +------------------------+    |
++======================================================+
+|           WARSTWA LOGIKI BIZNESOWEJ                  |
+|  +-----------------------------------------------+   |
+|  |         ProviderManager                       |   |
+|  |  - Register providers                         |   |
+|  |  - Manage lifecycle                           |   |
+|  +-----------------------------------------------+   |
+|  +------------------+  +------------------------+    |
+|  | BenchmarkRunner  |  |  MetricsCollector      |    |
+|  | - Orchestrate    |  |  - Timing              |    |
+|  | - Batch tests    |  |  - Memory              |    |
+|  | - Error handling |  |  - Energy              |    |
+|  +------------------+  +------------------------+    |
+|  +------------------+  +------------------------+    |
+|  |  DataExporter    |  |  DatasetLoader         |    |
+|  +------------------+  +------------------------+    |
++======================================================+
+|           WARSTWA PROVIDEROW AI                      |
+|  +-----------------------------------------------+   |
+|  |      CaptioningProvider (interface)           |   |
+|  +-----------------------------------------------+   |
+|  +--------------+ +--------------+ +-----------+    |
+|  | Florence2    | |  ViTGPT2     | |   BLIP    |    |
+|  | Provider     | |  Provider    | |  Provider |    |
+|  | (ONNX)       | |  (ONNX)      | |  (ONNX)   |    |
+|  +--------------+ +--------------+ +-----------+    |
+|  +--------------+ +--------------+ +-----------+    |
+|  |   OpenAI     | |    Azure     | |  Gemini   |    |
+|  |  Provider    | |   Provider   | |  Provider |    |
+|  |  (REST API)  | |  (REST API)  | | (REST API)|    |
+|  +--------------+ +--------------+ +-----------+    |
++======================================================+
+\end{verbatim}
+
+\subsubsection{Warstwa prezentacji}\label{sss:Warstwa prezentacji}
+\noindent
+
+\subsubsection{Warstwa logiki biznesowej}\label{sss:Warstwa logiki biznesowej}
+\noindent
+
+\subsubsection{Warstwa providerów AI}\label{sss:Warstwa providerow AI}
+\noindent
+
+
+\subsection{Implementacja providerów AI}\label{ss:Implementacja providerow AI}
+\noindent
+
+\subsection{System zbierania metryk}\label{ss:System zbierania metryk}
+\noindent
+
+\subsection{Moduł testów automatycznych????}\label{ss:Modul testow automatycznych}
+\noindent
+
+\subsection{Eksport i analiza danych}\label{ss:Eksport i analiza danych}
+\noindent

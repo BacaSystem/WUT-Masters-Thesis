@@ -1,0 +1,54 @@
+\newpage % Rozdziały zaczynamy od nowej strony.
+\section{Modele i technologie AI do generowania opisów obrazów}\label{s:Modele}
+
+\noindent
+Niniejszy rozdział przedstawia szczegółową charakterystykę wszystkich modeli sztucznej inteligencji wykorzystanych w badaniach. Analizie poddano trzy modele lokalne działające w środowisku ONNX Runtime oraz trzy rozwiązania chmurowe dostępne jako usługi API. Dla każdego modelu opisano architekturę, proces przedtreningu, możliwości oraz specyfikę implementacji.
+
+\subsection{Architektura modeli image captioning}\label{ss:Architektura modeli}
+\noindent
+Modele do generowania opisów obrazów (image captioning) można podzielić na dwie główne kategorie architektoniczne: modele encoder-decoder oraz modele end-to-end multimodalne. .... TODO
+
+\subsection{Strategia wdrożenia modeli sztucznej inteligencji}\label{ss:Strategia wdrozenia}
+\noindent
+Badany w pracy wybór między modelami lokalnymi a chmurowymi definiowany jest jako decyzja architektoniczna determinująca miejsce wykonywania obliczeń AI: bezpośrednio na urządzeniu mobilnym użytkownika lub na zdalnych serwerach dostępnych przez Internet \cite{TODO}. Oznacza to, że aby mówić o efektywnym wdrożeniu AI w aplikacji mobilnej, potrzebna jest analiza trade-offów między różnymi aspektami obu podejść.
+
+
+Modele lokalne to rozwiązania AI działające bezpośrednio na urządzeniu mobilnym użytkownika, bez konieczności komunikacji z zewnętrznymi serwerami. W zamian za to wymagają one optymalizacji modeli do ograniczonych zasobów sprzętowych dostępnych na urządzeniach mobilnych \cite{TODO}.
+
+
+\subsection{Modele lokalne wykorzystane w badaniach}\label{ss:Modele lokalne}
+\noindent
+Modele lokalne to rozwiązania zoptymalizowane do działania bezpośrednio na urządzeniach mobilnych w środowisku ONNX Runtime. Wszystkie trzy wybrane modele reprezentują różne podejścia architektoniczne i pokolenia rozwoju technologii Vision-Language.
+
+\subsubsection{Florence-2}\label{sss:Florence-2}
+\noindent
+Florence-2 to zaawansowany model Vision-Language opracowany przez Microsoft Research, będący następcą modelu Florence \cite{TODO}.
+
+\subsubsection{ViT-GPT2}\label{sss:ViT-GPT2}
+\noindent
+ViT-GPT2 to model encoder-decoder łączący Vision Transformer jako enkoder wizualny z GPT-2 jako dekoderem językowym \cite{TODO}. Jest to przykład klasycznej architektury Vision-Language wykorzystującej pre-trenowane komponenty.
+
+
+\subsubsection{BLIP}\label{sss:BLIP}
+\noindent
+BLIP to unified Vision-Language model opracowany przez Salesforce Research, wykorzystujący innowacyjną metodę CapFilt (Captioning and Filtering) do generowania i filtrowania danych treningowych \cite{TODO}.
+
+
+\subsection{Modele chmurowe wykorzystane w badaniach}\label{ss:Modele chmurowe}
+\noindent
+Modele chmurowe to rozwiązania dostępne jako usługi API oferowane przez głównych dostawców infrastruktury chmurowej. Reprezentują najbardziej zaawansowane modele AI z dostępem do ogromnej mocy obliczeniowej.
+
+\subsubsection{OpenAI GPT-4o Vision}\label{sss:GPT4o}
+\noindent
+GPT-4o (\textit{``o'' for ``omni''}) to najnowszy multimodalny model OpenAI obsługujący tekst, obraz, audio i wideo \cite{TODO}. W kontekście image captioning wykorzystuje się jego możliwości Vision.
+
+\subsubsection{Azure Computer Vision 4.0}\label{sss:Azure}
+\noindent
+Azure Computer Vision to specjalizowana usługa Microsoft Azure do analizy obrazów, oferująca gotowe modele do różnych zadań vision \cite{TODO}.
+
+\subsubsection{Google Vertex AI Gemini}\label{sss:Gemini}
+\noindent
+Gemini to multimodalny model AI od Google DeepMind, dostępny przez platformę Vertex AI \cite{TODO}. Gemini został zaprojektowany jako natively multimodal, co oznacza że text, image, audio są przetwarzane w jednej unified reprezentacji.
+
+\subsection{Porównanie rozwiązań AI}\label{ss:Porownanie rozwiazan AI}
+\noindent

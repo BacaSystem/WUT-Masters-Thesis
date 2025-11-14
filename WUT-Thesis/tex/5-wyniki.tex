@@ -1,0 +1,146 @@
+\newpage % Rozdziały zaczynamy od nowej strony.
+\section{Wyniki badań}\label{s:Wyniki badan}
+
+\noindent
+TODO | Niniejszy rozdział przedstawia wyniki przeprowadzonych badań porównawczych sześciu modeli AI do generowania opisów obrazów. Dane zostały zebrane zgodnie z metodologią opisaną w w rozdziale....
+\begin{table}[!h] \centering
+\caption{Podsumowanie przeprowadzonych testów}
+\begin{tabular}{|l|c|} \hline
+\label{tab:test_summary}
+\textbf{Parametr} & \textbf{Wartość} \\ \hline\hline
+Liczba providerów AI & 6 (3 local + 3 cloud) \\ \hline
+Dataset COCO (test) & 90 obrazów \\ \hline
+Dataset Custom Mobile & 50 obrazów \\ \hline
+Liczba powtórzeń & 5 iteracji \\ \hline
+\textbf{Total inference runs} & \textbf{4,200} \\ \hline
+Czas trwania testów & ~18 godzin \\ \hline
+Success rate (overall) & 98.7\% \\ \hline
+Failed inference & 55 (timeout/errors) \\ \hline
+\end{tabular}
+\end{table}
+
+
+\subsection{Analiza czasów inferencji}\label{ss:Analiza czasow inferncji}
+
+\noindent
+TODO | Opóźnienie inference jest kluczowym parametrem wpływającym na user experience w aplikacjach mobilnych.....
+
+\subsubsection{Czas end-to-end (E2E)}\label{sss:czas e2e}
+\noindent
+TODO | Czas end-to-end (E2E) obejmuje cały proces od momentu przesłania obrazu do otrzymania wygenerowanego opisu...
+
+\begin{table}[!h] \centering
+\caption{Przykładowa tabela}
+\begin{tabular}{|l|c|c|c|c|} \hline
+\label{tab:example_table}
+\textbf{Model} & \textbf{metric 1} & \textbf{metric 2} & \textbf{+} & \textbf{-} \\ \hline\hline
+ViT-GPT2 (local)       & 8.4  & 2.1 & 4  & 15 \\ \hline
+BLIP (local)           & 10.2 & 2.8 & 5  & 18 \\ \hline
+Florence-2 (local)     & 12.6 & 3.4 & 6  & 24 \\ \hline
+\hline
+Azure Vision (cloud)   & 14.8 & 3.9 & 7  & 27 \\ \hline
+Gemini Pro (cloud)     & 22.4 & 5.6 & 12 & 38 \\ \hline
+GPT-4o Vision (cloud)  & 26.7 & 6.8 & 14 & 45 \\ \hline
+\end{tabular}
+\end{table}
+
+
+\subsubsection{Breakdown czasów: Pre/Infer/Post}\label{sss:Time breakdown}
+\noindent
+TODO | Tabela \ref{tab:time_breakdown} przedstawia szczegółowy breakdown czasów dla preprocessing, inference i postprocessing...
+
+
+\begin{table}[!h] \centering
+\caption{Przykładowa tabela}
+\begin{tabular}{|l|c|c|c|c|} \hline
+\label{tab:example_table}
+\textbf{Model} & \textbf{metric 1} & \textbf{metric 2} & \textbf{+} & \textbf{-} \\ \hline\hline
+ViT-GPT2 (local)       & 8.4  & 2.1 & 4  & 15 \\ \hline
+BLIP (local)           & 10.2 & 2.8 & 5  & 18 \\ \hline
+Florence-2 (local)     & 12.6 & 3.4 & 6  & 24 \\ \hline
+\hline
+Azure Vision (cloud)   & 14.8 & 3.9 & 7  & 27 \\ \hline
+Gemini Pro (cloud)     & 22.4 & 5.6 & 12 & 38 \\ \hline
+GPT-4o Vision (cloud)  & 26.7 & 6.8 & 14 & 45 \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Analiza zużycia zasobów}\label{ss:Analiza zasobow}
+\noindent
+TODO | Analiza zużycia zasobów obejmuje pomiary CPU, RAM oraz energii podczas inferencji....
+
+\subsubsection{Zużycie pamięci RAM}\label{sss:Zuzycie pamieci RAM}
+
+\begin{table}[!h] \centering
+\caption{Przykładowa tabela}
+\begin{tabular}{|l|c|c|c|c|} \hline
+\label{tab:example_table}
+\textbf{Model} & \textbf{metric 1} & \textbf{metric 2} & \textbf{+} & \textbf{-} \\ \hline\hline
+ViT-GPT2 (local)       & 8.4  & 2.1 & 4  & 15 \\ \hline
+BLIP (local)           & 10.2 & 2.8 & 5  & 18 \\ \hline
+Florence-2 (local)     & 12.6 & 3.4 & 6  & 24 \\ \hline
+\hline
+Azure Vision (cloud)   & 14.8 & 3.9 & 7  & 27 \\ \hline
+Gemini Pro (cloud)     & 22.4 & 5.6 & 12 & 38 \\ \hline
+GPT-4o Vision (cloud)  & 26.7 & 6.8 & 14 & 45 \\ \hline
+\end{tabular}
+\end{table}
+\subsubsection{Zużycie energii}\label{sss:Zuzycie energii}
+
+\noindent
+TODO | Pomiary energii na emulatorze są symulowane, ale pokazują relatywne różnice....
+
+\begin{table}[!h] \centering
+\caption{Przykładowa tabela}
+\begin{tabular}{|l|c|c|c|c|} \hline
+\label{tab:example_table}
+\textbf{Model} & \textbf{metric 1} & \textbf{metric 2} & \textbf{+} & \textbf{-} \\ \hline\hline
+ViT-GPT2 (local)       & 8.4  & 2.1 & 4  & 15 \\ \hline
+BLIP (local)           & 10.2 & 2.8 & 5  & 18 \\ \hline
+Florence-2 (local)     & 12.6 & 3.4 & 6  & 24 \\ \hline
+\hline
+Azure Vision (cloud)   & 14.8 & 3.9 & 7  & 27 \\ \hline
+Gemini Pro (cloud)     & 22.4 & 5.6 & 12 & 38 \\ \hline
+GPT-4o Vision (cloud)  & 26.7 & 6.8 & 14 & 45 \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Analiza kosztów modeli chmurowych}\label{ss:Analiza kosztow modeli chmurowych}
+
+\noindent
+TODO | Analiza kosztów wywołań API dla modeli chmurowych...
+
+\begin{table}[!h] \centering
+\caption{Przykładowa tabela}
+\begin{tabular}{|l|c|c|c|c|} \hline
+\label{tab:example_table}
+\textbf{Model} & \textbf{metric 1} & \textbf{metric 2} & \textbf{+} & \textbf{-} \\ \hline\hline
+ViT-GPT2 (local)       & 8.4  & 2.1 & 4  & 15 \\ \hline
+BLIP (local)           & 10.2 & 2.8 & 5  & 18 \\ \hline
+Florence-2 (local)     & 12.6 & 3.4 & 6  & 24 \\ \hline
+\hline
+Azure Vision (cloud)   & 14.8 & 3.9 & 7  & 27 \\ \hline
+Gemini Pro (cloud)     & 22.4 & 5.6 & 12 & 38 \\ \hline
+GPT-4o Vision (cloud)  & 26.7 & 6.8 & 14 & 45 \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Analiza metryk jakościowych}\label{ss:Analiza metryk jakosciowych}
+
+\noindent
+TODO | Analiza jakości generowanych opisów na podstawie metryk CIDEr, SPICE, BLEU, METEOR....
+
+\begin{table}[!h] \centering
+\caption{Przykładowa tabela}
+\begin{tabular}{|l|c|c|c|c|} \hline
+\label{tab:example_table}
+\textbf{Model} & \textbf{metric 1} & \textbf{metric 2} & \textbf{+} & \textbf{-} \\ \hline\hline
+ViT-GPT2 (local)       & 8.4  & 2.1 & 4  & 15 \\ \hline
+BLIP (local)           & 10.2 & 2.8 & 5  & 18 \\ \hline
+Florence-2 (local)     & 12.6 & 3.4 & 6  & 24 \\ \hline
+\hline
+Azure Vision (cloud)   & 14.8 & 3.9 & 7  & 27 \\ \hline
+Gemini Pro (cloud)     & 22.4 & 5.6 & 12 & 38 \\ \hline
+GPT-4o Vision (cloud)  & 26.7 & 6.8 & 14 & 45 \\ \hline
+\end{tabular}
+\end{table}
