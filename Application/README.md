@@ -499,8 +499,8 @@ Providery lokalne wykonują inferencję bezpośrednio na urządzeniu za pomocą 
 
 **Model:** nlpconnect/vit-gpt2-image-captioning  
 **Architektura:** Vision Transformer + GPT-2  
-**Rozmiar:** 387 MB (2 pliki ONNX)  
-**Kwantyzacja:** FP32 (brak kwantyzacji)
+**Rozmiar:** 235 MB (2 pliki ONNX)  
+**Kwantyzacja:** INT 8
 
 **Pipeline inferencji:**
 1. **Vision Encoding** - ViT-base/16 przetwarza obraz 224×224 na sekwencję 197 feature vectors (768-dim)

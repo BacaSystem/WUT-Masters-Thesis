@@ -3,35 +3,33 @@
 
 \noindent
 Dynamiczny rozwój technologii oraz systemów sztucznej inteligencji umożliwił
-realizację zaawansowanych i skomplikowanych obliczeniowo zadań może bezpośrednio na urządzeniach mobilnych.
+realizację zaawansowanych i skomplikowanych obliczeniowo zadań bezpośrednio na urządzeniach mobilnych.
 Postęp w architekturze modeli, metodach kompresji oraz wydajności układów (CPU/NPU) sprawił,
 że aplikacje korzystające z AI stały się powszechne w środowisku mobilnym.
-Jednocześnie wielcy chmurowi dostawcy usług udostępniają najnowocześniejsze modele AI,
-oferujące najbardziej zaawansowane możliwości o niespotykanej wcześniej jakości i skali,
-kosztem zależności od zewnętrznej infrastruktury, prywatności, bezpieczeństwa czy uwiązania 
-od opłat subskrypcyjnych.
+Równolegle, wielcy dostawcy usług chmurowych udostępniają najnowocześniejsze modele AI,
+oferujące zaawansowane możliwości o niespotykanej wcześniej jakości i skali.
+Rozwiązania te niosą jednak ze sobą zależność od zewnętrznej infrastruktury oraz wiążą się
+z kwestiami prywatności, bezpieczeństwa i opłat subskrypcyjnych.
 
 Na tym tle szczególne znaczenie zyskuje zadanie automatycznego generowania opisów obrazów 
-(image captioning), łączące zaawansowanie przetwarzanie obrazu z generowaniem języka naturalnego.
+(image captioning), łączące zaawansowane przetwarzanie obrazu z generowaniem języka naturalnego.
 Technologia ta znajduje zastosowanie w wielu aspektach, od wsparcia osób z dysfunkcją wzroku,
 przez automatyczną kategoryzację treści, aż po integrację z asystentami głosowymi.
 
 
-W tej sytuacji twórcy aplikacji mobilnych stają przed dylematem wyboru, czy wdrażać wciąż ograniczone 
-lokalne modele sztucznej inteligencji, czy integrować zewnętrzne usługi od chmurowych dostawców oferujące ogromne
-możliwości.
+W obliczu tych możliwości twórcy aplikacji mobilnych stają przed dylematem wyboru
+między wdrażaniem lokalnych modeli sztucznej inteligencji, a integracją z usługami chmurowych dostawców.
 
 Celem niniejszej pracy jest przeprowadzenie kompleksowej analizy porównawczej modeli działających 
-w warunkach lokalnych oraz chmurowych, w kontekście generowania opisów obrazów na urządzeniach 
-z systemem Android. Badanie opiera się na porównaniu konkretnych implementacji trzech modeli
-lokalnych uruchamianych przez środowisko ONNX Runtime: Florence-2, ViT-GPT2, BLIP oraz trzech usługach
-chmurowych udostępnianych przez interfejs API: OpenAI GTP-4o mini, Azure Computer Vision, Google Gemini 2.5 Flash Lite.
+w warunkach lokalnych oraz chmurowych w kontekście generowania opisów obrazów na urządzeniach 
+z systemem Android. Badanie obejmuje porównanie trzech modeli lokalnych uruchamianych przez środowisko
+ONNX Runtime (Florence-2, ViT-GPT2, BLIP) oraz trzech usług chmurowych udostępnianych przez interfejs
+API (OpenAI GPT-4o mini, Azure Computer Vision, Google Gemini 2.5 Flash Lite).
 
-Analiza efektywności poszczególnych modeli bazuje na porównaniu metryk wydajnościowych, takich jak 
-czas generowania odpowiedzi, zużycie pamięci RAM, pobór energii oraz kosztów wywołań API, a także
-metryk jakościowych obejmujących poprawność generowanych opisów: CIDEr, SPICE, METEOR czy BLEU.
-
-Zebrane dane posłużą dalej do sformułowania popartych badaniami rekomendacji doboru dostępnych rozwiązań
+Analiza efektywności poszczególnych modeli opiera się na dwóch komplementarnych aspektach:
+metrykach wydajnościowych (czas generowania odpowiedzi, zużycie pamięci RAM, pobór energii, koszty wywołań API)
+oraz metrykach jakościowych (poprawność generowanych opisów mierzona wskaźnikami CIDEr, SPICE, METEOR, BLEU).
+Zebrane w ten sposób dane posłużą do sformułowania popartych empirycznie rekomendacji doboru rozwiązań
 sztucznej inteligencji w zależności od przeznaczenia projektowanej aplikacji mobilnej.
 
 Do realizacji powyższych celów zaprojektowano i zaimplementowano platformę badawczą CaptionLab, która
@@ -49,48 +47,88 @@ decyzji architektonicznych w projektowaniu aplikacji mobilnych.
 \newpage
 \section{Wstęp}\label{s:Wstep}
 
-% According to the 2016 White Paper on Information 
-% and Communications in Japan published by the 
-% Ministry of Internal Affairs and Communications, 
-% there are three major types of functions that AI plays 
-% in actual services: "identification", "prediction" and 
-% "execution" [3]. These functions can be utilized and 
-% applied across all industries. Standard usages of each 
-% function are as follows: 
-%  "Identify" the current situation (characteristics) 
-% from a large amount of data (big data). 
-% • Analyze the time characteristics of the data and 
-% "predict" future tendencies. 
-% • Make and "execute" an optimum plan which is 
-% based on the "identified"/"predicted" data. 
-% As shown in the white paper, AI is expected to be 
-% utilized in various business fields and perform highly 
-% advanced analysis (for improving operational 
-% efficiency), using big data in a short period of time 
-% without human manual operation
-% “Present and Future of Artificial Intelligence 
-% (AI),” White Paper on Information and 
-% Communications in Japan 2016, Chapter 4, 
-% Section 2.
+\noindent
+Systemy sztucznej inteligencji w ostatnich latach przeszły znaczną ewolucję od naukowych koncepcji
+do powszechnie wykorzystywanych narzędzi, które zrewolucjonizowały wiele dziedzin życia i przemysłu.
+AI znalazła zastosowanie i zmieniła funkcjonowanie całych sektorów gospodarki, począwszy od technologii i
+rozrywki przez dziennikarstwo, kończąc na finansach, czy medycynie. Według danych Presedence Research globalny rynek AI
+osiągnął wartość ponad 750 miliardów USD w 2025 roku, a prognozowany dalszy wzrost, przewiduje wzrost
+do prawie 3.7 bilionów USD do roku 2034 \cite{ai_market_precedence_2025}.
+
+W spektrum zastosowań sztucznej inteligencji szczególnie wyróżnia się zadanie automatycznego generowania
+opisów obrazów (image captioning) jako jedno z bardziej złożonych wyzwań łączących przetwarzanie obrazu,
+kategoryzację wizualną oraz analizę kontekstu z generowaniem języka naturalnego. Systemy image captioning,
+oparte na architekturach encoder-decoder \cite{show_and_tell_vinyals2015}, znajdują zastosowanie w wielu obszarach,
+od wsparcia osób z dysfunkcją wzroku, przez automatyczną kategoryzację treści, aż po integrację
+z asystentami głosowymi.
+
+Rozwój technologii uczenia maszynowego umożliwił znaczący postęp w dziedzinie image captioning.
+Systemy AI zyskały nowe możliwości dzięki innowacyjnym architekturom modeli oraz narzędziom
+ułatwiającym deweloperom wdrażanie zaawansowanych rozwiązań.
+Modele oparte na architekturze transformerów wizyjnych (Vision Transformer, ViT)
+wypierały tradycyjne sieci konwolucyjne (Convolutional Neural Networks, CNN), oferując lepsze możliwości 
+rozpoznawania i kwalifikacji obrazów \cite{vit_dosovitskiy2021}. Pojawienie się technologii jednolitych 
+formatów modeli takich jak ONNX (Open Neural Network Exchange) umożliwiło łatwiejszą wymianę i wdrażanie 
+zaawansowanych modeli AI w środowiskach o ograniczonych zasobach \cite{onnx_icsme_openja2022}, podczas gdy 
+popularyzacja sieci 5G oraz rozwój chmurowego przetwarzania danych pozwoliło na korzystanie z potężnych
+modeli AI poprzez interfejsy API (Application Programming Interface), eliminując potrzebę lokalnego przechowywania
+i przetwarzania danych \cite{edge_computing_shi2016}.
+
+Jednym z najbardziej dynamicznie rozwijających się obszarów zastosowań sztucznej inteligencji
+są aplikacje i systemy mobilne. Współczesne urządzenia mobilne, niegdyś pełniące funkcję jedynie
+narzędzi komunikacji i prostej rozrywki, dziś wyposażone są w zaawansowane układy obliczeniowe
+(Neural Processing Unit, NPU) umożliwiające przetwarzanie złożonych modeli AI bezpośrednio na urządzeniach. Według raportu z 2025 roku opublikowanego przez Statista, na świecie jest ponad 7 miliardów
+zarejestrowanych w sieci smartfonów, co przekłada się na niemal 80\% globalnej populacji \cite{smartphone_users_2025}.
+Ta masywna baza użytkowników połączona z ciągle rosnącą mocą obliczeniową układów mobilnych, sprawia,
+że platformy mobilne stają się kluczowym obszarem dla wdrażania rozwiązań opartych na sztucznej inteligencji.
+
+
+Wybór aplikacji mobilnych jako obszaru badań nad efektywnością modeli AI jest konsekwencją szeregu specyficznych uwarunkowań środowiskowych.
+Po pierwsze, urządzenia mobilne charakteryzują się ścisłymi ograniczeniami sprzętowymi, takimi jak limitowana ilość pamięci RAM, mocy obliczeniowej, 
+czy ograniczonym źródłem zasilania. Po drugie, urządzenia funkcjonują w warunkach zmiennej jakości połączeń sieciowych, co podważa niezawodność rozwiązań 
+zależnych wyłącznie od infrastruktury chmurowych dostawców. Po trzecie, kwestia prywatności i bezpieczeństwa danych użytkownika nabiera szczególnego 
+znaczenia w kontekście osobistych urządzeń z dostępem do bardzo wrażliwych danych. Czynniki te powodują, że architektura systemów AI na platformach mobilnych
+musi uwzględniać precyzyjny dobór rozwiązań, miejsca przetwarzania danych oraz strategii zarządzania zasobami.
+
+W kontekście tych ograniczeń zarysowuje się istotny kompromis między podejściem lokalnym a chmurowym.
+Modele uruchamiane lokalnie oferują działanie bez połączenia z siecią,
+przewidywalność czasu odpowiedzi oraz silniejszą ochronę prywatności. Z drugiej strony usługi chmurowe oferują dostęp 
+do najnowszych, dużych generatywnych modeli bez konieczności ich instalacji, aktualizacji, czy obciążania pamięci urządzenia,
+kosztem zależności od sieci, kosztów subskrypcyjnych i zewnętrznego przetwarzania danych. Badania Yuyi Mao i innych wykazały,
+że wybór miejsca wykonywania obliczeń (edge vs. cloud) ma istotny wpływ na opóźnienie, zużycie energii
+oraz przepustowość systemu \cite{edge_vs_cloud_mao2017}. W przypadku środowiska o ograniczonych zasobach, 
+chcąc jednocześnie oferować możliwie jak najlepszą jakość usługi, wybór odpowiedniego rozwiązania staje się kluczowym zadaniem projektowym dla twórców aplikacji mobilnych.
+
+
+Brak kompleksowych badań porównawczych utrudnia jednak podejmowanie świadomych decyzji architektonicznych.
+Niniejsza praca ma na celu wypełnienie tej luki poprzez przeprowadzenie szczegółowej analizy wydajnościowej
+i jakościowej reprezentatywnych modeli lokalnych i chmurowych do generowania opisów obrazów w środowisku
+mobilnym Android.
+
+
+\subsection{Struktura Pracy}\label{ss:Struktura Pracy}
 
 \noindent
-W dobie dzisiejszej technologii, systemy sztucznej inteligencji stały się integralną częścią ekosystemu aplikacji mobilnych. Urządzenia mobilne, które jeszcze dekadę temu służyły głównie do komunikacji i prostych zadań, dziś są wyposażone w zaawansowane możliwości obliczeniowe pozwalające na przetwarzanie złożonych modeli AI bezpośrednio na urządzeniu. Równolegle rozwinęły się również usługi chmurowe oferujące dostęp do najbardziej zaawansowanych modeli AI poprzez interfejsy API. Według danych z 2023 roku, wartość globalnego rynku AI w aplikacjach mobilnych przekroczyła 7 miliardów dolarów, z prognozą wzrostu do ponad 26 miliardów do 2030 roku, co wskazuje na dynamiczne tempo adopcji tej technologii \cite{mobile_ai_market_2023}.
+Przeprowadzenie analizy wymagało w pierwszej kolejności zebrania dogłębnej wiedzy teoretycznej na temat image captioning'u
+oraz architektury poszczególnych rozwiązań, aby zdefiniować cel i zakres badań.
+Szczegółowy opis teoretycznych podstaw automatycznego generowania opisów obrazów, ewolucji architektur
+oraz mechanizmów działania systemów image captioning przedstawiono w rozdziale \ref{s:Modele}. \textit{Modele i technologie AI do generowania opisów obrazów}.
+Sekcja \ref{ss:Wymagania Projektowe}. \textit{Wymagania projektowe} opisuje wymagania projektowe aplikacji badawczej.
+Pogłębiona analiza i dobór odpowiednich modeli do generowania opisów zostały ujęte w ramach tego samego rozdziału.
 
-Wraz z zatrważającym rozwojem technologii uczenia maszynowego, oferty systemów AI poszerzały się o kolejne możliwości, nowe architektury modeli czy udogodnienia dla deweloperów. Modele oparte na architekturze Vision Transformer (ViT) wypierały tradycyjne sieci konwulacyjne (CNN), oferując lepsze możliwości przetwarzania kontekstu globalnego w obrazach \cite{vit_dosovitskiy2021}. Pojawienie się efektywnych formatów wymiany modeli jak ONNX \cite{onnx_bai2019} umożliwiło uruchamianie zaawansowanych modeli na urządzeniach o ograniczonych zasobach, podczas gdy popularyzacja sieci 5G oraz rozwój usług cloud computing pozwoliły na powstanie hybrydowych rozwiązań, w których część obliczeń wykonywana jest lokalnie, a część w chmurze \cite{edge_computing_shi2016}.
+W ramach pracy napisany został dedykowany system badawczy CaptionLab, zdolny do przeprowadzania
+testów porównawczych między różnymi modelami AI w środowisku Android, jednocześnie zbierając potrzebne 
+metryki do dalszej analizy. Szczegóły architektury i implementacji platformy badawczej zostały opisane
+w rozdziale \ref{s:Aplikacja badawcza CaptionLab}. \textit{Aplikacja badawcza CaptionLab}.
 
-Takie rozwiązania niosły ze sobą znaczące różnice w charakterystykach działania: modele lokalne oferowały prywatność danych i działanie offline, podczas gdy rozwiązania chmurowe zapewniały dostęp do najnowszych modeli bez obciążania urządzenia. Badania przeprowadzone przez Mao i in. wykazały, że wybór między przetwarzaniem lokalnym a chmurowym ma istotny wpływ na opóźnienie (latencję), zużycie energii oraz przepustowość systemu \cite{edge_vs_cloud_mao2017}. W przypadku aplikacji mobilnych, gdzie zasoby obliczeniowe są ograniczone, a użytkownicy wymagają szybkich odpowiedzi, te trade-offy nabierają szczególnego znaczenia. Nie jest zatem zaskoczeniem, że wybór między tymi podejściami stał się kluczowym zagadnieniem projektowym dla twórców aplikacji mobilnych wykorzystujących AI.
+W rozdziale \ref{s:Metodologia badan}. \textit{Metodologia badania} przedstawiono proces projektowania i przeprowadzania 
+eksperymentów badawczych, metodologię pomiarów, a także opis wykorzystanych w analizie metryk.
 
-\subsection{Automatyczne generowanie opisów (Image Captioning)}\label{ss:Image Captioning}
-\noindent
-Image Captioning, czyli automatyczne generowanie opisów tekstowych obrazów, jest jednym z fundamentalnych zadań na styku Computer Vision i Natural Language Processing (NLP). Problem ten jest definiowany jako proces przekształcania informacji wizualnej zawartej w obrazie w spójny, semantycznie poprawny opis w języku naturalnym \cite{image_captioning_survey_hossain2019}. Zadanie to wymaga nie tylko rozpoznania obiektów obecnych na obrazie, ale również zrozumienia relacji między nimi, kontekstu sceny oraz wygenerowania gramatycznie poprawnego opisu w języku docelowym.
 
-Pierwsze znaczące osiągnięcia w dziedzinie image captioning pojawiły się wraz z pracami Vinyals i in. \cite{show_and_tell_vinyals2015}, którzy zaproponowali architekturę encoder-decoder wykorzystującą sieć konwolucyjną (CNN) do ekstrakcji cech wizualnych oraz rekurencyjną sieć neuronową (LSTM) do generowania sekwencji słów. Model ten, określany jako "Show and Tell", zapoczątkował erę end-to-end uczenia systemów image captioning. Kolejnym przełomem było wprowadzenie mechanizmu attention przez Xu i in. \cite{attention_xu2015}, który pozwolił modelowi fokusować się na różnych fragmentach obrazu podczas generowania kolejnych słów opisu, znacząco poprawiając jakość generowanych opisów.
-
-Złożone systemy image captioning nie opierają się na pojedynczym module przetwarzającym obraz, ale wymagają współpracy kilku komponentów: enkodera wizualnego (np. CNN, ViT) do ekstrakcji cech obrazu, modułu attention do fokusowania się na istotnych fragmentach obrazu oraz dekodera językowego (np. LSTM, Transformer) do generowania sekwencji słów. Taki podział pozwala na rozłożenie skomplikowanego procesu rozumienia obrazu i generowania języka na kilka wyspecjalizowanych modułów \cite{transformer_captioning_cornia2020}.
-
-Zastosowania technologii image captioning obejmują szeroki zakres dziedzin. W obszarze accessibility, automatyczne generowanie opisów obrazów umożliwia osobom niewidomym lub niedowidzącym dostęp do treści wizualnych poprzez syntezę mowy \cite{accessibility_stangl2021}. W systemach monitoringu wizyjnego, image captioning pozwala na automatyczną kategoryzację i indeksowanie nagrań wideo, co znacząco ułatwia późniejsze przeszukiwanie archiwów. Dodatkowo, integracja z asystentami głosowymi oraz wyszukiwarkami obrazów sprawia, że technologia ta staje się kluczowym elementem współczesnych interfejsów człowiek-komputer.
-
-Wobec rosnącego zapotrzebowania na aplikacje mobilne wykorzystujące image captioning, przed deweloperami stoi istotne pytanie: czy wdrażać modele lokalne działające bezpośrednio na urządzeniu, czy korzystać z usług chmurowych? Z jednej strony, modele lokalne zapewniają niskie opóźnienie, prywatność danych oraz działanie offline, co jest kluczowe w aplikacjach medycznych czy systemach bezpieczeństwa. Z drugiej strony, rozwiązania chmurowe oferują dostęp do najbardziej zaawansowanych modeli bez obciążania urządzenia końcowego, co może być optymalne dla aplikacji e-commerce czy mediów społecznościowych. Brak kompleksowych badań porównawczych utrudnia jednak podejmowanie świadomych decyzji architektonicznych. Niniejsza praca ma na celu wypełnienie tej luki poprzez przeprowadzenie szczegółowej analizy wydajnościowej i jakościowej sześciu reprezentatywnych modeli AI do generowania opisów obrazów w środowisku mobilnym Android.
+Wszelkie dane zebrane podczas przeprowadzania badań zostały przedstawione w rozdziale \ref{s:Wyniki badan}. \textit{Wyniki badań},
+aby na ich podstawie dokonać analizy i wysnuć odpowiednią interpretację na łamach rozdziału \ref{s:Interpretacja wynikow badan}. \textit{Interpretacja wyników badań}.
+Rozdział \ref{s:Podsumowanie}. \textit{Podsumowanie} zawiera końcowe wnioski z przeprowadzonych badań oraz wskazuje kierunki dalszych badań w obszarze wdrażania systemów
+image captioning'u  opartych o AI na platformach mobilnych.
 
 \subsection{Wymagania projektowe}\label{ss:Wymagania Projektowe}
 \noindent

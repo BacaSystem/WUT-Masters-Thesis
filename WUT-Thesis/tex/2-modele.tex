@@ -2,53 +2,366 @@
 \section{Modele i technologie AI do generowania opisów obrazów}\label{s:Modele}
 
 \noindent
-Niniejszy rozdział przedstawia szczegółową charakterystykę wszystkich modeli sztucznej inteligencji wykorzystanych w badaniach. Analizie poddano trzy modele lokalne działające w środowisku ONNX Runtime oraz trzy rozwiązania chmurowe dostępne jako usługi API. Dla każdego modelu opisano architekturę, proces przedtreningu, możliwości oraz specyfikę implementacji.
+Automatyczne generowanie opisów obrazów (image captioning) stanowi jedno z fundamentalnych zadań łączących
+komputerowe przetwarzanie obrazów (Computer Vision) z przetwarzaniem języka naturalnego (Natural Language Processing, NLP).
+Zadanie to definiuje się jako proces przekształcania informacji wizualnej zawartej w obrazie na spójny
+i semantycznie poprawny opis w języku naturalnym \cite{image_captioning_survey_hossain2019}.
+Proces ten wymaga nie tylko zdolności klasyfikacji i rozpoznawania obiektów obecnych na obrazie, ale także
+zrozumienia kontekstu, relacji między obiektami oraz generowania gramatycznie poprawnego opisu w docelowym języku.
+
+
+Niniejszy rozdział ma na celu przedstawienie teoretycznych podstaw oraz kluczowych koncepcji jakie stoją za automatycznym generowaniem opisów obrazów.
+Omówiona zostanie architektura typowych systemów image captioning, strategie wdrożeniowe z podziałem na modele lokalne i chmurowe, 
+a także szczegółowy opis i uzasadnienie wyboru konkretnych modeli AI wykorzystanych w badaniach przeprowadzonych w ramach pracy.
 
 \subsection{Architektura modeli image captioning}\label{ss:Architektura modeli}
+
 \noindent
-Modele do generowania opisów obrazów (image captioning) można podzielić na dwie główne kategorie architektoniczne: modele encoder-decoder oraz modele end-to-end multimodalne. .... TODO
+Tradycyjne podejścia do automatycznego generowania opisów obrazów opierały się na kombinacji metod ekstrakcji cech wizualnych z obrazów
+oraz klasycznych metod generowania języka, wykorzystując ręcznie zaprojektowane deskryptory obrazu oraz 
+szablonowe (template-based) bądź oparte na wyszukiwaniu (retrieval-based) metody generacji języka \cite{image_captioning_survey_hossain2019}.
+Metody te jednak wymagały znacznego nakładu pracy eksperckiej w procesie projektowania cech i reguł, a ich możliwości generalizacji były znacząco ograniczone.
+Wraz z rozwojem głębokiego uczenia (Deep Learning),
+pojawiły się zaawansowane modele oparte na architekturach sieci neuronowych, które znacząco poprawiły
+jakość generowanych opisów poprzez automatyczne uczenie się hierarchicznych reprezentacji wizualnych i językowych
+bez potrzeby ręcznego projektowania cech.
+
+Jednym z przełomów w tej dziedzinie było zastosowanie architektury enkoder–dekoder wykorzystującej sieć konwolucyjną (Convolutional Neural Network, CNN) jako enkoder 
+do ekstrakcji cech z obrazu oraz rekurencyjną sieć neuronową (Recurrent Neural Network, RRN) do generowania sekwencji słów \cite{show_and_tell_vinyals2015}.
+Model ten, nazywany "Show and Tell", stał się fundamentem w dalszym rozwoju systemów image captioning'u, wyznaczając nowy
+złoty standard. Kolejnym przełomem było wprowadzenie mechanizmu uwagi (Attention Mechanism), który pozwala
+sieciom dynamicznie skupiać się na różnych regionach obrazu podczas generowania kolejnych słów opisu \cite{attention_xu2015},
+znacząco poprawiając jakość generowanych opisów.
+
+Zmiana podejścia nastąpiła wraz z wprowadzeniem dekoderów transformerowych (Transformer-based Decoders), które zastąpiły komponenty rekurencyjne systemów.
+Modele takie jak Meshed-Memory Transformer 
+czy architektury wizyjno-językowe (Vision-Language Models) wykorzystujące transformery wizyjne (ViT) jako enkodery,
+osiągają rezultaty przewyższające tradycyjne podejścia CNN-RNN \cite{transformer_captioning_cornia2020}.
+
+Modele generacji opisów obrazów można podzielić na dwie główne kategorie: klasyczne modele enkoder-dekoder z mechanizmem uwagi 
+oraz nowoczesne, zintegrowane modele multimodalne end-to-end.
+
+W klasycznym ujęciu architektura systemu enkoder-dekoder z mechanizmem uwagi składa się z dwóch głównych faz: fazy ekstrakcji cech wizualnych
+przez klasyczną sieć konwolucyjną, bądź bardziej złożony Vision Transformer oraz fazy generowania opisu tekstowego 
+przy pomocy modelu językowego\cite{show_and_tell_vinyals2015}. Enkoder wizyjny przetwarza wejściowy obraz na sekwencję cech, 
+które następnie są wykorzystywane przez dekoder językowy do generowania kolejnych tokenów opis. 
+Mechanizm uwagi pozawala dekoderowi dynamicznie skupiać się na istotnych w danym kroku częściach obrazu podczas generowania każdego słowa, 
+co poprawia spójność i trafność opisów. Schemat tej architektury przedstawiono na rysunku \ref{fig:encoder_decoder_architecture}.
+
+\begin{figure}[!h]
+    \centering
+    \begin{tikzpicture}[
+        node distance=1.5cm,
+        box/.style={rectangle, draw, thick, minimum width=3cm, minimum height=1cm, align=center},
+        arrow/.style={->, thick, >=stealth}
+    ]
+        \node[box, fill=blue!20] (image) {Obraz};
+        \node[box, fill=cyan!20, below of=image] (encoder) {Vision Encoder\\(CNN / ViT)};
+        \node[box, fill=yellow!20, below of=encoder] (features) {Visual Feature\\Sequence};
+        \node[box, fill=orange!20, right of=features, xshift=3cm] (attention) {Attention\\Mechanism};
+        \node[box, fill=purple!20, below of=features, yshift=-1cm] (decoder) {Text Decoder\\(RRN / Transformer)};
+        \node[box, fill=lime!20, right of=decoder, xshift=3cm] (prev_words) {Previous\\tokens};
+        \node[box, fill=red!20, below of=decoder] (output) {Softmax\\(Word Probabilities)};
+        \node[box, fill=pink!20, below of=output] (caption) {Wygenerowany\\opis};
+        
+        \draw[arrow] (image) -- (encoder);
+        \draw[arrow] (encoder) -- (features);
+        \draw[arrow] (features) -- (decoder);
+        \draw[arrow] (features) -- (attention);
+        \draw[<->] (attention.south) -- (decoder);
+        \draw[arrow] (prev_words) -- (decoder);
+        \draw[arrow] (decoder) -- (output);
+        \draw[arrow] (output) -- (caption);
+        \draw[arrow, dashed] (output.east) -- ++(2.6,0) -- (prev_words.south);
+        
+        \node[above=0.3cm of image, font=\small\bfseries] {FAZA 1: Ekstrakcja cech};
+        \node[above=0.3cm of decoder, font=\small\bfseries] {FAZA 2: Generowanie opisu};
+        
+    \end{tikzpicture}
+    \caption{Architektura systemu image captioning oparta na modelu enkoder-dekoder z mechanizmem uwagi}
+    \label{fig:encoder_decoder_architecture}
+\end{figure}
+
+Współczesne podejście multimodalne dąży do integracji różnych modalności (np. obraz, tekst, audio) w ramach jednej, unifikowanej architektury end-to-end.
+Zamiast sekwencyjnego przetwarzania w oddzielnych modułach enkodera i dekodera, modele te wykorzystują złożone sieci neuronowe
+do przetwarzania wspólnego strumienia tokenów wizualnych i tekstowych, które są poddawane wielowarstwowej transformacji z mechanizmami uwagi krzyżowej (cross-attention)
+w ramach tej samej sieci \cite{blip_li2022}. Uproszczony schemat architektury multimodalnej przedstawiono na rysunku \ref{fig:multimodal_architecture}.
+
+\begin{figure}[!h]
+    \centering
+    \begin{tikzpicture}[
+        node distance=1.2cm and 1.5cm,
+        box/.style={rectangle, draw, thick, rounded corners=3pt, minimum width=2.8cm, minimum height=0.9cm, align=center, font=\small},
+        smallbox/.style={rectangle, draw, thick, rounded corners=2pt, minimum width=2cm, minimum height=0.6cm, align=center, font=\footnotesize},
+        flow/.style={->, thick, >=stealth},
+        biflow/.style={<->, thick, >=stealth, dashed}
+    ]
+        % Input layer
+        \node[box, fill=blue!20] (image) {Obraz};
+        \node[box, fill=green!20, right=4cm of image] (text) {Tekst};
+        
+        % Embedding layer
+        \node[smallbox, fill=blue!15, below=0.8cm of image] (img_emb) {Image Patches\\(ViT embedding)};
+        \node[smallbox, fill=green!15, below=0.8cm of text] (txt_emb) {Text Tokens\\(Word embedding)};
+        
+        % Encoder layer - dual stream
+        \node[box, fill=cyan!25, below=1.2cm of img_emb] (vis_enc) {Vision Encoder\\(Transformer)};
+        \node[box, fill=lime!25, below=1.2cm of txt_emb] (txt_enc) {Text Encoder\\(Transformer)};
+        
+        % Multimodal fusion
+        \node[box, fill=orange!30, below=1.5cm of vis_enc, xshift=3cm, minimum width=6cm] (mm_enc) {Multimodal Encoder\\(Cross-Attention: Image $\leftrightarrow$ Text)};
+        
+        % Decoder
+        \node[box, fill=purple!25, below=1.2cm of mm_enc, minimum width=6cm] (decoder) {Text Decoder\\(Cross-Attention do Vision Features)};
+        
+        % Outputs
+        \node[smallbox, fill=red!20, below=1cm of decoder] (cap_out) {Wygenerowany\\opis};
+        
+        % Arrows
+        \draw[flow] (image) -- (img_emb);
+        \draw[flow] (text) -- (txt_emb);
+        \draw[flow] (img_emb) -- (vis_enc);
+        \draw[flow] (txt_emb) -- (txt_enc);
+        \draw[flow] (vis_enc) -- (mm_enc);
+        \draw[flow] (txt_enc) -- (mm_enc);
+        \draw[flow] (mm_enc) -- (decoder);
+        \draw[flow] (decoder) -- (cap_out);
+        
+        % Cross connections for contrastive
+        \draw[biflow, orange!60] (vis_enc.east) -- (txt_enc.west) node[midway, above, font=\tiny] {Contrastive};
+        
+        % Labels
+        \node[above=0.2cm of image, font=\scriptsize\bfseries, text=blue!70!black] {Modalność wizualna};
+        \node[above=0.2cm of text, font=\scriptsize\bfseries, text=green!70!black] {Modalność tekstowa};
+        \node[left=0.2cm of mm_enc, font=\tiny, align=right, text=gray] {Unified\\Representation};
+        
+    \end{tikzpicture}
+    \caption{Uproszczona architektura ujednoliconego modelu multimodalnego dla obrazu i tekstu.}
+    \label{fig:multimodal_architecture}
+\end{figure}
+
+Takie podejście do budowy modeli umożliwia bardziej efektywne wykorzystanie informacji z różnych modalności, gdyż słowa i regiony obrazu 
+współuczestniczą w budowie kontekstu na każdym etapie przetwarzania. Pozwala to na głębsze zrozumienie relacji między cechami wizualnymi, a generowanym tekstem,
+co przekłada się na opis obrazu, który posiada głębsze zrozumienie kontekstu sceny.
+
+Najnowszym etapem rozwoju są wielkie modele multimodalne (Large Multimodal Models, LMMs), które są bezpośrednim rozszerzeniem wielkich modeli językowych
+(Large Language Models, LLMs) o zdolność przetwarzania wielomodalnych danych wejściowych, w tym obrazów, audio i wideo \cite{gpt4v_yang2023}.
+Modele takie jak GPT-4 Vision oraz rodzina Gemini reprezentują paradygmat
+\textquote{natively multimodal} \cite{gpt4_openai2023}, w którym wszystkie modalności są przetwarzane przez jedną zunifikowaną architekturę transformerową od samego początku procesu
+treningu, w przeciwieństwie do wcześniejszych podejść łączących osobne enkodery dla różnych modalności \cite{gemini_team2023}. 
+
+Te zaawansowane LMM'y, dostępne głównie jako usługi chmurowe przez API dostawców (OpenAI API, Google Vertex AI),
+oferują bezprecedensowe możliwości w zakresie rozumienia i generowania opisów obrazów, łącząc bogate reprezentacje wizualne
+z zaawansowanymi zdolnościami rozumowania i generowania języka naturalnego charakterystycznymi dla wielkich modeli językowych.
 
 \subsection{Strategia wdrożenia modeli sztucznej inteligencji}\label{ss:Strategia wdrozenia}
 \noindent
-Badany w pracy wybór między modelami lokalnymi a chmurowymi definiowany jest jako decyzja architektoniczna determinująca miejsce wykonywania obliczeń AI: bezpośrednio na urządzeniu mobilnym użytkownika lub na zdalnych serwerach dostępnych przez Internet \cite{TODO}. Oznacza to, że aby mówić o efektywnym wdrożeniu AI w aplikacji mobilnej, potrzebna jest analiza trade-offów między różnymi aspektami obu podejść.
+W środowisku mobilnym istnieją dwie główne strategie wdrażania rozwiązań sztucznej inteligencji. Pierwsza z nich to implementacja modeli lokalnych, które są zoptymalizowane do 
+działania bezpośrednio na urządzeniach mobilnych korzystając z ich zasobów. Druga obejmuje wykorzystanie gotowych rozwiązań AI dostępnych jako usługi chmurowe (AI-as-a-Service) 
+i integrację ich poprzez internetowe API.
 
+Implementacja modeli sztucznej inteligencji natywnie na urządzeniu mobilnym wymaga zastosowania dedykowanych silników inferencji (Inference Runtime) 
+oraz formatów modeli dostosowanych do ograniczeń sprzętowych urządzeń. Najpopularniejszymi rozwiązaniami na rynku są TensorFlow Lite (TFLite) oraz ONNX Runtime Mobile, 
+które umożliwiają uruchamianie zoptymalizowanych modeli AI na zasobach urządzenia.
 
-Modele lokalne to rozwiązania AI działające bezpośrednio na urządzeniu mobilnym użytkownika, bez konieczności komunikacji z zewnętrznymi serwerami. W zamian za to wymagają one optymalizacji modeli do ograniczonych zasobów sprzętowych dostępnych na urządzeniach mobilnych \cite{TODO}.
+W celu optymalizacji modeli pod względem moblinych zastowań stosuje się różnorodne techniki kompresji i przyspieszenia inferencji, takie jak kwantyzacja (Quantization) czy
+przycinanie (Pruning). Kwantyzacja polega na redukcji zapisu precyzji wag, co redukuje rozmiar modelu i przyspiesza obliczenia kosztem niewielkiej utraty dokładności.
+Przykładowo kwantyzacja z 32-bitowych liczb zmiennoprzecinkowych (FP32) do 8-bitowych liczb całkowitych (INT8) pozwala na zmniejszenie rozmiaru nawet 4-krotnie oraz 2-krotne
+przyspieszenie inferencji przy zachowaniu dokładności w graniach 2\% \cite{tflite_quantization_krishnamoorthi2018}.
+
+Kluczową zaletą podejścia lokalnego jest pełna niezależność od połączenia sieciowego. Dodatkowo, to podejście zapewnia silniejszą ochronę prywatności i danych
+użytkownika, gdyż wszystkie dane przetwarzane są lokalnie na urządzeniu bez konieczności przesyłania ich do zewnętrznych serwerów \cite{tinyml_reddi2021}.
+
+Ograniczenia takiej implementacji wynikają głównie z konieczności dostosowania modeli do ograniczeń sprzętowych środowiska mobilnego, co wymusza
+stosowanie technik kompresji czy używania mniejszych architektur modeli, w wyniku czego modele lokalne często oferują niższą dokładność i jakość predykcji opisów.
+
+Alternatywą jest wdrożenie AI jako usługi chmurowej poprzez integrację z API dostawców, którzy oferują dostęp do najnowocześniejszych multimodalnych modeli generatywnych 
+o ogromnej mocy obliczeniowej, zdolnych do przetwarzania danych na gigantyczną skalę 
+,co pozwala na uzyskanie najwyższej jakości generowanych opisów obrazów.
+
+Wady takiego podejścia obejmują konieczność stałego połączenia sieciowego, co przekłada się na potencjalnie wyższe opóźnienia, czy brak dostępu do usługi. 
+Badania Yuyi Mao i innych wskazują, że opóźnienie end-to-end w systemach chmurowych może być 3-5 razy wyższe niż w przypadku
+przetwarzania lokalnego, szczególnie w warunkach słabej jakości połączenia sieciowego \cite{edge_vs_cloud_mao2017}.
+Problemem są również koszty związane z wywołaniami API oraz obawy dotyczące prywatności danych.
 
 
 \subsection{Modele lokalne wykorzystane w badaniach}\label{ss:Modele lokalne}
 \noindent
-Modele lokalne to rozwiązania zoptymalizowane do działania bezpośrednio na urządzeniach mobilnych w środowisku ONNX Runtime. Wszystkie trzy wybrane modele reprezentują różne podejścia architektoniczne i pokolenia rozwoju technologii Vision-Language.
+Do implementacji modeli lokalnych w platformie badawczej użyto środowiska ONNX Runtime Mobile. Wybór ten podyktowany był neutralnością względem dostawcy modelu,
+co pozwoliło na łatwiejszy eksport i integrację modeli o różnych architekturach w jendolitym interfejsie badawczym. Dodatkowo ONNX Runtime zapewnia wsparcie 
+dla akceleracji sprzętowej wykorzystując dostępne na urządzeniu delegaty (CPU, GPU, NPU), co umożliwia przyszłe rozszerzenia bez zmian w warstwie abstrakcji.
 
-\subsubsection{Florence-2}\label{sss:Florence-2}
-\noindent
-Florence-2 to zaawansowany model Vision-Language opracowany przez Microsoft Research, będący następcą modelu Florence \cite{TODO}.
+Dobór lokalnych modeli odzwierciedla trzy generacje rozwoju podejść image captioning'u: klasyczne połączenie osobnego enkodera obrazu z dekoderem językowym (ViT-GPT2), 
+nowszą ujednoliconą architekturę z podejściem enkoder-dekoder (Florence-2) oraz podejście łączące wielofunkcyjne komponenty w ramach jednego modelu (BLIP).
+Taki zestaw pozwala porównać koszty obliczeń, wielkość modeli, sposób generowania opisów oraz odporność na zmianę dziedziny danych.
+
 
 \subsubsection{ViT-GPT2}\label{sss:ViT-GPT2}
 \noindent
-ViT-GPT2 to model encoder-decoder łączący Vision Transformer jako enkoder wizualny z GPT-2 jako dekoderem językowym \cite{TODO}. Jest to przykład klasycznej architektury Vision-Language wykorzystującej pre-trenowane komponenty.
+Model ViT-GPT2 jest przykładem klasycznego podejścia enkoder-dekoder, łącząc Vision Transformer (ViT) jako enkoder obrazu 
+z modelem językowym GPT-2 jako dekoder tekstu. W tej architekturze enkoder przetwarza wejściowy obraz na sekwencję cech w postaci 
+wektorów reprezentujących różne fragmenty obrazu, które następnie dekoder wykorzystuje do generowania opisu słowo po słowie \cite{vitgpt2_blog_kumar2022}.
 
+Model ten oferuje około 100-200 milionów parametrów w zależności od kwantyzacji, co stawia go w kategorii modeli o średniej wielkości i 
+jest odpowiedni dla mobilnego środowiska. W aplikacji badawczej wykorzystano wersję modelu w formacie ONNX w kwantyzacji INT8, ze względu
+na optymalizację rozmiaru i szybkości inferencji. Finalnie model ten składa się z dwóch plików, enkodera i dekodera o łącznym rozmiarze 232 MB. 
+Model ten będzie stanowić punkt odniesienia do oceny nowszych architektur. 
+
+\subsubsection{Florence-2}\label{sss:Florence-2}
+\noindent
+Florence-2 to zaawansowany wielozadaniowy model zdolny do realizacji zadań wizyjno-językowych, w tym generowania opisów obrazów,
+detekcji obiektów, wydzielania segmentów, czy odpowiadania na pytania dotyczące obrazu \cite{florence2_xiao2024}.
+Architektura modelu łączy w sobie enkoder wizyjny DaViT (Dual-Attention Vision Transformer) z modelem tekstowym BART (Bidirectional and Auto-Regressive Transformers),
+przetwarzając wspólne cechy wizualne i tekstowe w standardowej strukturze enkoder-dekoder z mechanizmami uwagi krzyżowej.
+
+Do badań wykorzystano model Florence-2-base, który najpierw został skonwertowany do formatu ONNX, jednocześnie optymalizując go do kwantyzacji 
+INT8, tak aby odpowiadał on pozostałym modelom wykorzystywanych w tej pracy. Łączny rozmiar modelu po kwantyzacji wyniósł 213 MB.
 
 \subsubsection{BLIP}\label{sss:BLIP}
 \noindent
-BLIP to unified Vision-Language model opracowany przez Salesforce Research, wykorzystujący innowacyjną metodę CapFilt (Captioning and Filtering) do generowania i filtrowania danych treningowych \cite{TODO}.
+BLIP (Bootstrapping Language-Image Pre-training) to nowoczesny model wizyjno-językowy, w którym to jeden szkielet architektoniczny 
+stanowi połączenie dwóch enkoderów, wizualnego i tekstowego, z dekoderem tekstowym w ramach jednolitej architektury \cite{blip_li2022}.
+
+
+
+BLIP wyróżnia się innowacyjnym procesem treningu 
+łączącym nadzorowane uczenie z automatyczną generacją i filtrowaniem syntetycznych opisów. 
+Takie podejście pozwala modelowi uczyć się na dużych zbiorach danych o \textquote{zaszumionej} postaci, 
+co przekłada się na lepszą generalizację.
+
+Podobnie jak w pozostałych przypadkach w badaniach użyto wariantu skonwertowanego do formatu ONNX skwantyzowanego do INT8, 
+składającego się z dwóch plików ONNX o łącznym rozmiarze 239 MB.
 
 
 \subsection{Modele chmurowe wykorzystane w badaniach}\label{ss:Modele chmurowe}
 \noindent
-Modele chmurowe to rozwiązania dostępne jako usługi API oferowane przez głównych dostawców infrastruktury chmurowej. Reprezentują najbardziej zaawansowane modele AI z dostępem do ogromnej mocy obliczeniowej.
+Modele chmurowe oferują dostęp do najnowocześniejszych architektur multimodalnych za pośrednictwem internetowego REST API, 
+co pozwala na bezproblemową integrację z dowolną usługą. 
 
-\subsubsection{OpenAI GPT-4o Vision}\label{sss:GPT4o}
-\noindent
-GPT-4o (\textit{``o'' for ``omni''}) to najnowszy multimodalny model OpenAI obsługujący tekst, obraz, audio i wideo \cite{TODO}. W kontekście image captioning wykorzystuje się jego możliwości Vision.
+W badaniach wykorzystano trzy modele, reprezentujące odmienne kategorie usług: lekki uniwersalny multimodalny model ogólnego przeznaczenia (GPT-4o mini),
+wyspecjalizowana usługa analizy obrazu (Azure Computer Vision) oraz ekonomiczny wariant rodziny Gemini (Gemini 2.5 Flash Lite), charakteryzujący się krótkim czasem odpowiedzi 
+i efektywnością kosztową przy przetwarzaniu zapytań z obrazami. Taki dobór pozwala na ocenę kompromisu między jakością opisu, zakresem funkcji, 
+kosztem przetwarzania oraz opóźnieniami zapytań sieciowych.
 
-\subsubsection{Azure Computer Vision 4.0}\label{sss:Azure}
-\noindent
-Azure Computer Vision to specjalizowana usługa Microsoft Azure do analizy obrazów, oferująca gotowe modele do różnych zadań vision \cite{TODO}.
 
-\subsubsection{Google Vertex AI Gemini}\label{sss:Gemini}
+\subsubsection{OpenAI GPT-4o mini}\label{sss:GPT4o}
 \noindent
-Gemini to multimodalny model AI od Google DeepMind, dostępny przez platformę Vertex AI \cite{TODO}. Gemini został zaprojektowany jako natively multimodal, co oznacza że text, image, audio są przetwarzane w jednej unified reprezentacji.
+GPT-4o mini to zoptymalizowana wersja multimodalnego modelu GPT-4o firmy OpenAI, wykorzystująca architekturę transformer natively multimodal, 
+w której przetwarzanie wizualne i tekstowe jest zintegrowane od podstaw \cite{gpt4omini_openai2024}.
+Jako model LLM dysponuje szeroką wiedzą ogólną oraz zdolnościami tworzenia bogatych, kontekstualnych opisów obrazów 
+wykraczających poza prostą identyfikację obiektów.
+
+Integracja odbywa się poprzez standardowe zapytania HTTPS REST API, gdzie obraz jest przesyłany 
+jako załącznik w formacie base64 lub poprzez URL, a model zwraca wygenerowany opis w odpowiedzi JSON.
+Czas odpowiedzi wynosi zazwyczaj 1-3 sekundy.
+Model cenowy obejmuje \$0.150 za milion tokenów wejściowych oraz \$0.600 za milion tokenów wyjściowych \cite{openai_pricing2024}.
+
+
+\subsubsection{Azure Computer Vision}\label{sss:Azure}
+\noindent
+Azure Computer Vision to wyspecjalizowana usługa analizy obrazów firmy Microsoft, zaprojektowana specjalnie do zadań przetwarzania obrazów.
+Architektura opiera się na konwolucyjnych sieciach neuronowych z mechanizmami uwagi, oferując funkcje obejmujące generowanie opisów, 
+wykrywanie obiektów, rozpoznawanie tekstu oraz klasyfikację treści \cite{azure_cv_docs2024}.
+
+Integracja odbywa się poprzez Azure REST API, gdzie obrazy są przesyłane jako dane binarne lub URL.
+Usługa zwraca odpowiedź JSON zawierającą opis tekstowy, wykryte obiekty, tagi oraz współczynniki pewności.
+Średni czas odpowiedzi wynosi 500ms-2s.
+Model cenowy obejmuje od \$1.00 do \$1.50 za 1000 transakcji \cite{azure_pricing2024}.
+
+
+\subsubsection{Gemini 2.5 Flash}\label{sss:Gemini}
+\noindent
+Gemini 2.5 Flash to multimodalny model AI firmy Google zaprojektowany z naciskiem na szybkość i efektywność.
+Wykorzystuje architekturę transformer natively multimodal, przetwarzającą dane wizualne i tekstowe wspólnie od początku treningu,
+co umożliwia głębszą integrację różnych modalności \cite{gemini_team2024}.
+Model obsługuje długie konteksty do 1 miliona tokenów, osiągając czas odpowiedzi 500ms-1.5s.
+
+Dostęp odbywa się poprzez Google AI API lub z wykorzystaniem protokołu REST API. 
+Model cenowy wynosi \$0.100 za milion tokenów wejściowych oraz \$0.40 za milion tokenów wyjściowych, 
+co czyni go najtańszym spośród badanych rozwiązań chmurowych \cite{gemini_pricing2024}.
 
 \subsection{Porównanie rozwiązań AI}\label{ss:Porownanie rozwiazan AI}
 \noindent
+Wybrane modele reprezentują różnorodne podejścia do generowania opisów obrazów, różniąc się architekturą, 
+strategią wdrożenia oraz kompromisami między wydajnością a jakością. Tabela \ref{tab:models_comparison} 
+przedstawia kluczowe charakterystyki wszystkich sześciu modeli wykorzystanych w badaniach.
+
+\begin{table}[h!]
+    \centering
+    \caption{Porównanie modeli lokalnych i chmurowych wykorzystanych w badaniach}
+    \label{tab:models_comparison}
+    \begin{tabular}{|>{\centering}m{2.2cm}|>{\centering}m{2.1cm}|>{\centering}m{2cm}|>{\centering}m{3.2cm}|>{\centering\arraybackslash}m{4cm}|}
+        \hline
+        \textbf{Model} & 
+        \textbf{Typ} & 
+        \textbf{Rozmiar / Koszt} & 
+        \textbf{Architektura} & 
+        \textbf{Kluczowe cechy} \\ 
+        \hline\hline
+
+        \multicolumn{5}{|c|}{\textbf{Modele lokalne (ONNX Runtime)}} \\
+        \hline
+
+        ViT-GPT2 & 
+        Lokalny & 
+        232 MB (INT8) & 
+        ViT + GPT-2 (enkoder-dekoder) & 
+        Klasyczna architektura, baseline do porównań \\
+        \hline
+
+        Florence-2 & 
+        Lokalny & 
+        213 MB (INT8) & 
+        DaViT + BART (multi-task) & 
+        Wielozadaniowy, promptowanie \\
+        \hline
+
+        BLIP & 
+        Lokalny & 
+        239 MB (INT8) & 
+        ViT + Transformer (bootstrap) & 
+        Bootstrap learning, CapFilt, kontrastywne uczenie \\
+        \hline\hline
+
+        \multicolumn{5}{|c|}{\textbf{Modele chmurowe (REST API)}} \\
+        \hline
+
+        GPT-4o mini & 
+        Chmurowy & 
+        \$0.15/\$0.60 za 1M tokenów & 
+        Transformer (natively multimodal) & 
+        LLM z wiedzą ogólną, bogate opisy, 1-3s latencja \\
+        \hline
+
+        Azure CV & 
+        Chmurowy & 
+        \$1.00-\$1.50 za 1k wywołań & 
+        CNN + Attention (wyspecjalizowany) & 
+        Dedykowany do CV, szybki (0.5-2s), pewność predykcji \\
+        \hline
+
+        Gemini 2.5 Flash & 
+        Chmurowy & 
+        \$0.10/\$0.40 za 1M tokenów & 
+        Transformer (natively multimodal) & 
+        Najtańszy, szybki (0.5-1.5s), długi kontekst (1M tokenów) \\
+        \hline
+
+    \end{tabular}
+\end{table}
+
+Modele lokalne charakteryzują się podobnym rozmiarem (213-239 MB) po kwantyzacji do INT8, 
+co czyni je odpowiednimi do wdrożenia mobilnego przy zachowaniu akceptowalnej jakości. 
+ViT-GPT2 stanowi punkt odniesienia jako reprezentant klasycznej architektury enkoder-dekoder, 
+podczas gdy Florence-2 i BLIP reprezentują nowsze podejścia z wielozadaniowością i agregacyjym uczeniu.
+
+Modele chmurowe oferują dostęp do znacznie większych architektur bez obciążania pamięci urządzenia, 
+kosztem zależności od połączenia sieciowego i opłat za użycie. GPT-4o mini wykorzystuje szeroką wiedzę 
+językową do generowania kontekstualnych opisów, Azure Computer Vision oferuje wyspecjalizowane 
+przetwarzanie obrazów z krótkimi czasami odpowiedzi, a Gemini 2.5 Flash łączy niską cenę 
+z szybkością, co czyni go atrakcyjnym dla aplikacji wymagających częstych zapytań.
+
+Wybór między rozwiązaniami lokalnymi a chmurowymi sprowadza się do kompromisu między niezależnością 
+od sieci i prywatnością (modele lokalne) a dostępem do najnowocześniejszych możliwości AI 
+i brakiem ograniczeń pamięciowych (modele chmurowe). Przeprowadzone badania mają na celu 
+empiryczną ocenę tych kompromisów w kontekście rzeczywistych metryk wydajnościowych i jakościowych.
