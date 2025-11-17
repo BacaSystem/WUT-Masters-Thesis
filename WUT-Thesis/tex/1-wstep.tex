@@ -106,49 +106,94 @@ i jakościowej reprezentatywnych modeli lokalnych i chmurowych do generowania op
 mobilnym Android.
 
 
+\subsection{Wymagania projektowe}\label{ss:Wymagania Projektowe}
+
+\noindent
+
+Głównym celem badawczym niniejszej pracy jest przeprowadzenie kompleksowej analizy efektywności 
+lokalnych oraz chmurowych rozwiązań sztucznej inteligencji w zadaniu generowania opisów obrazów (image captioning) 
+na platformie mobilnej Android oraz sformułowanie rekomendacji doboru strategii wdrożeniowej 
+w zależności od specyfiki i przeznaczenia projektowanych aplikacji mobilnych.
+
+Kompleksowe porównanie efektywności modeli sztucznej inteligencji
+w badanym kontekście wymagało
+zdefiniowania problemu badawczego, doboru reprezentatywnych modeli oraz opracowania metodologii badawczej 
+umożliwiającej obiektywną analizę poszczególnych modeli poprzez analizę zebranych w trakcie badań metryk.
+
+
+Nim przystąpiono do realizacji głównego celu badawczego i wybrano poszczególne rozwiązania modeli sztucznej inteligencji
+do analizy, należało zgłębić temat image captioning'u, poznać sam mechanizm działania, a także zrozumieć architekturę poszczególnych systemów 
+dostępnych na rynku. W tym celu przeprowadzono szczegółową analizę literatury oraz dokumentacji technicznej
+dotyczącej zarówno klasycznych, jak i współczesnych podejść do zadania automatycznego generowania opisów obrazów.
+
+Na bazie tej wiedzy, dokonano selekcji reprezentatywnych modeli AI, różniących się architekturą, podejściem do przetwarzania danych, a także miejscem wykonywania obliczeń (lokalne vs. chmurowe). 
+Wybrane modele miały pokrywać szerokie spektrum dostępnych rozwiązań,
+umożliwiając w ten sposób analizę technologii o różnych podejściach i możliwościach.
+
+Nastepnie, mając wyselekcjonowane rozwiązania, zaprojektowano i zaimplementowano dedykowaną platformę badawczą, zdolną do wdrażania
+i testowania różnorakich modeli AI w zadaniu image captioning'u. Platforma ta, poza wsparciem dla uruchamiania różnorodnych modeli, musiała także umożliwiać 
+zbieranie precyzyjnych metryk, niezbędnych do obiektywnej analizy efektywności poszczególnych rozwiązań.
+
+Opracowanie metodologii badawczej obejmowało zdefiniowanie zestawu metryk wydajnościowych i jakościowych, 
+procedur pomiarowych oraz protokołu testowego, pozwalającego na zebranie odpowiednich danych, które w dalszej kolejności 
+będą służyć do obiektywnej oceny efektywności badanych modeli AI.
+
+Z opracowaną metodologią i sformułowanymi wymaganiami projektowymi, przystąpiono do realizacji badań, przeprowadzając serię eksperymentów
+badawczych, zbierając dane dotyczące parametrów wydajnościowych i jakościowych dla wybranych lokalnych i chmurowych modeli sztucznej inteligencji.
+
+Ostatnim i zarazem kluczowym etapem była wizualizacja i interpretacja uzyskanych wyników badań, identyfikacja kompromisów między wydajnością, a jakością
+generowanych opisów oraz sformułowanie rekomendacji doboru strategii wdrożeniowej w zależności od specyfiki i wymagań projektowanej aplikacji mobilnej.
+
+
+Wyżej sformułowane wymagania zebrano i przedstawiono w formie poszczególnych celów badawczych, których realizacja prowadzi do osiągnięcia głównego celu pracy.
+Każdy z wyróżnionych niżej celów odpowiada kolejnym rozdziałom pracy, w których szczegółowo opisano podejście do realizacji i osiągnięcia poszczególnych celów.
+
+\begin{enumerate}[leftmargin=*, label=\textbf{C\arabic*.}, itemsep=3pt]
+    \item Przedstawienie teoretycznych podstaw automatycznego generowania opisów obrazów, analizy 
+    architektur modeli AI stosowanych w zadaniu image captioning'u oraz identyfikacja kluczowych różnic 
+    między strategiami wdrażania lokalnego i chmurowego w kontekście aplikacji mobilnych.
+    
+    \item Zaprojektowanie i implementacja dedykowanej platformy badawczej \textquote{CaptionLab} umożliwiającej 
+    przeprowadzenie badań porównawczych modeli lokalnych i chmurowych w środowisku 
+    Android z zapewnieniem precyzji pomiarów oraz powtarzalności testów.
+    
+    \item Opracowanie metodologii badawczej obejmującej definicję zestawu metryk wydajnościowych i jakościowych, 
+    procedur pomiarowych oraz protokołów testowych pozwalających na obiektywną ocenę efektywności badanych 
+    modeli AI.
+    
+    \item Przeprowadzenie serii eksperymentów badawczych oraz zebranie danych dotyczących parametrów wydajnościowych 
+    (czas inferencji, zużycie pamięci, pobór energii, koszty operacyjne) i jakościowych (metryki CIDEr, SPICE, 
+    METEOR, BLEU) dla wybranych modeli lokalnych i chmurowych.
+    
+    \item Interpretacja uzyskanych wyników badań, identyfikacja kompromisów między wydajnością, a jakością 
+    generowanych opisów oraz sformułowanie rekomendacji doboru strategii wdrożeniowej w zależności od 
+    specyfiki i wymagań projektowanej aplikacji mobilnej.
+\end{enumerate}
+
+
 \subsection{Struktura Pracy}\label{ss:Struktura Pracy}
 
 \noindent
-Przeprowadzenie analizy wymagało w pierwszej kolejności zebrania dogłębnej wiedzy teoretycznej na temat image captioning'u
-oraz architektury poszczególnych rozwiązań, aby zdefiniować cel i zakres badań.
-Szczegółowy opis teoretycznych podstaw automatycznego generowania opisów obrazów, ewolucji architektur
-oraz mechanizmów działania systemów image captioning przedstawiono w rozdziale \ref{s:Modele}. \textit{Modele i technologie AI do generowania opisów obrazów}.
-Sekcja \ref{ss:Wymagania Projektowe}. \textit{Wymagania projektowe} opisuje wymagania projektowe aplikacji badawczej.
-Pogłębiona analiza i dobór odpowiednich modeli do generowania opisów zostały ujęte w ramach tego samego rozdziału.
+Wskazane cele i zidentyfikowane problemy badawcze w sekcji \ref{ss:Wymagania Projektowe}. \textit{Wymagania projektowe} zdefiniowały 
+podział pracy na poszczególne jednostki redakcyjne, z których każda odpowiada realizacji kolejnych celów badawczych.
 
-W ramach pracy napisany został dedykowany system badawczy CaptionLab, zdolny do przeprowadzania
+Rozdział \ref{s:Modele}. \textit{Modele i technologie AI do generowania opisów obrazów} przedstawia szczegółowy opis teoretycznych podstaw automatycznego generowania opisów obrazów, ewolucji architektur
+oraz mechanizmów działania systemów image captioning'u. Zawarto w nim także omówienie kluczowych różnic między strategiami wdrażania lokalnego i chmurowego,
+a także charakterystykę wybranych modeli sztucznej inteligencji wykorzystanych w badaniach.
+
+Szczegóły architektury i implementacji platformy badawczej zostały opisane
+w rozdziale \ref{s:Aplikacja badawcza CaptionLab}. \textit{Aplikacja badawcza CaptionLab}. W ramach pracy napisany został dedykowany system badawczy 
+\textquote{CaptionLab}, zdolny do przeprowadzania
 testów porównawczych między różnymi modelami AI w środowisku Android, jednocześnie zbierając potrzebne 
-metryki do dalszej analizy. Szczegóły architektury i implementacji platformy badawczej zostały opisane
-w rozdziale \ref{s:Aplikacja badawcza CaptionLab}. \textit{Aplikacja badawcza CaptionLab}.
+dane do dalszej analizy. 
 
 W rozdziale \ref{s:Metodologia badan}. \textit{Metodologia badania} przedstawiono proces projektowania i przeprowadzania 
-eksperymentów badawczych, metodologię pomiarów, a także opis wykorzystanych w analizie metryk.
-
+eksperymentów badawczych, metodologię pomiarów, opis wykorzystanych w analizie metryk, a także sposób wyznaczania 
+metryk jakościowych oceniających generowane opisy obrazów, na podstawie popularnych metod oceny jakości generowanego tekstu przez AI.
 
 Wszelkie dane zebrane podczas przeprowadzania badań zostały przedstawione w rozdziale \ref{s:Wyniki badan}. \textit{Wyniki badań},
 aby na ich podstawie dokonać analizy i wysnuć odpowiednią interpretację na łamach rozdziału \ref{s:Interpretacja wynikow badan}. \textit{Interpretacja wyników badań}.
+
 Rozdział \ref{s:Podsumowanie}. \textit{Podsumowanie} zawiera końcowe wnioski z przeprowadzonych badań oraz wskazuje kierunki dalszych badań w obszarze wdrażania systemów
 image captioning'u  opartych o AI na platformach mobilnych.
 
-\subsection{Wymagania projektowe}\label{ss:Wymagania Projektowe}
-\noindent
-W celu efektywnego przeprowadzenia badań porównawczych modeli lokalnych i chmurowych zdefiniowano następujące wymagania projektowe dla aplikacji badawczej CaptionLab:
-
-\textbf{Wymagania funkcjonalne:}
-\begin{enumerate}
-\item Wsparcie dla minimum 3 modeli lokalnych (Florence-2, ViT-GPT2, BLIP)
-\item Wsparcie dla minimum 3 modeli chmurowych (OpenAI, Azure, Gemini)
-\item Możliwość testowania pojedynczych obrazów z interfejsem użytkownika
-\item Możliwość automatycznych testów batchowych na zestawach obrazów
-\item Zbieranie metryk: czas (preprocessing, inference, postprocessing), pamięć, energia, koszty
-\item Eksport wyników do formatów CSV i JSON
-\end{enumerate}
-
-\textbf{Wymagania niefunkcjonalne:}
-\begin{enumerate}
-\item Platforma: Android SDK 26+ (Android 8.0 Oreo i nowsze)
-\item Architektura: modularna, łatwo rozszerzalna o nowe modele
-\item Wydajność: minimalne overhead pomiarowe (<5\% czasu inference)
-\item Dokładność pomiarów: precision ±50ms dla czasu, ±10MB dla pamięci
-\item Kod: Kotlin, zgodny z Android best practices
-\end{enumerate}
