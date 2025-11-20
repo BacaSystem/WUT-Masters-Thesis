@@ -3,101 +3,100 @@
 \section{Aplikacja badawcza CaptionLab}\label{s:Aplikacja badawcza CaptionLab}
 \noindent
 W celu przeprowadzenia kompleksowych badań porównawczych wybranych modeli AI, zaprojektowano 
-i zaimplementowano aplikację badawczą \textquote{CaptionLab} na system Android. Platforma ta umożliwia testowanie
-zarówno modeli lokalnych działających w środowisku ONNX Runtime, jak i modeli chmurowych dostępnych poprzez dostarczane API dostawców.
-W trakcie generowania opisów platforma jednocześnie zbiera szczegółowe metryki wydajnościowe
-i eksportuje je w formacie wygodnym do późniejszej analizy i interpretacji.
+dedykowaną aplikację badawczą \textquote{CaptionLab} na system Android. Platforma ta, musiała umożliwiać testowanie
+zarówno lokalnych oraz chmurowych modeli AI,
+dostarczać odpowiednich narzędzi do zbierania danych w trakcie inferencji, a także oferować możliwość eksportu zebranych danych do dalszej analizy.
 
 W tym rozdziale opisano architekturę systemu badawczego, jego kluczowe komponenty odpowiedzialne za generowanie opisów obrazów 
 i pomiar parametrów wydajności, a także mechanizm dostarczania modeli AI, system zbierania metryk oraz moduł testów automatycznych.
 
 \subsection{Architektura systemu}\label{ss:Architektura systemu}
 \noindent
-Aplikacja CaptionLab została zaprojektowana zgodnie z zasadami czystej architektury (Clean Architecture) oraz wykorzystuje wzorce projektowe ułatwiające rozszerzalność i testowanie kodu.
-System został podzielony na trzy główne warstwy: warstwę prezentacji odpowiedzialną za interfejs użytkownika, warstwę logiki biznesowej zarządzającą przepływem danych i koordynacją testów, 
-oraz warstwę providerów AI implementującą konkretne modele sztucznej inteligencji. Taki podział zgodnie z zasadami separacji odpowiedzialności (Separation of Concerns) 
-zapewnia modularność, łatwość rozbudowy oraz możliwość niezależnego testowania poszczególnych komponentów.
+Budowa platformy \textquote{CaptionLab} opiera się na modularnej architekturze, złożonej z wyraźnie wydzielonych warstw funkcjonalnych.
+System został podzielony na trzy główne warstwy: warstwę prezentacji odpowiedzialną za interfejs i interakcję z użytkownikiem,
+warstwę logiki biznesowej odpowiedzialną za przeprowadzanie testów i przepływ danych oraz warstwę providerów AI implementującą 
+konkretne modele sztucznej inteligencji.
 
-Schemat architektury wysokiego poziomu przedstawiono na rysunku \ref{fig:captionlab_architecture}, który ilustruje wzajemne relacje między poszczególnymi warstwami oraz przepływ danych w systemie.
+Schemat architektury wysokiego poziomu przedstawiono na rysunku \ref{fig:captionlab_architecture}., który ilustruje 
+najważniejsze elementy platformy, wzajemne relacje między poszczególnymi warstwami oraz przepływ danych w systemie.
+
 
 \begin{figure}[!h]
     \centering
     \begin{tikzpicture}[
         node distance=0.6cm,
-        layer/.style={rectangle, draw=black, very thick, minimum width=13cm, align=center},
-        component/.style={rectangle, draw, thick, rounded corners=2pt, minimum width=3cm, minimum height=1cm, align=center, font=\small},
-        widecomp/.style={rectangle, draw, thick, rounded corners=2pt, minimum width=6.5cm, minimum height=1cm, align=center, font=\small},
-        smallcomp/.style={rectangle, draw, thick, rounded corners=2pt, minimum width=2.4cm, minimum height=0.75cm, align=center, font=\footnotesize},
-        interface/.style={rectangle, draw, thick, dashed, minimum width=12.5cm, minimum height=0.65cm, align=center, font=\small},
+        layer/.style={rectangle, draw=black, very thick, minimum height=9.5cm, align=center},
+        component/.style={rectangle, draw, thick, rounded corners=2pt, minimum width=2.2cm, minimum height=0.8cm, align=center, font=\footnotesize},
+        widecomp/.style={rectangle, draw, thick, rounded corners=2pt, minimum width=3.8cm, minimum height=1.5cm, align=center, font=\small},
+        smallcomp/.style={rectangle, draw, thick, rounded corners=2pt, minimum width=1.8cm, minimum height=0.65cm, align=center, font=\scriptsize},
+        interface/.style={rectangle, draw, thick, dashed, minimum height=9cm, minimum width=0.8cm, align=center},
         flow/.style={->, thick, >=stealth},
         dataflow/.style={->, thick, >=stealth, dashed}
     ]
-        % WARSTWA PREZENTACJI
-        \node[layer, fill=blue!10, minimum height=1.8cm] (pres_layer) at (0,0) {};
-        \node[above=0.05cm of pres_layer.north, font=\bfseries] {WARSTWA PREZENTACJI};
+        % WARSTWA PREZENTACJI 
+        \node[layer, fill=blue!10, minimum width=2.8cm] (pres_layer) at (0,0) {};
+        \node[above=0.05cm of pres_layer.north, font=\bfseries\scriptsize, align=center] {WARSTWA\\PREZENTACJI};
         
-        \node[component, fill=blue!25] (main_act) at (-3,0) {MainActivity\\{\scriptsize Single Test}};
-        \node[component, fill=blue!25] (batch_act) at (3,0) {BatchTestActivity\\{\scriptsize Batch Tests}};
+        \node[component, fill=blue!25] (main_act) at (0,2.2) {Main\\Activity\\{\tiny Single Test}};
+        \node[component, fill=blue!25] (batch_act) at (0,-2.2) {BatchTest\\Activity\\{\tiny Batch Tests}};
         
         % WARSTWA LOGIKI BIZNESOWEJ
-        \node[layer, fill=orange!10, minimum height=5.2cm, below=2.2cm of pres_layer] (logic_layer) {};
-        \node[above=0.05cm of logic_layer.north, font=\bfseries] {WARSTWA LOGIKI BIZNESOWEJ};
+        \node[layer, fill=orange!10, minimum width=5.5cm, right=0.8cm of pres_layer] (logic_layer) {};
+        \node[above=0.05cm of logic_layer.north, font=\bfseries\scriptsize, align=center] {WARSTWA\\LOGIKI BIZNESOWEJ};
         
-        % Górny rząd: ProviderManager
-        \node[widecomp, fill=orange!30, below=0.5cm of logic_layer.north] (provider_mgr) {ProviderManager\\{\scriptsize Rejestracja}};
+        \node[widecomp, fill=orange!30] (provider_mgr) at ($(logic_layer)+(0,0)$) {Provider Manager\\{\tiny Models Coordination}};
+        \node[component, fill=orange!25] (metrics) at ($(logic_layer)+(0,2.2)$) {Metrics\\Collector\\{\tiny Measurements}};
+
+        \node[component, fill=orange!25] (benchmark) at ($(logic_layer)+(0,-2.2)$) {Benchmark\\Runner\\{\tiny Orchestration}};
         
-        % Środkowy rząd: MetricsCollector i BenchmarkRunner
-        \node[component, fill=orange!25, below=0.7cm of provider_mgr, xshift=-3.5cm] (metrics) {MetricsCollector\\{\scriptsize Pomiary}};
-        \node[component, fill=orange!25, below=0.7cm of provider_mgr, xshift=3.5cm] (benchmark) {BenchmarkRunner\\{\scriptsize Orkiestracja}};
+        \node[smallcomp, fill=yellow!20] (memory_mon) at ($(metrics)+(-1.1,1.8)$) {Memory\\Monitor};
+        \node[smallcomp, fill=yellow!20] (power_mon) at ($(metrics)+(1.1,1.8)$) {Power\\Monitor};
         
-        % Dolny rząd: MemoryMonitor, PowerMonitor, DataExporter
-        \node[smallcomp, fill=yellow!20, below=0.6cm of metrics, xshift=-1.3cm] (memory_mon) {MemoryMonitor};
-        \node[smallcomp, fill=yellow!20, below=0.6cm of metrics, xshift=1.3cm] (power_mon) {PowerMonitor};
-        \node[smallcomp, fill=yellow!20, below=0.6cm of benchmark] (exporter) {DataExporter};
+        \node[smallcomp, fill=yellow!20] (exporter) at ($(benchmark)+(0,-1.8)$) {Data\\Exporter};
         
         % WARSTWA PROVIDERÓW 
-        \node[layer, fill=green!8, minimum height=6cm, below=2.2cm of logic_layer] (provider_layer) {};
-        \node[above=0.05cm of provider_layer.north, font=\bfseries] {WARSTWA PROVIDERÓW AI};
+        \node[layer, fill=green!8, minimum width=4.5cm, right=0.8cm of logic_layer] (provider_layer) {};
+        \node[above=0.05cm of provider_layer.north, font=\bfseries\scriptsize, align=center] {WARSTWA\\PROVIDERÓW AI};
         
         % INTERFACE
-        \node[interface, fill=purple!8, below=0.4cm of provider_layer.north] (interface_layer) {CaptioningProvider Interface};
+        \node[interface, fill=purple!8] (interface_layer) at ($(provider_layer.west)+(0.75,0)$) {};
+        \node[font=\bfseries\scriptsize, rotate=90] at (interface_layer) {Captioning Provider Interface};
         
-        % Providery w dwóch kolumnach po 3 wiersze
-        % Lewa kolumna (lokalne)
-        \node[smallcomp, fill=cyan!25, below=0.6cm of interface_layer, xshift=-3cm] (florence) {Florence-2\\{\tiny ONNX}};
-        \node[smallcomp, fill=cyan!25, below=0.55cm of florence] (vitgpt2) {ViT-GPT2\\{\tiny ONNX}};
-        \node[smallcomp, fill=cyan!25, below=0.55cm of vitgpt2] (blip) {BLIP\\{\tiny ONNX}};
+        % Providery - lokalne
+        \node[smallcomp, fill=cyan!25] (florence) at ($(provider_layer)+(1,3.3)$) {Florence-2\\{\tiny ONNX}};
+        \node[smallcomp, fill=cyan!25] (vitgpt2) at ($(provider_layer)+(1,2.1)$) {ViT-GPT2\\{\tiny ONNX}};
+        \node[smallcomp, fill=cyan!25] (blip) at ($(provider_layer)+(1,0.9)$) {BLIP\\{\tiny ONNX}};
         
-        % Prawa kolumna (chmurowe)
-        \node[smallcomp, fill=lime!25, below=0.6cm of interface_layer, xshift=3cm] (openai) {OpenAI\\{\tiny REST API}};
-        \node[smallcomp, fill=lime!25, below=0.55cm of openai] (gemini) {Gemini\\{\tiny REST API}};
-        \node[smallcomp, fill=lime!25, below=0.55cm of gemini] (azure) {Azure Vision\\{\tiny REST API}};
+        % Providery - chmurowe
+        \node[smallcomp, fill=lime!25] (openai) at ($(provider_layer)+(1,-0.9)$) {OpenAI\\{\tiny REST API}};
+        \node[smallcomp, fill=lime!25] (gemini) at ($(provider_layer)+(1,-2.1)$) {Gemini\\{\tiny REST API}};
+        \node[smallcomp, fill=lime!25] (azure) at ($(provider_layer)+(1,-3.3)$) {Azure Vision\\{\tiny REST API}};
         
         % FLOWS
-        \draw[flow] (main_act) -- (provider_mgr);
-        \draw[flow] ([xshift=-0.5cm]main_act.south) -- ++(0,-0.5) -| (metrics.north);
-        \draw[flow] ([xshift=0.5cm]batch_act.south) -- ++(0,-0.5) -| (benchmark.north);
-        \draw[flow] (batch_act) -- (provider_mgr);
-        \draw[flow] (benchmark) -- (metrics);
+        \draw[flow] (main_act) -- ($(provider_mgr.west)+(0,0.3)$);
+        \draw[flow] (main_act.east) -- (metrics.west);
+        
+        \draw[flow] (batch_act) -- ($(provider_mgr.west)+(0,-0.3)$);
+        \draw[flow] (batch_act.east) -- (benchmark.west);
+        
+        \draw[flow] (benchmark.east) .. controls +(1.5,0) and +(1.5,0) .. (metrics.east);
         \draw[dataflow] (benchmark) -- (exporter);
+        
         \draw[flow] (metrics) -- (memory_mon);
         \draw[flow] (metrics) -- (power_mon);
-
-        \draw[flow] (provider_mgr) -- (interface_layer);
         
-        \coordinate (if_bottom) at (interface_layer.south);
-        \coordinate (left_start) at ([xshift=-0.5cm]if_bottom);
-        \draw[flow] (left_start) |- (florence.east);
-        \draw[flow] (left_start) |- (vitgpt2.east);
-        \draw[flow] (left_start) |- (blip.east);
-        \coordinate (right_start) at ([xshift=0.5cm]if_bottom);
-        \draw[flow] (right_start) |- (openai.west);
-        \draw[flow] (right_start) |- (gemini.west);
-        \draw[flow] (right_start) |- (azure.west);
+        \draw[flow] (provider_mgr.east) -- (interface_layer);
+        
+        \draw[flow] ($(interface_layer.east)+(0,3.3)$) -- (florence);
+        \draw[flow] ($(interface_layer.east)+(0,2.1)$) -- (vitgpt2);
+        \draw[flow] ($(interface_layer.east)+(0,0.9)$) -- (blip);
+        \draw[flow] ($(interface_layer.east)+(0,-0.9)$) -- (openai);
+        \draw[flow] ($(interface_layer.east)+(0,-2.1)$) -- (gemini);
+        \draw[flow] ($(interface_layer.east)+(0,-3.3)$) -- (azure);
         
         % ANNOTATIONS
-        \node[above=0.05cm of florence, font=\tiny, text=cyan!70!black] {Modele Lokalne};
-        \node[above=0.05cm of openai, font=\tiny, text=lime!70!black] {Modele Chmurowe};
+        \node[above=0.05cm of florence.north, font=\tiny, text=cyan!70!black, align=center] {Local};
+        \node[below=0.05cm of azure.south, font=\tiny, text=lime!70!black, align=center] {Cloud};
         
     \end{tikzpicture}
     \caption{Architektura wysokiego poziomu aplikacji badawczej CaptionLab}
@@ -106,12 +105,138 @@ Schemat architektury wysokiego poziomu przedstawiono na rysunku \ref{fig:caption
 
 \subsubsection{Warstwa prezentacji}\label{sss:Warstwa prezentacji}
 \noindent
+Warstwa prezentacji stanowi interfejs użytkownika aplikacji i odpowiada za interakcję z użytkownikiem końcowym.
+Składa się ona z dwóch głównych ekranów aktywności (Activities) systemu Android, z których każdy realizuje inny scenariusz badawczy.
+
+Pierwsza, główna aktywność (MainActivity) (rysunki \ref{fig:mainactivity_1}. oraz \ref{fig:mainactivity_2}.) pozwala na interaktywne testowanie pojedynczych obrazów.
+Użytkownik może wybrać dowolny obraz z galerii urządzenia lub wykonać nową fotografię za pomocą aparatu, nastepnie wskazać konkretny model AI
+, z którego chce skorzystać. Po zatwierdzeniu wyboru system przeprowadza inferencję przy pomocy wybranego modelu i wyświetla wygenerowany opis 
+wraz z zebranymi metrykami inferencji.
+
+\begin{figure}[!h]
+    \centering
+    \begin{minipage}{0.43\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{MainActivity_1.png}
+        \caption{MainActivity - ekran wyboru modeli i obrazu.}
+        \label{fig:mainactivity_1}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.43\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{MainActivity_2.png}
+        \caption{MainActivity - wyniki generowania opisu z metrykami.}
+        \label{fig:mainactivity_2}
+    \end{minipage}
+\end{figure}
+
+Ten tryb jest szczególnie przydatny podczas wstepnej kalibracji systemu oraz weryfikacji poprawności działania poszczególnych 
+modeli AI, przed przystąpieniem do właściwych testów wydajnościowych na większą skalę.
+
+Druga aktywność (BatchTestActivity) (rysunki \ref{fig:batchactivity_1}. i \ref{fig:batchactivity_2}.)
+stanowi fundament funkcjonalności badawczej platformy.
+Pozwala ona na przeprowadzanie zautomatyzowanych testów wydajnościowych na dużym zbiorze obrazów, z możliwością wielokrotnego
+powtarzania pomiarów dla większej wiarygodności wyników.
+
+Użytkownik może załadować wcześniej przygotowany zbiór danych (np. podzbiór COCO\cite{coco_lin2014}), bądź wskazać własny katalog
+z obrazami testowymi. Następnie wybiera zestaw modeli AI do przeprowadzenia badań, co ważne system umożliwia jednoczesne testowanie
+wielu modeli w ramach jednego eksperymentu, co znacząco przyspiesza proces zbierania danych. Następnie definiuje kluczowe parametry eksperymentu,
+takie jak liczba właściwych powtórzeń pomiarów, liczba serii rozgrzewkowych, maksymalny czas oczekiwania na odpowiedź oraz
+format eksportu wyników, po czym uruchamia testy.
+
+Podczas trwania eksperymentu, interfejs na bieżąco prezentuje postęp wykonywanych operacji, obejmujący informacje o aktualnym modelu, 
+przetwarzanym obrazie, czy aktualnej iteracji pomiaru. Po zakończeniu testów uruchamiany jest automatyczny 
+proces eksportu zebranych danych zapisujący wyniki w przestrzeni dyskowej aplikacji.
+
+\begin{figure}[!h]
+    \centering
+    \begin{minipage}{0.43\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{BatchTestActivity_1.png}
+        \caption{BatchTestActivity - wybór zbioru danych i modeli AI.}
+        \label{fig:batchactivity_1}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.43\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{BatchTestActivity_2.png}
+        \caption{BatchTestActivity - konfiguracja parametrów testu i egzekucja.}
+        \label{fig:batchactivity_2}
+    \end{minipage}
+\end{figure}
+
 
 \subsubsection{Warstwa logiki biznesowej}\label{sss:Warstwa logiki biznesowej}
 \noindent
+Warstwa logiki biznesowej stanowi centrum koordynacyjne platformy, zarządzając dostępem do modeli AI,
+organizacją testów oraz zbieraniem danych pomiarowych. Kluczowymi komponentami tej warstwy są 
+\texttt{ProviderManager}, \texttt{BenchmarkRunner} oraz \texttt{MetricsCollector}, którego działanie wspierają
+moduły monitorujące \texttt{MemoryMonitor} oraz \texttt{PowerMonitor}.
+
+\texttt{ProviderManager} pełni rolę centralnego rejestru modeli AI. Odpowiada za rejestrację i dostarczanie
+konkretnych implementacji providerów AI na żądanie. Umożliwia dynamiczne dodawanie nowych modeli do systemu,
+bez konieczności modyfikacji pozostałych komponentów aplikacji oraz zarządza cyklem życia instancji providerów.
+
+Organizacją i przebiegiem testów zajmuje się \texttt{BenchmarkRunner}. Algorytm działania tego komponentu 
+opiera się na sekwencyjnym wykonywaniu zdefiniowanych testów, zgodnie z określoną konfiguracją eksperymentu.
+Dla każdego wybranego modelu w pierwszej kolejności przeprowadzana jest seria rozgrzewkowa (\textit{warm-up run}), 
+mająca na celu ustabilizowanie warunków pomiarowych. Następnie wykonywane są właściwe iteracje pomiarowe dla każdego 
+obrazu w zbiorze testowym, zbierając dane pomiarowe przy pomocy \texttt{MetricsCollector}. Proces ten jest powtarzany
+dla każdego z modeli zgodnie ze zdefiniowaną konfiguracją. W ten sposób minimalizowany jest wpływ efektów 
+przejściowych, związanych z ładowaniem modeli do pamięci urządzenia i innych nieznaczących dla pomiarów operacji.
+
+W trakcie działania \texttt{BenchmarkRunner} inicjuje komponent \texttt{MetricsCollector}, który realizuje kompleksowy pomiar
+parametrów wydajnościowych podczas każdej inferencji. System pomiarowy opiera się na metrykach z czterech głównych kategorii: danych czasowych,
+metryk pamięciowych, kosztach energetycznych działania modeli oraz kosztów wywołań API (dla modeli chmurowych).
+Dokładny opis poszczególnych mechanizmów pomiarowych znajduje się w sekcji \ref{ss:System zbierania metryk}. \textquote{System zbierania metryk}.
+Po zakończeniu wszystkich iteracji, zebrane dane są przekazywane do modułu eksportu \texttt{DataExporter} w celu zapisania ich na dysku.
+
+Poza tym warstwa biznesowa realizuje również mechanizmy obsługi wyjątków i błędów, zapewniając stabilność działania aplikacji.
+System stale monitoruje limity przekroczenia czasu odpowiedzi modeli dla zbyt długich inferencji, rejestruje wszelkie niepowodzenia,
+a także pozwala na kontynuowanie testów pomimo wystąpienia błędów w trakcie eksperymentu. Wszystkie szczegóły błędów są 
+logowane i uwzględnione w końcowych wynikach eksportu.
+
 
 \subsubsection{Warstwa providerów AI}\label{sss:Warstwa providerow AI}
 \noindent
+Warstwa providerów AI stanowi najbardziej rozbudowaną część systemu i zawiera implementacje konkretnych modeli sztucznej inteligencji 
+wykorzystywanych do generowania opisów obrazów. Głównym założeniem architektonicznym tej warstwy jest zastosowanie wzorca strategii 
+(\textit{Strategy Pattern}), poprzez zdefiniowanie wspólnego interfejsu \texttt{CaptioningProvider} dla różnych implementacji modeli AI.
+
+Interfejs \texttt{CaptioningProvider} definiuje minimalny kontrakt, który musi spełniać każda implementacja provider'a modelu AI, obejmujący unikalny identyfikator
+oraz asynchroniczną metodę \texttt{caption(bitmap: Bitmap)}, która przyjmuję obiekt bitmapy obrazu i zwraca strukturę \texttt{CaptionResult}
+zawierającą wygenerowany opis wraz z metadanymi operacji. \textit{Listing} \ref{lst:captioning_provider_interface}. zawiera definicję tego interfejsu w języku Kotlin.
+
+\begin{addmargin}[7mm]{0mm}
+\begin{lstlisting}[
+    language=Kotlin, 
+    caption={Interfejs CaptioningProvider}, 
+    label={lst:captioning_provider_interface},
+    numbers=left,
+    firstnumber=5
+    ]
+interface CaptioningProvider {
+    val id: String
+    suspend fun caption(bitmap: Bitmap): CaptionResult
+}
+
+data class CaptionResult(
+    val text: String,
+    val extra: Map <String, Any?> = emptyMap()
+)
+\end{lstlisting}
+\end{addmargin}
+
+Dzięki takiemu podejściu zapewniona jest pełna elastyczność w implementacji różnych modeli, bez konieczności modyfikacji 
+wyższych warstw systemu, pozwalając aplikacji na dostęp do wyspecjalizowanych implementacji poprzez wspólny interfejs \cite{strategy_pattern_schmidt}.
+
+Wszystkie lokalne modele AI zostały zaimplementowane przy użyciu ONNX Runtime jako silnika inferencji. Pliki modeli w formacie ONNX
+są przechowywane w zasobach aplikacji i są ładowane do pamięci operacyjnej urządzenia podczas inicjalizacji providera.
+Każdy lokalny provider zarządza własną sesją ONNX oraz implementuje specyficzne dla danego modelu procedury przetwarzania obrazu wejściowego
+i dekodowania wygenerowanego opisu z surowych wyników inferencji.
+
+Provider'y chmurowe komunikują się z usługami zewnętrznych dostawców AI poprzez REST API. Każdy z tych provider'ów implementuje mechanizmy autoryzacji,
+obsługi zapytań HTTP oraz przetwarza odpowiedzi serwera do zgodnego formatu.
 
 \subsection{Implementacja providerów AI}\label{ss:Implementacja providerow AI}
 \noindent
@@ -119,8 +244,9 @@ Schemat architektury wysokiego poziomu przedstawiono na rysunku \ref{fig:caption
 \subsection{System zbierania metryk}\label{ss:System zbierania metryk}
 \noindent
 
-\subsection{Moduł testów automatycznych????}\label{ss:Modul testow automatycznych}
+\subsection{Automatyzacja testów wydajnościowych}\label{ss:Automatyzacja testow}
 \noindent
 
-\subsection{Eksport i analiza danych}\label{ss:Eksport i analiza danych}
+\subsection{Eksport i analiza danych}\label{ss:Eksport danych}
 \noindent
+
