@@ -333,7 +333,84 @@ class DataExporter(private val context: Context) {
             appendLine("$pad  \"success_rate\": ${provResult.successRate},")
             appendLine("$pad  \"total_images\": ${provResult.totalImages},")
             appendLine("$pad  \"successful_images\": ${provResult.successfulImages},")
-            appendLine("$pad  \"duration_ms\": ${provResult.durationMs}")
+            appendLine("$pad  \"duration_ms\": ${provResult.durationMs},")
+            
+            // Add performance metrics if available
+            provResult.aggregated?.let { agg ->
+                appendLine("$pad  \"performance_metrics\": {")
+                appendLine("$pad    \"latency\": {")
+                appendLine("$pad      \"p50_ms\": ${agg.e2eMedian},")
+                appendLine("$pad      \"p90_ms\": ${agg.e2eP90},")
+                appendLine("$pad      \"mean_ms\": ${agg.e2eMean},")
+                appendLine("$pad      \"std_ms\": ${agg.e2eStd},")
+                appendLine("$pad      \"min_ms\": ${agg.e2eMin},")
+                appendLine("$pad      \"max_ms\": ${agg.e2eMax}")
+                appendLine("$pad    },")
+                appendLine("$pad    \"throughput\": {")
+                appendLine("$pad      \"median_img_per_s\": ${agg.throughputMedian}")
+                appendLine("$pad    },")
+                
+                // Inference time
+                agg.inferMedian?.let { inferMedian ->
+                    appendLine("$pad    \"inference_time\": {")
+                    appendLine("$pad      \"median_ms\": $inferMedian")
+                    append("$pad    }")
+                    
+                    // Check if there are more metrics to add
+                    if (agg.ramPeakMeanMb != null || agg.energyMeanMwh != null || agg.costMeanUsd != null) {
+                        appendLine(",")
+                    } else {
+                        appendLine()
+                    }
+                }
+                
+                // RAM metrics
+                agg.ramPeakMeanMb?.let { ramMean ->
+                    appendLine("$pad    \"ram\": {")
+                    appendLine("$pad      \"peak_mean_mb\": $ramMean,")
+                    appendLine("$pad      \"peak_max_mb\": ${agg.ramPeakMaxMb}")
+                    append("$pad    }")
+                    
+                    // Check if there are more metrics to add
+                    if (agg.energyMeanMwh != null || agg.costMeanUsd != null) {
+                        appendLine(",")
+                    } else {
+                        appendLine()
+                    }
+                }
+                
+                // Energy metrics
+                agg.energyMeanMwh?.let { energyMean ->
+                    appendLine("$pad    \"energy\": {")
+                    appendLine("$pad      \"mean_mwh_per_image\": $energyMean,")
+                    appendLine("$pad      \"total_mwh\": ${agg.energyTotalMwh}")
+                    append("$pad    }")
+                    
+                    // Check if there are more metrics to add
+                    if (agg.costMeanUsd != null) {
+                        appendLine(",")
+                    } else {
+                        appendLine()
+                    }
+                }
+                
+                // Cost metrics
+                agg.costMeanUsd?.let { costMean ->
+                    appendLine("$pad    \"cost\": {")
+                    appendLine("$pad      \"mean_usd_per_image\": $costMean,")
+                    appendLine("$pad      \"total_usd\": ${agg.costTotalUsd}")
+                    appendLine("$pad    }")
+                }
+                
+                appendLine("$pad  }")
+            } ?: run {
+                // No aggregated metrics available - remove trailing comma
+                val content = this.toString()
+                this.clear()
+                append(content.trimEnd().removeSuffix(","))
+                appendLine()
+            }
+            
             append("$pad}")
         }
     }

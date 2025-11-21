@@ -140,7 +140,7 @@ powtarzania pomiarów dla większej wiarygodności wyników.
 
 Użytkownik może załadować wcześniej przygotowany zbiór danych (np. podzbiór COCO\cite{coco_lin2014}), bądź wskazać własny katalog
 z obrazami testowymi. Następnie wybiera zestaw modeli AI do przeprowadzenia badań, co ważne system umożliwia jednoczesne testowanie
-wielu modeli w ramach jednego eksperymentu, co znacząco przyspiesza proces zbierania danych. Następnie definiuje kluczowe parametry eksperymentu,
+wielu modeli w ramach jednego eksperymentu, co znacząco przyspiesza proces zbierania danych. Finalnie definiuje kluczowe parametry eksperymentu,
 takie jak liczba właściwych powtórzeń pomiarów, liczba serii rozgrzewkowych, maksymalny czas oczekiwania na odpowiedź oraz
 format eksportu wyników, po czym uruchamia testy.
 
@@ -238,15 +238,201 @@ i dekodowania wygenerowanego opisu z surowych wyników inferencji.
 Provider'y chmurowe komunikują się z usługami zewnętrznych dostawców AI poprzez REST API. Każdy z tych provider'ów implementuje mechanizmy autoryzacji,
 obsługi zapytań HTTP oraz przetwarza odpowiedzi serwera do zgodnego formatu.
 
+Taka architektura systemu pozwala na unifikację dostępu do modeli AI, niezależnie od odmiennych technologii, czy szczegółów implementacji.
+
 \subsection{Implementacja providerów AI}\label{ss:Implementacja providerow AI}
 \noindent
+Implementacja poszczególnych modeli AI wymagała uwzględnienia specyfiki każdego z modeli oraz zastosowanej technologii. 
+Providery modeli lokalnych muszą radzić sobie z zarządzaniem ograniczonymi zasobami urządzeń mobilnych, podczas gdy 
+providery chmurowych rozwiązań muszą efektywnie obsługiwać komunikację sieciową i autoryzację dla różnych formatów API.
+
+Silnikiem inferencji dla modeli lokalnych jest ONNX Runtime Mobile, którego wybór był podyktowany przede wszystkim szerokim wsparciem
+dla różnorodnych operatorów sieci neuronowych, optymalizacjami pod kątem urządzeń mobilnych oraz łatwą integracją z aplikacjami Android.
+Dzięki jego użyciu możliwe było uruchomienie modeli takich jak Florence-2, ViT-GPT2 oraz BLIP bez konieczności głębokich modyfikacji architektury sieci,
+po wcześniejszym eksporcie modeli do formatu ONNX.
+
+Model ViT-GPT2 łączy transformer wizyjny (\textit{Vision Transformer}) z modelem językowym GPT-2 w architekturze enkoder-dekoder. 
+W procesie wstępnego przetwarzania obraz jest skalowany do rozdzielczości 224x224 px, normalizowany według statystyk ImageNet i konwertowany z układu NHWC (\textit{Number, Height, Width, Channels})
+charakterystycznego dla Androida do układu NCHW wymaganego przez model.
+Model składa się z dwóch sesji ONNX. Enkoder przetwarza obraz i generuje wektorowe reprezentacje cech wizualnych, które stanowią kontekst dla dekodera GPT-2.
+Dekoder autoregresywnie generuje tokeny opisu, w każdej iteracji otrzymując poprzednio wygenerowane tokeny oraz kontekst wizualny z enkodera.
+Proces kończy się po osiągnięciu maksymalnej długości sekwencji lub napotkaniu znacznika końca sekwencji, a wygenerowane tokeny są dekodowane do tekstu przez dedykowany tokenizer GPT-2.
+
+Model BLIP stanowi rozwiązanie oparte na wielozadaniowym mechanizmie treningu wstepnego (\textit{pretraining}), łączącym zadania rozumienia i generowania opisów wizualno-językowych. 
+Architektura składa się z enkodera obrazu opartego na Vision Transformer oraz dekodera tekstowego z mechanizmem uwagi krzyżowej (\textit{cross-attention}).
+Obraz jest skalowany do rozdzielczości 384x384 px i normalizowany według specyficznych parametrów BLIP. Model został zaimplementowany jako dwie sesje ONNX: 
+enkoder generujący stany ukryte o wymiarowości 768 oraz dekoder autoregresywny generujący tokeny opisu.
+Detokenizacja jest realizowana przez tokenizer BLIP obsługujący słownik WordPiece z ponad 30,000 tokenów.
+
+Florence-2 reprezentuje najbardziej zaawansowaną architekturę multimodalną. Model został podzielony na cztery sesje ONNX:
+enkoder wizyjny, moduł embedowania tokenów, enkoder tekstowy oraz dekoder autoregresywny.
+Proces inferencji rozpoczyna się od ekstrakcji cech wizualnych, które są konkatenowane z wektorowymi reprezentacjami promptu \textquote{Describe image} i przetwarzane przez enkoder tekstowy.
+Dekoder następnie autoregresywnie generuje opis, wykorzystując stany ukryte z enkodera oraz maski uwagi. Ta wieloetapowa architektura pozwala Florence-2 na generowanie 
+bardziej szczegółowych i bogatszych kontekstowo opisów.
+
+Provider'y chmurowe koncentrują się na prawidłowej komunikacji z zewnętrznymi usługami AI poprzez REST API, zarządzając jedynie komunikacją sieciową
+, autoryzacją zapytań oraz formatowaniem danych. 
+
+OpenAI GPT-4o mini wykorzystuje API Chat Completions, gdzie obraz jest konwertowany do formatu base64 i osadzany w żądaniu JSON jako data URL z autoryzacją Bearer Token.
+Google Gemini 2.0 Flash Lite stosuje podobne podejście z odmienną strukturą API, gdzie obraz jest przesyłany jako część tablicy \texttt{parts}, a autoryzacja realizowana poprzez parametr \texttt{key} w URL.
+Azure Computer Vision 4.0 jako wyspecjalizowany model analizy obrazu przesyła surowe bajty JPEG bezpośrednio w ciele żądania HTTP z autoryzacją przez nagłówek \texttt{Ocp-Apim-Subscription-Key},
+zwracając opis wraz ze wskaźnikiem pewności. 
+
+Wszystkie provider'y chmurowe implementują pomiar czasów poszczególnych etapów przetwarzania,
+umożliwiając szczegółową analizę wydajności komunikacji sieciowej, a także parametry inferencji takie jak ilość zużytych tokenów.
+
 
 \subsection{System zbierania metryk}\label{ss:System zbierania metryk}
 \noindent
+Precyzyjny pomiar parametrów wydajnościowych stanowi fundamentalny aspekt prowadzonych badań, zatem projektując platformę \textquote{CaptionLab}
+zaprojektowano osobny system pomiarowy integrujący różnorodne mechanizmy pomiarowe.
+System ten jest realizowany przez komponent \texttt{MetricsCollector}, który został zaprojektowany w sposób zapewniający 
+minimalny wpływ na mierzone wartości oraz wysoką dokładność rejestrowanych danych.
 
-\subsection{Automatyzacja testów wydajnościowych}\label{ss:Automatyzacja testow}
+\subsubsection{Pomiar czasu wykonania}\label{sss:Pomiar czasu}
 \noindent
+Metryki czasowe rejestrowane są z wykorzystaniem wysokorozdzielczego zegara systemowego Android (\texttt{System.nanoTime()}), na poziomie 
+providerów, który oferuje precyzję rzędu nanosekund i jest niezależny od zmian czasu systemowego urządzenia. Pomiar obejmuje cztery
+fazy przetwarzania:
+\begin{itemize}
+    \item \textbf{Czas wstępnego przetwarzania obrazu (\texttt{pre\_ms})} - czas od otrzymania obrazu do przygotowania go do inferencji, 
+    obejmujący akcje kompresji obrazu, skalowania rozdzielczości, normalizację, konwersję przestrzeni warstw oraz alokację i inicjalizację tensorów wejściowych.
+    \item \textbf{Czas inferencji modelu (\texttt{infer\_ms})} - czas trwania samej operacji inferencji w modelu AI lub czas trwania zapytania
+    HTTP do momentu otrzymania odpowiedzi dla modeli chmurowych.
+    \item \textbf{Czas postprocesingu wyników (\texttt{post\_ms})} - czas od zakończenia inferencji do uzyskania finalnego opisu, w tym dekodowanie
+    sekwencji tokenów, parsowanie odpowiedzi JSON oraz formatowanie końcowego opisu.
+    \item \textbf{Całkowity czas operacji (\texttt{e2e\_ms})} - całkowity czas od przekazania obrazu do wygenerowania opisu, stanowiący
+    sumę wszystkich trzech powyższych faz.
+\end{itemize}
+
+Każdy z czasów rejestrowany jest oddzielnie, co pozwala na szczegółową analizę wydajności poszczególnych etapów przetwarzania
+i jest zapisywany w milisekundach dla łatwiejszej interpretacji. 
+
+\subsubsection{Pomiar zużycia pamięci}\label{sss:Pomiar pamieci}
+\noindent
+Monitoring zużycia pamięci operacyjnej realizuje moduł \texttt{MemoryMonitor}, który wykorzystuje \texttt{Android Runtime API} do zbierania danych
+o wykorzystaniu pamięci przez proces aplikacji. Mechanizm pomiarowy został zaprojektowany w sposób 
+minimalizujący wpływ samego procesu monitorowania na mierzone wartości, poprzez wykonywanie pomiarów w osobnym wątku o niskim 
+priorytecie, działającym równolegle z wątkiem głównym aplikacji.
+
+Proces pomiaru rozpoczyna się bezpośrednio przed wywołaniem inferencji modelu, kiedy to \texttt{MetricsCollector} uruchamia 
+instancję \texttt{MemoryMonitor} i rejestruje wstępny stan pamięci procesu jako wartość bazową. Wątek pomiarowy następnie 
+cyklicznie próbkuje aktualny stan pamięci, rejestrując szczytową wartość zużycia podczas całego procesu inferencji. 
+Po zakończeniu operacji \texttt{MetricsCollector} pobiera z monitora dwie kluczowe metryki: szczytowe zużycie pamięci operacyjnej 
+(\texttt{ramPeakMb}) oraz przyrost zużycia pamięci względem wartości bazowej. Dla modeli lokalnych system dodatkowo rejestruje 
+rozmiar plików modelu w formacie ONNX (\texttt{modelSizeMb}), co pozwala na ocenę narzutu pamięciowego związanego z ładowaniem 
+modelu do pamięci urządzenia. 
+
+Wszystkie zebrane dane pamięciowe są agregowane w strukturze \texttt{BenchmarkMetrics} i przekazywane
+do modułu eksportu wraz z pozostałymi parametrami wydajnościowymi. 
+
+\subsubsection{Pomiar zużycia energii}\label{sss:Pomiar energii}
+\noindent
+Rejestracja zużycia energii jest realizowana przez moduł \texttt{PowerMonitor}, który wykorzystuje interfejs \texttt{BatteryManager} systemu Android
+do zbierania danych o parametrach elektrycznych baterii urządzenia. Komponent jest uruchamiany równolegle z \texttt{MemoryMonitor} bezpośrednio przed rozpoczęciem inferencji
+i działa w osobnym wątku asynchronicznym, cyklicznie próbkując wartości natężenia prądu oraz napięcia baterii.
+
+System rejestruje trzy kluczowe parametry elektryczne: chwilowe natężenie prądu, średnie natężenie prądu oraz pojemność baterii, które wraz z napięciem pozwalają
+na obliczenie zużycia energii podczas operacji. Po zakończeniu inferencji \texttt{MetricsCollector} zatrzymuje monitor i inicjuje proces obliczenia całkowitego zużycia
+energii, wyrażonego w miliwatogodzinach (mWh). Implementacja przewiduje trzy alternatywne metody kalkulacji, stosowane hierarchicznie w zależności od dostępności danych
+na urządzeniu. 
+
+Pierwsza metoda opiera się na całkowaniu mocy chwilowej w czasie, wykorzystując szereg pomiarów napięcia i natężenia prądu:
+\begin{equation}
+E = \sum_{i=1}^{n-1} \frac{P_i + P_{i+1}}{2} \cdot \Delta t_i
+\end{equation}
+gdzie $P_i = U_i \times I_i$ jest mocą chwilową w $i$-tym pomiarze, a $\Delta t_i$ to odstęp czasu między kolejnymi próbkami.
+
+Druga metoda wykorzystuje średnie natężenie prądu dla całego okresu pomiaru:
+\begin{equation}
+E = U_{avg} \times I_{avg} \times \Delta t
+\end{equation}
+gdzie $U_{avg}$ i $I_{avg}$ to wartości średnie napięcia i natężenia prądu, a $\Delta t$ to całkowity czas trwania inferencji.
+
+Trzecia metoda bazuje na bezpośrednim pomiarze zmiany pojemności baterii:
+\begin{equation}
+E = \Delta Q \times U_{avg}
+\end{equation}
+gdzie $\Delta Q$ to różnica pojemności baterii między początkiem a końcem pomiaru.
+
+Warto jednak zaznaczyć, że dokładność pomiarów energetycznych jest ograniczona przez kilka czynników.
+Po pierwsze, \texttt{BatteryManager} nie zawsze udostępnia pomiary prądu chwilowego na wszystkich urządzeniach, co wymusza
+wykorzystanie mniej precyzyjnych metod obliczeniowych. 
+Po drugie, pomiary obejumą całkowite zużycie energii przez urządzenia, a nie tylko przez sam proces inferencji, co wprowadza 
+stały narzut związany z działaniem systemu operacyjnego i innych procesów w tle.
+
+Z tych powodów metryki zużycia energii należy traktować jako przybliżone względne wskaźniki i używać ich w porównaniach między modelami
+w podobnych warunkach testowych, zamiast jako absolutnych wartości zużycia energii przez inferencję.
+
+\subsubsection{Obliczanie kosztów wywołań API}\label{sss:Koszty API}
+\noindent
+Dla modeli chmurowych system automatycznie oblicza szacunkowy koszt finansowy pojedynczego wywołania API na podstawie aktualnych cenników dostawców
+oraz danych o zużyciu tokenów zwracanych w odpowiedziach API. Kalkulacja kosztów jest realizowana przez metodę \texttt{estimateCost()} w komponencie 
+\texttt{MetricsCollector}, która stosuje specyficzne formuły dla każdego z dostawców usług AI.
+
+Dla modeli OpenAI GPT-4o mini oraz Google Gemini 2.5 Flash Lite, które są uniwersalnymi modelami językowymi, koszty są obliczane na podstawie liczby tokenów
+wejściowych (prompt) oraz wyjściowych (completion) według formuły:
+\begin{equation}
+C_{total} = \frac{T_{prompt}}{10^6} \times C_{prompt} + \frac{T_{completion}}{10^6} \times C_{completion}
+\end{equation}
+, gdzie $T_{prompt}$ i $T_{completion}$ to liczby tokenów, a $C_{prompt}$ i $C_{completion}$ to stawki cenowe za milion tokenów w USD.
+Dla OpenAI stosowane są stawki \$0.15 za milion tokenów wejściowych i \$0.60 za milion tokenów wyjściowych, natomiast dla Gemini odpowiednio \$0.10 i \$0.40.
+
+Azure Computer Vision 4.0 wykorzystuje uproszczony model cenowy oparty na liczbie przetworzonych obrazów, gdzie koszt jednostkowy wynosi:
+\begin{equation}
+C = \frac{1.5}{1000} \text{ USD}
+\end{equation}
+, co odpowiada stawce \$1.50 za tysiąc przetworzonych obrazów, niezależnie od złożoności operacji czy długości wygenerowanego opisu.
+
+Obliczone koszty są zapisywane w metryce \texttt{costUsd} struktury \texttt{BenchmarkMetrics}, co umożliwia agregację kosztów dla całych zbiorów 
+testowych i porównywanie cen różnych rozwiązań chmurowych w kontekście generowanych opisów obrazów.
 
 \subsection{Eksport i analiza danych}\label{ss:Eksport danych}
 \noindent
+Po przeprowadzeniu eksperymentów badawczych zebrane dane muszą zostać odpowiednio zapisane i przygotowane do dalszej analizy.
+Do tego celu został zaprojektowany system eksportu danych, realizowany przez moduł \texttt{DataExporter}, który generuje wyniki 
+w trzech formatach: CSV, JSON oraz tekstowym raporcie podsumowującym, z których każdy służy innym celom analitycznym.
 
+
+Dane zapisane w formacie CSV (\textit{Comma Separated Values}) zawierają szczegółowe metryki wydajnościowe dla każdej pojedynczej inferencji.
+Każdy wiersz pliku reprezenruje pojedyncze wykonanie operacji generowania opisu i zawiera następujące kolumny:
+\begin{itemize}
+    \item \texttt{provider\_id}     - identyfikator providera,
+    \item \texttt{provider\_type}   - typ modelu - lokalny/chmurowy,
+    \item \texttt{image\_id}        - identyfikator obrazu,
+    \item \texttt{iteration}        - numer iteracji pomiarowej,
+    \item \texttt{pre\_ms}          - czas preprocessingu,
+    \item \texttt{infer\_ms}        - czas inferencji,
+    \item \texttt{post\_ms}         - czas postprocessingu,
+    \item \texttt{e2e\_ms}          - całkowity czas end-to-end,
+    \item \texttt{ram\_peak\_mb}    - szczytowe zużycie pamięci RAM,
+    \item \texttt{energy\_mwh}      - zużycie energii,
+    \item \texttt{cost\_usd}        - koszt wywołania,
+    \item \texttt{caption}          - wygenerowany opis,
+    \item \texttt{caption\_length}  - długość opisu,
+    \item \texttt{timestamp}        - znacznik czasowy pomiaru,
+    \item \texttt{status}           - status operacji
+\end{itemize}
+Taka struktura danych umożliwia łatwy import do narzędzi analitycznych w których
+mogą być przeprowadzane bardziej zaawansowane analizy zebranych danych pomiarowych.
+
+Dane wyeksportowane do formatu JSON (\textit{JavaScript Object Notation}) zawierają zagregowane statystyki całego eksperymentu.
+Hierarchiczna struktura pliku JSON pozwala na przechowywanie zagnieżdżonych danych w zorganizowany i czytelny sposób.
+Struktura pliku JSON obejmuje następujące sekcje:
+\begin{itemize}
+    \item \texttt{metadata}     - zawiera informacje o eksperymencie, takie jak nazwa testu, opis, użyty zbiór danych, czas rozpoczęcia i zakończenia,
+    \item \texttt{device}       - zawiera szczegóły dotyczące urządzenia testowego, w tym producenta, model, wersję Androida oraz parametry sprzętowe,
+    \item \texttt{statistics}   - zawiera ogólne statystyki eksperymentu, takie jak liczba przetworzonych obrazów, liczba iteracji, czy współczynnik sukcesu,
+    \item \texttt{providers}    - zawiera szczegółowe metryki wydajności dla każdego z testowanych modeli AI, w tym czasy inferencji, zużycie pamięci, energii oraz koszty,
+\end{itemize}
+Ten format danych jest szczególnie przydatny do automatycznego przetwarzania wyników przez skrypty analizujące oraz do generowania raportów porównawczych między
+różnymi eksperymentami.
+
+Wszystkie pliki eksportu są zapisywane w katalogu \texttt{exports} w przestrzeni dyskowej aplikacji z automatycznie generowanymi nazwami
+zawierającymi znacznik czasowy eksperymentu, co pozwala na łatwe zarządzanie i archiwizację wyników z wielu testów. System automatycznie tworzy
+również tekstowy raport zawierający czytelną dla człowieka prezentację najważniejszych wyników oraz ewentualnych błędów.
+
+Wyeksportowane dane stanowią podstawę do dalszej analizy generowanych opisów obrazów.  
+Analiza jakościowa jest przeprowadzana poza samą platformą testową przy użyciu dedykowanych narzędzi skryptowych, gdzie wygenerowane teksty 
+(\texttt{caption} z plików CSV) są porównywane z referencyjnymi opisami ze zbioru danych przy użyciu metryk jakościowych
+takich jak BLEU, METEOR, ROUGE oraz CIDEr, co zostało szczegółowo omówione w rozdziale \ref{ss:Metryki jakosciowe} \textquote{Metryki jakościowe}.

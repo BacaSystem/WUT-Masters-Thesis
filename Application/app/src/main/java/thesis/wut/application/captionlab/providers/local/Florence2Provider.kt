@@ -3,6 +3,7 @@ package thesis.wut.application.captionlab.providers.local
 import ai.onnxruntime.*
 import android.content.Context
 import android.graphics.Bitmap
+import android.os.SystemClock
 import android.util.Log
 import thesis.wut.application.captionlab.providers.CaptioningProvider
 import thesis.wut.application.captionlab.providers.CaptionResult
@@ -48,44 +49,44 @@ class Florence2Provider(private val context: Context) : CaptioningProvider {
     }
 
     override suspend fun caption(bitmap: Bitmap): CaptionResult = runCatching {
-        val startTime = System.currentTimeMillis()
-        val metrics = mutableMapOf<String, Double>()
+        val start = SystemClock.elapsedRealtimeNanos()
+        val metrics = mutableMapOf<String, Any?>()
         
-        val preStart = System.currentTimeMillis()
+        val preStart = SystemClock.elapsedRealtimeNanos()
         val pixelValues = ImagePreprocessor.preprocess(
             bitmap = bitmap,
             targetSize = config.imageSize,
             mean = config.imageMean,
             std = config.imageStd
         )
-        metrics["pre_ms"] = (System.currentTimeMillis() - preStart).toDouble()
+        metrics["pre_ms"] = (SystemClock.elapsedRealtimeNanos() - preStart) / 1_000_000.0
         
-        val visionStart = System.currentTimeMillis()
+        val visionStart = SystemClock.elapsedRealtimeNanos()
         val imageFeatures = encodeImage(pixelValues)
-        metrics["vision_enc_ms"] = (System.currentTimeMillis() - visionStart).toDouble()
+        metrics["vision_enc_ms"] = (SystemClock.elapsedRealtimeNanos() - visionStart) / 1_000_000.0
         
-        val promptStart = System.currentTimeMillis()
+        val promptStart = SystemClock.elapsedRealtimeNanos()
         val promptIds = tokenizer.encode("Describe image")
         val promptEmbeds = embedTokens(promptIds)
-        metrics["prompt_ms"] = (System.currentTimeMillis() - promptStart).toDouble()
+        metrics["prompt_ms"] = (SystemClock.elapsedRealtimeNanos() - promptStart) / 1_000_000.0
         
-        val textEncStart = System.currentTimeMillis()
+        val textEncStart = SystemClock.elapsedRealtimeNanos()
         val inputsEmbeds = OnnxTensorHelper.concatenate(imageFeatures, promptEmbeds)
         val seqLen = config.imageSeqLength + promptIds.size
         val attentionMask = LongArray(seqLen) { 1L }
         val encoderHiddenStates = encodeText(inputsEmbeds, attentionMask)
-        metrics["text_enc_ms"] = (System.currentTimeMillis() - textEncStart).toDouble()
+        metrics["text_enc_ms"] = (SystemClock.elapsedRealtimeNanos() - textEncStart) / 1_000_000.0
         
-        val decStart = System.currentTimeMillis()
+        val decStart = SystemClock.elapsedRealtimeNanos()
         val generatedIds = generateText(encoderHiddenStates, attentionMask, maxTokens = config.maxLength * 5)
-        metrics["dec_ms"] = (System.currentTimeMillis() - decStart).toDouble()
+        metrics["dec_ms"] = (SystemClock.elapsedRealtimeNanos() - decStart) / 1_000_000.0
         
-        val postStart = System.currentTimeMillis()
+        val postStart = SystemClock.elapsedRealtimeNanos()
         val generatedText = tokenizer.decode(generatedIds, skipSpecialTokens = true)
-        metrics["post_ms"] = (System.currentTimeMillis() - postStart).toDouble()
+        metrics["post_ms"] = (SystemClock.elapsedRealtimeNanos() - postStart) / 1_000_000.0
         
-        metrics["e2e_ms"] = (System.currentTimeMillis() - startTime).toDouble()
-        metrics["tokens_generated"] = generatedIds.size.toDouble()
+        metrics["e2e_ms"] = (SystemClock.elapsedRealtimeNanos() - start) / 1_000_000.0
+        metrics["tokens_generated"] = generatedIds.size
         
         CaptionResult(
             text = generatedText,

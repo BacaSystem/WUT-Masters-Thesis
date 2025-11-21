@@ -87,7 +87,7 @@ Zamiast sekwencyjnego przetwarzania w oddzielnych modułach enkodera i dekodera,
 do przetwarzania wspólnego strumienia tokenów wizualnych i tekstowych, które są poddawane wielowarstwowej transformacji z mechanizmami uwagi krzyżowej (cross-attention)
 w ramach tej samej sieci \cite{blip_li2022}. Uproszczony schemat architektury multimodalnej przedstawiono na rysunku \ref{fig:multimodal_architecture}.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \begin{tikzpicture}[
         node distance=1.2cm and 1.5cm,
@@ -136,7 +136,7 @@ w ramach tej samej sieci \cite{blip_li2022}. Uproszczony schemat architektury mu
         \node[left=0.2cm of mm_enc, font=\tiny, align=right, text=gray] {Unified\\Representation};
         
     \end{tikzpicture}
-    \caption{Uproszczona architektura ujednoliconego modelu multimodalnego dla obrazu i tekstu.}
+    \caption{Architektura ujednoliconego modelu multimodalnego dla obrazu i tekstu.}
     \label{fig:multimodal_architecture}
 \end{figure}
 
@@ -165,9 +165,7 @@ oraz formatów modeli dostosowanych do ograniczeń sprzętowych urządzeń. Najp
 które umożliwiają uruchamianie zoptymalizowanych modeli AI na zasobach urządzenia.
 
 W celu optymalizacji modeli pod względem moblinych zastowań stosuje się różnorodne techniki kompresji i przyspieszenia inferencji, takie jak kwantyzacja (Quantization) czy
-przycinanie (Pruning). Kwantyzacja polega na redukcji zapisu precyzji wag, co redukuje rozmiar modelu i przyspiesza obliczenia kosztem niewielkiej utraty dokładności.
-Przykładowo kwantyzacja z 32-bitowych liczb zmiennoprzecinkowych (FP32) do 8-bitowych liczb całkowitych (INT8) pozwala na zmniejszenie rozmiaru nawet 4-krotnie oraz 2-krotne
-przyspieszenie inferencji przy zachowaniu dokładności w graniach 2\% \cite{tflite_quantization_krishnamoorthi2018}.
+przycinanie (Pruning). Kwantyzacja polega na redukcji zapisu precyzji wag, co redukuje rozmiar modelu i przyspiesza obliczenia kosztem niewielkiej utraty dokładności \cite{tflite_quantization_krishnamoorthi2018}.
 
 Kluczową zaletą podejścia lokalnego jest pełna niezależność od połączenia sieciowego. Dodatkowo, to podejście zapewnia silniejszą ochronę prywatności i danych
 użytkownika, gdyż wszystkie dane przetwarzane są lokalnie na urządzeniu bez konieczności przesyłania ich do zewnętrznych serwerów \cite{tinyml_reddi2021}.
@@ -184,7 +182,7 @@ Badania Yuyi Mao i innych wskazują, że opóźnienie end-to-end w systemach chm
 przetwarzania lokalnego, szczególnie w warunkach słabej jakości połączenia sieciowego \cite{edge_vs_cloud_mao2017}.
 Problemem są również koszty związane z wywołaniami API oraz obawy dotyczące prywatności danych.
 
-
+% \vfill
 \subsection{Modele lokalne wykorzystane w badaniach}\label{ss:Modele lokalne}
 \noindent
 Do implementacji modeli lokalnych w platformie badawczej użyto środowiska ONNX Runtime Mobile. Wybór ten podyktowany był neutralnością względem dostawcy modelu,
@@ -194,7 +192,6 @@ dla akceleracji sprzętowej wykorzystując dostępne na urządzeniu delegaty (CP
 Dobór lokalnych modeli odzwierciedla trzy generacje rozwoju podejść image captioning'u: klasyczne połączenie osobnego enkodera obrazu z dekoderem językowym (ViT-GPT2), 
 nowszą ujednoliconą architekturę z podejściem enkoder-dekoder (Florence-2) oraz podejście łączące wielofunkcyjne komponenty w ramach jednego modelu (BLIP).
 Taki zestaw pozwala porównać koszty obliczeń, wielkość modeli, sposób generowania opisów oraz odporność na zmianę dziedziny danych.
-
 
 \subsubsection{ViT-GPT2}\label{sss:ViT-GPT2}
 \noindent
@@ -222,8 +219,6 @@ INT8, tak aby odpowiadał on pozostałym modelom wykorzystywanych w tej pracy. �
 BLIP (Bootstrapping Language-Image Pre-training) to nowoczesny model wizyjno-językowy, w którym to jeden szkielet architektoniczny 
 stanowi połączenie dwóch enkoderów, wizualnego i tekstowego, z dekoderem tekstowym w ramach jednolitej architektury \cite{blip_li2022}.
 
-
-
 BLIP wyróżnia się innowacyjnym procesem treningu 
 łączącym nadzorowane uczenie z automatyczną generacją i filtrowaniem syntetycznych opisów. 
 Takie podejście pozwala modelowi uczyć się na dużych zbiorach danych o \textquote{zaszumionej} postaci, 
@@ -231,7 +226,6 @@ co przekłada się na lepszą generalizację.
 
 Podobnie jak w pozostałych przypadkach w badaniach użyto wariantu skonwertowanego do formatu ONNX skwantyzowanego do INT8, 
 składającego się z dwóch plików ONNX o łącznym rozmiarze 239 MB.
-
 
 \subsection{Modele chmurowe wykorzystane w badaniach}\label{ss:Modele chmurowe}
 \noindent
@@ -242,7 +236,6 @@ W badaniach wykorzystano trzy modele, reprezentujące odmienne kategorie usług:
 wyspecjalizowana usługa analizy obrazu (Azure Computer Vision) oraz ekonomiczny wariant rodziny Gemini (Gemini 2.5 Flash Lite), charakteryzujący się krótkim czasem odpowiedzi 
 i efektywnością kosztową przy przetwarzaniu zapytań z obrazami. Taki dobór pozwala na ocenę kompromisu między jakością opisu, zakresem funkcji, 
 kosztem przetwarzania oraz opóźnieniami zapytań sieciowych.
-
 
 \subsubsection{OpenAI GPT-4o mini}\label{sss:GPT4o}
 \noindent
@@ -256,7 +249,6 @@ jako załącznik w formacie base64 lub poprzez URL, a model zwraca wygenerowany 
 Czas odpowiedzi wynosi zazwyczaj 1-3 sekundy.
 Model cenowy obejmuje \$0.150 za milion tokenów wejściowych oraz \$0.600 za milion tokenów wyjściowych \cite{openai_pricing2024}.
 
-
 \subsubsection{Azure Computer Vision}\label{sss:Azure}
 \noindent
 Azure Computer Vision to wyspecjalizowana usługa analizy obrazów firmy Microsoft, zaprojektowana specjalnie do zadań przetwarzania obrazów.
@@ -267,7 +259,6 @@ Integracja odbywa się poprzez Azure REST API, gdzie obrazy są przesyłane jako
 Usługa zwraca odpowiedź JSON zawierającą opis tekstowy, wykryte obiekty, tagi oraz współczynniki pewności.
 Średni czas odpowiedzi wynosi 500ms-2s.
 Model cenowy obejmuje od \$1.00 do \$1.50 za 1000 transakcji \cite{azure_pricing2024}.
-
 
 \subsubsection{Gemini 2.5 Flash}\label{sss:Gemini}
 \noindent
@@ -286,7 +277,7 @@ Wybrane modele reprezentują różnorodne podejścia do generowania opisów obra
 strategią wdrożenia oraz kompromisami między wydajnością a jakością. Tabela \ref{tab:models_comparison} 
 przedstawia kluczowe charakterystyki wszystkich sześciu modeli wykorzystanych w badaniach.
 
-\begin{table}[h!]
+\begin{table}[!ht]
     \centering
     \caption{Porównanie modeli lokalnych i chmurowych wykorzystanych w badaniach}
     \label{tab:models_comparison}
