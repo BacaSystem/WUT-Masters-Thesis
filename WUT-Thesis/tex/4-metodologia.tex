@@ -1,62 +1,340 @@
 % \newpage % Rozdziały zaczynamy od nowej strony.
 \clearpage
 \section{Metodologia badań}\label{s:Metodologia badan}
-
 \noindent
-TODO | W celu przeprowadzenia obiektywnych i powtarzalnych badań porównawczych modeli AI do generowania opisów obrazów, opracowano szczegółową metodologię badawczą obejmującą projekt eksperymentów, wybór datasetu, defin icję metryk oraz procedury wykonania testów. Niniejszy rozdział opisuje wszystkie aspekty metodologiczne niezbędne do zrozumienia i replikacji przeprowadzonych badań....
+Obiektywna ocena efektywności wybranych modeli AI, w zadaniu generowania opisów obrazów, wymagała opracowania odpowiedniej 
+metodologii badawczej. W niniejszym rozdziale przedstawiono procedurę pomiarową wraz ze scenariuszem badawczym, 
+które pozwoliły na porównanie rozwiązań lokalnych i chmurowych AI w warunkach środowiska mobilnego.
+Opisano również szczegóły dotyczące wybranego zestawu metryk, pozwalających 
+na kompleksową ocenę wydajności i jakości generowanych opisów.
+Wszystkie aspekty metodologii badawczej zostały zaprojektowane w sposób zapewniający powtarzalność i wiarygodność uzyskanych wyników,
+unikając potencjalnych wpływów zewnętrznych czynników zakłócających pomiary.
 
 \subsection{Scenariusz badawczy}\label{ss:Scenariusz badawczy}
 \noindent
-TODO | Badania zostały zaprojektowane jako kontrolowany eksperyment porównawczy z następującymi parametrami...
+Badania zostały zaprojektowane jako zestaw kontrolowanych eksperymentów porównawczych, w którym sześć wybranych modeli AI,
+trzy działających lokalnie na urządzeniu mobilnym (ViT-GPT2, Florence-2, BLIP) oraz trzy korzystające z usług chmurowych
+(OpenAI GPT-4o mini, Azure Computer Vision, Google Gemini 2.0 Flash Lite), poddano identycznym testom image captioning'u w porównywalnych warunkach.
+Szczegółową charakterystykę oraz uzasadnienie doboru poszczególnych modeli przedstawiono w rozdziale \ref{s:Modele}. \textquote{Modele i technologie AI 
+do generowania opisów obrazów}. Taka konstrukcja badań umożliwiła bezpośrednie porównanie wydajności i jakości generowanych opisów
+w zależności od środowiska i architektury działania modelu.
+
+Do uzyskania powtarzalnych i miarodajnych wyników, użyto standardowego zestawu obrazów testowych w postaci zbioru COCO,
+będącego uznanym standardem w dziedzinie image captioning'u.
+Na zbiór ten składa się prawie 330 tysięcy złożonych obrazów codziennych scen zawierających powszechne obiekty w naturalnych kontekstach,
+opatrzonych ręcznie tworzonymi opisami w języku angielskim \cite{coco_lin2014}.
+Do walidacji modeli użyty został konkretnie podzbiór walidacyjny \textquote{COCO-2017-Val} zawierający 5000 obrazów wraz z odpowiadającymi im opisami referencyjnymi.
+
+Kluczowym elementem scenariusza badawczego jest platforma testowa \textquote{CaptionLab} (opisana szczegółowo w rozdziale 
+\ref{s:Aplikacja badawcza CaptionLab}. \textquote{Aplikacja badawcza CaptionLab}), która realizuje proces automatycznego testowania wydajności modeli AI
+na dużych zbiorach danych, jednocześnie rejestrując szczegółowe metryki wydajnościowe.
+Eksperyment obejmuje przeprowadzenie serii inferencji, dla każdego z modeli, na tym samym, losowo wybranym, zbiorze obrazów testowych
+z jednoczesną rejestracją metryk wydajnościowych każdej inferencji.
+
+Scenariusz zakłada porównanie modeli w dwóch głównych wymiarach: wydajnościowym oraz jakościowym.
+W wymiarze wydajnościowym analizowane są parametry czasowe (opóźnienie end-to-end, czas przetwarzania), pamięciowe (zużycie RAM i pamięci masowej), energetyczne (zużycie energii) oraz kosztowe (koszt inferencji w usługach chmurowych).
+W wymiarze jakościowym oceniana jest poprawność semantyczna i spójność generowanych tekstów względem referencyjnych opisów, mierzona przy pomocy 
+uznanych narzędzi oceny NLP (\textit{Natural language Processing}). 
+
+Takie podejście umożliwia wieloaspektową ocenę efektywności poszczególnych rozwiązań oraz identyfikację kompromisów między wydajnością, a jakością generowanych opisów,
+a także weryfikację hipotez badawczych dotyczących wpływu architektury modelu i środowiska wykonawczego na efektywność generowania opisów obrazów.
 
 
 \subsection{Metryki wydajnościowe}\label{ss:Metryki wydajnosci}
-
 \noindent
-Zdefiniowano precyzyjne metody pomiaru kluczowych parametrów wydajności.
+Wymiar wydajnościowy badań koncentruje się na obiektywnie mierzalnych parametrach operacyjnych modeli AI
+podczas wykonywania zadania generowania opisów obrazów. W celu oceny wydajności modeli AI zdefiniowano zestaw metryk 
+obejmujący cztery aspekty działania systemu: opóźnienie czasowe, zużycie pamięci, pobór energii oraz koszty operacyjne.
+Wszystkie dane zbierane były automatycznie podczas procesu inferencji przez mechanizmy pomiarowe platformy testowej, któych 
+szczegółowa implementacja została opisana w rozdziale \ref{s:Aplikacja badawcza CaptionLab}. \textquote{Aplikacja badawcza CaptionLab}.
 
 \subsubsection{Metryki czasowe}\label{sss:Metryki czasowe}
+\noindent
+Czas inferencji jest kluczowym parametrem wydajnościowym,
+bezpośrednio wpływając na odczucie użytkownika i użyteczność systemu. Według klasycznych badań Nielsena nad 
+czasami odpowiedzi w systemach interaktywnych, opóźnienie przekraczające 1 sekundę prowadzi do przerwania płynności 
+interakcji z użytkownikiem \cite{nielsen_response_times_1993}.
 
-\textbf{1. Preprocessing Time (pre\_ms)}
+W ramach prowadzonych badań zdefiniowano cztery metryki czasowe (mierzone w milisekundach) dla poszczególnych faz procesu:
+\begin{itemize}
+    \item \textbf{Czas preprocessingu (\texttt{pre\_ms})} -- czas przygotowania obrazu do formatu wymaganego przez model,
+    obejmujący konwersję formatu bitmapy, skalowanie obrazu oraz normalizację wartości pikseli do oczekiwanego zakresu.
+    
+    \item \textbf{Czas inferencji (\texttt{infer\_ms})} -- czas właściwej inferencji. Dla modeli lokalnych jest to czas 
+    wykonania obliczeń przez ONNX Runtime, dla modeli chmurowych obejmuje całość komunikacji HTTP 
+    oraz przetwarzania w infrastrukturze dostawcy. Ten czas jest bezpośrednim wskaźnikiem wydajności modelu w danym środowisku.
+    
+    \item \textbf{Czas postprocessingu (\texttt{post\_ms})} -- czas konwersji wyniku modelu do tekstu, obejmujący 
+    dekodowanie tokenów (modele lokalne) lub parsowanie odpowiedzi JSON (modele chmurowe).
+    
+    \item \textbf{Czas end-to-end (\texttt{e2e\_ms})} -- całkowity czas przetwarzania będący sumą trzech powyższych faz. 
+    Jest to najważniejsza metryka z perspektywy użytkownika końcowego aplikacji bezpośrednio odzwierciedlająca końcowe opóźnienie systemu.
+    \begin{equation}
+        \text{e2e\_ms} = \text{pre\_ms} + \text{infer\_ms} + \text{post\_ms}
+    \end{equation}
 
-\textbf{2. Inference Time (infer\_ms)}
+\end{itemize}
 
-\textbf{3. Postprocessing Time (post\_ms)}
-
-\textbf{4. End-to-End Time (e2e\_ms)}
+Wszystkie pomiary czasowe były powtarzane wielokrotnie dla tego samego obrazu, co pozwoliło na uśrednienie wyników
+i redukcję wpływu fluktuacji systemowych, dzięki czemu uzyskano większą wiarygodność statystyczną uzyskanych danych.
 
 \subsubsection{Metryki pamięciowe}\label{sss:Metryki pamieciowe}
+\noindent
+Efektywne zarządzanie pamięcią jest krytyczne w środowisku mobilnym ze względu na ograniczone zasoby sprzętowe,
+zatem pomiar zużycia pamięci stanowił istotny element oceny wydajności modeli AI w tym kontekście.
 
-\textbf{1. Peak RAM Usage (ram\_peak\_mb)}
+System pomiarowy rejestruje dwie komplementarne metryki pamięciowe:
+\begin{itemize}
+    \item \textbf{Szczytowe zużycie RAM (\texttt{ram\_peak\_mb})} -- maksymalna ilość pamięci
+    zaalokowanej przez proces aplikacji podczas wykonywania inferencji, szczególnie istotne dla modeli 
+    lokalnych przechowujących wagi modelu w pamięci operacyjnej urządzenia.
+    
+    \item \textbf{Rozmiar modelu (\texttt{model\_size\_mb})} -- rozmiar plików modelu
+    przechowywanych w przestrzeni dyskowej aplikacji. Metryka ta ma znaczenie wyłącznie dla modeli
+    lokalnych i reprezentuje narzut pamięciowy związany z dystrybucją aplikacji oraz ładowaniem
+    wag modelu do pamięci urządzenia.
+\end{itemize}
 
-\textbf{2. Model Size (model\_size\_mb)}
-
+Architektura systemu pomiarowego została zaprojektowana w sposób minimalizujący wpływ samego procesu
+monitorowania na mierzone wartości. Próbkowanie pamięci odbywa się w osobnym wątku działającym równolegle 
+do głównego procesu inferencji. Szczegóły implementacji zostały opisane w sekcji \ref{sss:Pomiar pamieci}. \textquote{Pomiar zużycia pamięci}.
 
 \subsubsection{Metryki energetyczne}\label{sss:Metryki energii}
+\noindent
+Pobór energii stanowi istotny parametr dla aplikacji mobilnych zasilanych z baterii, wpływając
+bezpośrednio na czas działania urządzenia między kolejnymi ładowaniami.
 
-\textbf{Energy Consumption (energy\_mwh)}
+\begin{itemize}
+    \item \textbf{Zużycie energii (\texttt{energy\_mwh})} -- rzeczywiste zużycie energii podasz inferencji.
+    Pomiar realizowany jest metodą numerycznej integracji mocy chwilowej w czasie, wykorzystując pomiary napięcia i natężenia pobieranego prądu.
+    \begin{equation}
+    E = \sum_{i=1}^{n-1} \frac{P_i + P_{i+1}}{2} \cdot \Delta t_i
+    \end{equation}
+    gdzie $P_i = U_i \times I_i$ jest mocą chwilową w $i$-tym pomiarze, a $\Delta t_i$ to odstęp czasu między kolejnymi próbkami.
+\end{itemize}
 
+Wynik pomiaru wyrażony jest w miliwatogodzinach (mWh) i reprezentuje rzeczywiste zużycie energii
+urządzenia podczas wykonywania inferencji. Należy zaznaczyć, że dokładność pomiarów energii może odbiegać
+od rzeczywistych wartości i może być zależna od specyfiki sprzętowej urządzenia pomiarowego. Dokładny opis
+systemu pomiarowego wraz z jego ograniczeniami i ich obejściem zawarto w ramach rozdziału \ref{sss:Pomiar energii}. \textquote{Pomiar energii}.
 
 \subsubsection{Metryki kosztowe}\label{sss:Metryki kosztow}
-
 \noindent
-TODO | Dla modeli chmurowych obliczany jest koszt wywołania API...
+Modele chmurowe działające jako usługi API wiążą się z bezpośrednimi kosztami operacyjnymi,
+które są istotnym czynnikiem przy podejmowaniu decyzji o wyborze strategii wdrożeniowej.
+Dokładne koszty użytkowania modeli zostały oszacowane na podstawie oficjalnych cenników dostawców usług chmurowych 
+\cite{openai_pricing2024, azure_pricing2024, gemini_pricing2024}.
 
+System zbiera dwie kategorie metryk kosztowych dla modeli chmurowych:
+\begin{itemize}
+    \item \textbf{Liczba tokenów (\texttt{tokens\_input}, \texttt{tokens\_output})} -- liczba przetworzonych tokenów wejściowych i wyjściowych. 
+    Parametry te pozwalają na szczegółową analizę kosztów w zależności od rozmiaru obrazu oraz długości generowanego opisu,
+    a także umożliwiają prognozowanie kosztów dla różnych scenariuszy użytkowania.
+
+    \item \textbf{Koszt jednostkowy wywołania (\texttt{cost\_usd})} -- reprezentuje rzeczywisty koszt
+    pojedynczego wywołania API w dolarach amerykańskich, obliczany na podstawie oficjalnych
+    cenników dostawców oraz liczby przetworzonych tokenów. Model Azure Computer Vision stosuje stały cennik za wywołanie niezależny od rozmiaru danych wynoszący \$1.50 za 1000 wywołań.\
+    Dla modeli OpenAI i Google Gemini obliczany jest jako:
+    \begin{equation}
+        C_{total} = \frac{T_{prompt}}{10^6} \times C_{prompt} + \frac{T_{completion}}{10^6} \times C_{completion}
+    \end{equation}
+    gdzie $T_{prompt}$ i $T_{completion}$ to liczby tokenów, a $C_{prompt}$ i $C_{completion}$ to stawki cenowe za milion tokenów w USD.
+\end{itemize}
+
+Dzięki tym metrykom możliwe jest przeprowadzenie analizy kosztowej modeli chmurowych co stanowi ważny aspekt strategii wdrożenia usług image captioning'u w aplikacjach mobilnych. 
 
 \subsection{Metryki jakościowe} \label{ss:Metryki jakosciowe}
 \noindent
-TODO | W celu oceny jakości generowanych opisów obrazów zastosowano standardowe metryki NLP powszechnie używane w zadaniach generowania tekstu....
+Metryki jakościowe pozwalają na obiektywną ocenę poprawności i użyteczności generowanych opisów obrazów.
+Ocena jakosci generowanych opisów wymaga zastosowania metryk pozwalających na automatyczne porównanie wygenerowanego tekstu z referencyjnymi opisami, dostarczonymi w zbiorze testowym.
+Do tego celu wykorzystano zestaw komplementarnych metryk z dziedziny przetwarzania języka naturalnego (NLP), z których każda ocenia
+inne aspekty poprawności semantycznej, zgodności z opisami referencyjnymi oraz płynności językowej tekstu.
 
-
-\subsubsection{CIDEr, SPICE} \label{sss:CIDEr SPICE}
+\subsubsection{CIDEr i SPICE} \label{sss:CIDEr SPICE}
 \noindent
+\textbf{CIDEr} (Consensus-based Image Description Evaluation) jest metryką oceny jakości opisów obrazów bazującej na 
+konsensusie wielu opisów referencyjnych \cite{cider_vedantam2015}. 
+Fundamentalną ideą stojącą za CIDEr jest założenie, że opis obrazu powinien koncentrować się na elementach, które 
+ludzie uznają za istotne dla danej sceny, co wyraża się w zgodzie między wieloma niezależnymi 
+opisami referencyjnymi.
 
+Zgodnie z opisem autorów, metryka ta premiuje słowa i frazy, które często występują w opisach
+konkretnego obrazu, jednocześnie deprecjonując ogólne terminy pojawiające się powszechnie we wszystkich 
+opisach \cite{cider_vedantam2015}. Przykładowo, słowa takie jak \textit{\textquote{i}}, \textquote{jak} 
+czy \textquote{jest} otrzymują niską wagę jako nieistotne dla zrozumienia treści obrazu, podczas gdy 
+terminy charakterystyczne dla danej sceny (np. \textquote{człowiek}, \textquote{ananas}) są silnie premiowane. 
+Autorzy wykazali, że tak skonstruowana metryka lepiej koreluje z oceną ludzką niż klasyczne metryki BLEU, ROUGE czy METEOR
 
+Główną zaletą CIDEr jest jej specjalizacja w zadaniu opisywania obrazów oraz zdolność do identyfikacji
+informacji najważniejszych dla danej sceny. Ograniczeniem pozostaje jednak wrażliwość na dobór słownictwa, gdyż
+dwa opisy używające synonimów mogą otrzymać niższe oceny, mimo semantycznej równoważności, a także wymagania odnośnie 
+dużej ilości opisów referencyjnych dla każdego obrazu, co może być trudne do spełnienia w praktyce.
 
-\subsubsection{BLEU, METEOR} \label{sss:BLEU METEOR}
+\vspace{0.3cm}
 \noindent
+\textbf{SPICE} (Semantic Propositional Image Caption Evaluation) reprezentuje inne podejście do oceny opisów
+obrazów niż tradycyjne metryki oparte na zgodności fragmentów tekstu. Zamiast liczyć pokrycie sekwencji słów, SPICE
+koncentruje się na poprawną reprezentacją podstawowych faktów o scenie,
+takie jak obecne obiekty, ich cechy wzajemne relacje \cite{spice_anderson2016}.
+
+W pierwszym kroku oba opisy (generowany i referencyjny) są przetwarzane przez parser językowy,
+który rozkłada zdanie na strukturę składniową. Następnie ta struktura jest
+przekształcana w tzw. graf sceny, czyli uporządkowaną reprezentację obiektów
+(np.\ \textquote{pies}, \textquote{park}), ich atrybutów (np.\ \textquote{czarny})
+oraz relacji (np.\ \textquote{biegać}). Z takiego grafu wydobywa się zbiory
+prostych stwierdzeń typu: \textquote{pies biega}, \textquote{pies jest
+brązowy}, \textquote{pies biegnie w parku}. SPICE porównuje następnie zbiory
+takich stwierdzeń dla opisu kandydującego i opisów referencyjnych, mierząc,
+jaka ich część jest wspólna. Dzięki temu zdania
+\textit{\textquote{Czarny pies biega w parku}} oraz
+\textquote{W parku jest czarny pies, który biega} uzyskają wysoką
+zgodność, mimo różnic w kolejności słów, ponieważ wyrażają w gruncie rzeczy
+tę samą informację semantyczną.
+
+Główną zaletą SPICE jest więc większa niezależność od dokładnego doboru słów i szyku zdania. Metryka nagradza opisy, które poprawnie wymieniają obiekty,
+ich właściwości oraz relacje obecne na obrazie, nawet jeśli używają one nieco innego sformułowania niż opisy referencyjne.
+W eksperymentach autorów na standardowych zbiorach danych SPICE osiąga wyższą zgodność z ocenami ludzkimi niż powszechnie stosowane metryki
+takie jak BLEU, ROUGE, METEOR czy CIDEr, szczególnie w zakresie oceny faktycznej poprawności treści opisów \cite{spice_anderson2016}.
+
+Metryka ta jest jednak zależna od jakości automatycznego parsowania i budowy grafu sceny, błędy
+na tym etapie mogą prowadzić do zaniżania lub zawyżania oceny mimo semantycznie poprawnego opisu. Dodatkowo, ze względu na wykorzystanie
+złożonych narzędzi językowych SPICE jest bardziej kosztowna obliczeniowo niż proste metryki bazujące na dopasowaniu n-gramów.
+Metryka SPICE dobrze sprawdza się w ocenie semantycznej poprawności opisów obrazów, jednak nie uwzględnia w żadnym stopniu aspektów językowych takich jak płynność, styl czy gramatyka
+tekstu. 
+
+\subsubsection{BLEU i METEOR} \label{sss:BLEU METEOR}
+\noindent
+\textbf{BLEU} (Bilingual Evaluation Understudy), pierwotnie zaprojektowana do automatycznej oceny tłumaczeń maszynowych, stała się
+jedną z najczęściej stosowanych metryk także w zadaniach generowania opisów
+obrazów. Podstawowa idea BLEU polega na porównywaniu krótkich fragmentów tekstu między opisem
+wygenerowanym a zestawem opisów referencyjnych. Metryka mierzy, jaka część takich fragmentów z opisu kandydującego pojawia się również w opisach referencyjnych, co
+autorzy interpretują jako miarę precyzji przekładu \cite{bleu_papineni2002}.
+
+W praktyce BLEU uwzględnia fragmenty o kilku długościach jednocześnie i łączy
+informację o ich dopasowaniu do jednej wartości liczbowej. Dodatkowo wprowadza się
+karę dla opisów zbyt krótkich, aby uniknąć sytuacji, w których
+bardzo krótkie zdania osiągają wysoką precyzję jedynie dzięki dopasowaniu kilku
+często występujących słów. Autorzy pokazali, że dla zadań tłumaczeniowych BLEU dobrze
+odzwierciedla oceny ludzkie na poziomie całych systemów, co przyczyniło się do jego
+szerokiego przyjęcia. Późniejsze analizy wskazują jednak, że
+korelacja ta jest znacznie słabsza na poziomie pojedynczych zdań oraz w innych
+zadaniach generowania tekstu \cite{bleu_validity_reiter2018}.
+
+Główną zaletą BLEU jest prostota koncepcyjna oraz bardzo niski koszt obliczeniowy,
+co pozwala na szybkie porównywanie dużych zbiorów wyników. Istotnym ograniczeniem pozostaje
+natomiast fakt, że metryka opiera się na dokładnym dopasowaniu sekwencji słów,
+nie uwzględnia synonimów, swobodnych parafraz ani głębszego podobieństwa
+semantycznego zdań. W kontekście zadania generowania opisów obrazów, gdzie tę samą scenę można poprawnie opisać na wiele różnych
+sposobów, ograniczenie to sprawia, że BLEU często gorzej koreluje z ocenami ludzkimi
+niż nowsze metody zaprojektowane specjalnie do tego zadania.
+
+
+\vspace{0.3cm}
+\noindent
+\textbf{METEOR} (Metric for Evaluation of Translation with Explicit ORdering) została zaprojektowana 
+jako odpowiedź na ograniczenia BLEU, wprowadzając bardziej elastyczne 
+mechanizmy dopasowania tekstów \cite{meteor_banerjee2005}. Autorzy argumentują, że tradycyjne podejście
+oparte wyłącznie na dokładnym dopasowaniu słów nie oddaje rzeczywistej jakości generowanego tekstu,
+pomijając semantyczną równoważność różnych sformułowań.
+
+METEOR rozszerza koncepcję BLEU w kilku aspektach. Po pierwsze, jak opisują autorzy, 
+metryka wykorzystuje zewnętrzne zasoby leksykalne do rozpoznawania synonimów oraz różnych form 
+fleksyjnych tego samego słowa, dzięki czemu opisy używające bliskoznacznych terminów nie są nadmiernie 
+karane \cite{meteor_banerjee2005}. Po drugie, w przeciwieństwie do BLEU koncentrującej się na precyzji,
+METEOR równoważy precyzję z pokryciem opisu referencyjnego, co lepiej oddaje kompletność generowanego 
+tekstu. Po trzecie, metryka premiuje opisy, w których dopasowane słowa występują w podobnym porządku,
+penalizując nadmierną fragmentację treści.
+
+Badania autorów wykazały, że METEOR osiąga wyższą korelację z oceną ludzką niż BLEU, szczególnie
+w scenariuszach wymagających oceny parafraz i synonimicznych sformułowań \cite{meteor_banerjee2005}.
+Główną zaletą jest zatem elastyczność w rozpoznawaniu semantycznie równoważnych opisów. Ograniczeniem
+pozostaje zależność od dostępności zewnętrznych zasobów leksykalnych oraz większa złożoność 
+obliczeniowa w porównaniu do prostszych metryk.
+
+\vspace{0.5cm}
+\noindent
+Zastosowanie zestawu czterech komplementarnych metryk pozwala na wieloaspektową ocenę jakości 
+generowanych opisów, gdzie każda z nich wnosi odmienną perspektywę ewaluacji. CIDEr koncentruje 
+się na zgodności z ludzkim konsensusem dotyczącym istotnych elementów sceny, SPICE weryfikuje 
+faktyczną poprawność semantyczną niezależnie od sformułowania, BLEU sprawdza precyzję dopasowania
+tekstowego, podczas gdy METEOR oferuje najbardziej elastyczne podejście uwzględniające różnorodność
+poprawnych sposobów wyrażenia tej samej treści. Taka strategia, w której żadna pojedyncza metryka
+nie jest traktowana jako absolutny wskaźnik jakości, jest zgodna z praktyką przyjętą w badaniach
+nad automatycznym generowaniem opisów obrazów, gdzie kompleksowa ocena wymaga uwzględnienia wiele
+wymiarów poprawności tekstu.
+
 
 
 \subsection{Procedura pomiarowa}\label{ss:Proces badawczy}
 \noindent
-TODO | Opis procedury pomiarowej, w tym konfiguracja środowiska testowego, liczba powtórzeń, sposób zbierania danych i ich analiza....
+Przeprowadzenie rzetelnych i powtarzalnych badań porównawczych wymagało opracowania szczegółowego
+protokołu testowego definiującego wszystkie aspekty procesu eksperymentalnego. Procedura pomiarowa
+została zaprojektowana w sposób minimalizujący zmienność wyników oraz eliminujący wpływ czynników
+zewnętrznych, które mogłyby zakłócić wiarygodność pomiarów.
+
+Wszystkie eksperymenty przeprowadzono na urządzeniu Samsung Galaxy S24 z procesorem
+Exynos 2400, 8 GB pamięci RAM oraz systemem Android 14. Przed rozpoczęciem każdej
+serii pomiarów aplikacja pomiarowa była reinstalowana, a urządzenie było uruchamiane ponownie w celu wyczyszczenia pamięci i przywrócenia bazowego
+stanu systemu. Podczas testów wszystkie nieistotne procesy i usługi zostały wyłączone, w tym powiadomienia,
+automatyczne aktualizacje oraz usługi lokalizacji, a urządzenie podłączono do stabilnej sieci Wi-Fi o maksymalnej przepustowości 100 Mb/s.
+
+Jako zbiór danych testowych wykorzystano podzbiór walidacyjny COCO-2017-Val, stanowiący uznany standard
+w dziedzinie automatycznego generowania opisów obrazów \cite{coco_lin2014}. Z pełnego zbioru walidacyjnego
+zawierającego 5000 obrazów, wybrano losowo 100 obrazów stanowiących reprezentatywną próbę różnorodności
+scen. Każdy obraz w zbiorze COCO zawiera referencyjny opis stworzony przez różnych zespół ludzkich ekspertów, co zapewnia bogaty zestaw odniesień dla późniejszej oceny jakościowej
+generowanych opisów.
+
+Ważną decyzją metodologiczną było testowanie każdego z sześciu modeli AI osobno, w oddzielnych
+sesjach pomiarowych. Takie podejście miało na celu wyeliminowanie wzajemnego wpływu modeli na wyniki
+poprzez zminimalizowanie zajętości pamięci RAM, uniknięcie skumulowanego nagrzewania się urządzenia
+oraz zapewnienie porównywalnych warunków startowych dla każdej sesji. Między sesjami testowymi
+poszczególnych modeli urządzenie było wyłączane i pozostawiane w spoczynku do momentu powrotu
+do temperatury pokojowej.
+
+Każdy eksperyment rozpoczynał się fazą rozgrzewki składającą się z 3 iteracji inferencji na
+losowo wybranym podzbiorze obrazów testowych. Wyniki z tej fazy nie były uwzględniane w analizie
+końcowej, służąc wyłącznie eliminacji efektów związanych z ładowaniem modeli do pamięci,
+inicjalizacją środowiska wykonawczego ONNX oraz stabilizacją warunków systemowych. Po zakończeniu
+fazy rozgrzewki, następowały właściwe pomiary, podczas których dla każdego z 100 obrazów testowych
+wykonywano pełną inferencję z jednoczesną rejestracją metryk wydajnościowych przez moduły
+\texttt{MemoryMonitor} i \texttt{PowerMonitor}. Szczegółowe parametry konfiguracyjne zastosowane w eksperymentach przedstawiono w tabeli \ref{tab:test_config}.
+
+\begin{table}[!h] 
+\centering
+\caption{Parametry konfiguracyjne przeprowadzonych eksperymentów}
+\label{tab:test_config}
+\begin{tabular}{|l|c|} \hline
+\textbf{Parametr} & \textbf{Wartość} \\ \hline\hline
+Urządzenie testowe & Samsung Galaxy S24 \\ \hline
+Procesor & Exynos 2400 (10-core) \\ \hline
+Pamięć RAM & 8 GB \\ \hline
+System operacyjny & Android 14 (API level 34) \\ \hline
+Połączenie sieciowe & Wi-Fi 802.11ax (Wi-Fi 6) \\ \hline
+\hline
+Zbiór danych & COCO Validation 2017 \\ \hline
+Liczba obrazów testowych & 100 (losowy wybór) \\ \hline
+Powtórzenia pomiarowe & 5 na obraz \\ \hline
+Iteracje rozgrzewkowe & 3 na model \\ \hline
+Timeout inferencji & 30 sekund \\ \hline
+\end{tabular}
+\end{table}
+
+Po zakończeniu wszystkich pomiarów, zebrane dane były eksportowane w formatach CSV i JSON,
+zawierających szczegółowe metryki wydajnościowe dla każdej inferencji wraz z wygenerowanymi
+opisami tekstowymi. Pliki danych zapisywano w folderze aplikacji z automatycznym
+oznaczeniem czasowym, umożliwiając dalszą analizę statystyczną.
+
+Na tym etapie kończy się działanie platformy badawczej. Dalsza ocena jakościowa generowanych opisów została przeprowadzona w oddzielnym etapie poza urządzeniem przy
+użyciu standardowych implementacji metryk CIDEr, SPICE, BLEU i METEOR z biblioteki \texttt{pycocoevalcap}.
+Dla każdego wygenerowanego opisu obliczano wartości wszystkich czterech metryk względem opisów referencyjnych ze zbioru COCO, 
+po uprzedniej normalizacji tekstów. Wyniki oceny jakościowej zostały następnie połączone z metrykami wydajnościowymi, tworząc kompletny zestaw danych pozwalający
+na wieloaspektową analizę efektywności badanych modeli AI.
+
+\vspace{0.5cm}
+\noindent
+Opisana procedura pomiarowa została zaprojektowana z myślą o zapewnieniu wiarygodności, powtarzalności
+oraz obiektywności uzyskanych wyników. Standaryzacja warunków testowych, wielokrotne powtarzanie
+pomiarów, eliminacja efektów przejściowych oraz zastosowanie uznanego zbioru danych testowego
+pozwalają na przeprowadzenie rzetelnej oceny efektywności badanych modeli i wyciągnięcie
+miarodajnych wniosków dotyczących doboru strategii wdrożenia systemów sztucznej inteligencji
+w środowisku mobilnym.

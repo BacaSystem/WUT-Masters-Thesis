@@ -11,7 +11,7 @@ oferujące zaawansowane możliwości o niespotykanej wcześniej jakości i skali
 Rozwiązania te niosą jednak ze sobą zależność od zewnętrznej infrastruktury oraz wiążą się
 z kwestiami prywatności, bezpieczeństwa i opłat subskrypcyjnych.
 
-Na tym tle szczególne znaczenie zyskuje zadanie automatycznego generowania opisów obrazów 
+Na tym tle szczególne znaczenie zyskuje kwestia automatycznego generowania opisów obrazów 
 (image captioning), łączące zaawansowane przetwarzanie obrazu z generowaniem języka naturalnego.
 Technologia ta znajduje zastosowanie w wielu aspektach, od wsparcia osób z dysfunkcją wzroku,
 przez automatyczną kategoryzację treści, aż po integrację z asystentami głosowymi.
@@ -109,8 +109,7 @@ mobilnym Android.
 \subsection{Wymagania projektowe}\label{ss:Wymagania Projektowe}
 
 \noindent
-
-Głównym celem badawczym niniejszej pracy jest przeprowadzenie kompleksowej analizy efektywności 
+Głównym celem badawczym niniejszej pracy było przeprowadzenie kompleksowej analizy efektywności 
 lokalnych oraz chmurowych rozwiązań sztucznej inteligencji w zadaniu generowania opisów obrazów (image captioning) 
 na platformie mobilnej Android oraz sformułowanie rekomendacji doboru strategii wdrożeniowej 
 w zależności od specyfiki i przeznaczenia projektowanych aplikacji mobilnych.
@@ -119,7 +118,6 @@ Kompleksowe porównanie efektywności modeli sztucznej inteligencji
 w badanym kontekście wymagało
 zdefiniowania problemu badawczego, doboru reprezentatywnych modeli oraz opracowania metodologii badawczej 
 umożliwiającej obiektywną analizę poszczególnych modeli poprzez analizę zebranych w trakcie badań metryk.
-
 
 Nim przystąpiono do realizacji głównego celu badawczego i wybrano poszczególne rozwiązania modeli sztucznej inteligencji
 do analizy, należało zgłębić temat image captioning'u, poznać sam mechanizm działania, a także zrozumieć architekturę poszczególnych systemów 
@@ -130,23 +128,35 @@ Na bazie tej wiedzy, dokonano selekcji reprezentatywnych modeli AI, różniącyc
 Wybrane modele miały pokrywać szerokie spektrum dostępnych rozwiązań,
 umożliwiając w ten sposób analizę technologii o różnych podejściach i możliwościach.
 
-Nastepnie, mając wyselekcjonowane rozwiązania, zaprojektowano i zaimplementowano dedykowaną platformę badawczą, zdolną do wdrażania
+Następnie, mając wyselekcjonowane rozwiązania, zaprojektowano i zaimplementowano dedykowaną platformę badawczą, przystosowaną do wdrażania
 i testowania różnorakich modeli AI w zadaniu image captioning'u. Platforma ta, poza wsparciem dla uruchamiania różnorodnych modeli, musiała także umożliwiać 
-zbieranie precyzyjnych metryk, niezbędnych do obiektywnej analizy efektywności poszczególnych rozwiązań.
+zbieranie precyzyjnych statystyk, niezbędnych do obiektywnej analizy efektywności poszczególnych rozwiązań.
 
 Opracowanie metodologii badawczej obejmowało zdefiniowanie zestawu metryk wydajnościowych i jakościowych, 
 procedur pomiarowych oraz protokołu testowego, pozwalającego na zebranie odpowiednich danych, które w dalszej kolejności 
 będą służyć do obiektywnej oceny efektywności badanych modeli AI.
 
 Z opracowaną metodologią i sformułowanymi wymaganiami projektowymi, przystąpiono do realizacji badań, przeprowadzając serię eksperymentów
-badawczych, zbierając dane dotyczące parametrów wydajnościowych i jakościowych dla wybranych lokalnych i chmurowych modeli sztucznej inteligencji.
+badawczych, zbierając dane dotyczące parametrów dla wybranych lokalnych i chmurowych modeli sztucznej inteligencji.
 
 Ostatnim i zarazem kluczowym etapem była wizualizacja i interpretacja uzyskanych wyników badań, identyfikacja kompromisów między wydajnością, a jakością
 generowanych opisów oraz sformułowanie rekomendacji doboru strategii wdrożeniowej w zależności od specyfiki i wymagań projektowanej aplikacji mobilnej.
 
-
 Wyżej sformułowane wymagania zebrano i przedstawiono w formie poszczególnych celów badawczych, których realizacja prowadzi do osiągnięcia głównego celu pracy.
 Każdy z wyróżnionych niżej celów odpowiada kolejnym rozdziałom pracy, w których szczegółowo opisano podejście do realizacji i osiągnięcia poszczególnych celów.
+
+\vspace{0.3cm}
+\noindent
+\textbf{Cel główny (CG):} 
+
+Przeprowadzenie kompleksowej analizy efektywności lokalnych oraz chmurowych rozwiązań sztucznej 
+inteligencji w zadaniu generowania opisów obrazów na platformie mobilnej Android 
+oraz sformułowanie rekomendacji doboru strategii wdrożeniowej w zależności od specyfiki i przeznaczenia 
+projektowanych aplikacji mobilnych.
+
+\vspace{0.3cm}
+\noindent
+\textbf{Cele szczegółowe:}
 
 \begin{enumerate}[leftmargin=*, label=\textbf{C\arabic*.}, itemsep=3pt]
     \item Przedstawienie teoretycznych podstaw automatycznego generowania opisów obrazów, analizy 
@@ -154,8 +164,8 @@ Każdy z wyróżnionych niżej celów odpowiada kolejnym rozdziałom pracy, w kt
     między strategiami wdrażania lokalnego i chmurowego w kontekście aplikacji mobilnych.
     
     \item Zaprojektowanie i implementacja dedykowanej platformy badawczej \textquote{CaptionLab} umożliwiającej 
-    przeprowadzenie badań porównawczych modeli lokalnych i chmurowych w środowisku 
-    Android z zapewnieniem precyzji pomiarów oraz powtarzalności testów.
+    przeprowadzenie badań porównawczych modeli lokalnych i chmurowych w środowisku Android z zapewnieniem 
+    precyzji pomiarów oraz powtarzalności testów.
     
     \item Opracowanie metodologii badawczej obejmującej definicję zestawu metryk wydajnościowych i jakościowych, 
     procedur pomiarowych oraz protokołów testowych pozwalających na obiektywną ocenę efektywności badanych 
@@ -165,17 +175,150 @@ Każdy z wyróżnionych niżej celów odpowiada kolejnym rozdziałom pracy, w kt
     (czas inferencji, zużycie pamięci, pobór energii, koszty operacyjne) i jakościowych (metryki CIDEr, SPICE, 
     METEOR, BLEU) dla wybranych modeli lokalnych i chmurowych.
     
-    \item Interpretacja uzyskanych wyników badań, identyfikacja kompromisów między wydajnością, a jakością 
+    \item Interpretacja uzyskanych wyników badań, identyfikacja kompromisów między wydajnością a jakością 
     generowanych opisów oraz sformułowanie rekomendacji doboru strategii wdrożeniowej w zależności od 
     specyfiki i wymagań projektowanej aplikacji mobilnej.
 \end{enumerate}
 
+\noindent
+Dla tak zdefiniowanych celów badawczych sformułowano odpowiadające im problemy badawcze,
+na które niniejsza praca ma udzielić odpowiedzi. Problemy te wyznaczają główny kierunek prowadzonej
+analizy oraz jasno definiują zakres prowadzonych badań.
 
+\vspace{0.3cm}
+\noindent
+\textbf{Problem główny (PG):} 
+
+Które podejście do wdrażania systemów AI generujących opisy obrazów (lokalne 
+czy chmurowe) jest bardziej efektywne w środowisku mobilnym oraz jakie kryteria powinny kierować wyborem strategii wdrożeniowej?
+
+\vspace{0.3cm}
+\noindent
+\textbf{Problemy szczegółowe:}
+
+Analogicznie do dekompozycji celu głównego na cele szczegółowe, problem główny został rozłożony na pięć 
+problemów szczegółowych, bezpośrednio odpowiadających celom szczegółowym C1-C5.
+
+\begin{enumerate}[leftmargin=*, label=\textbf{P\arabic*.}, itemsep=3pt]
+    \item Jak działa zadanie automatycznego generowania opisów obrazów,
+    czym charakteryzują się poszczególne architektury modeli AI
+    oraz jakie są kluczowe różnice pomiędzy strategiami wdrażania lokalnego i chmurowego?
+    
+    \item Jak efektywnie mierzyć i porównywać różnorodne modele AI (lokalne i chmurowe) 
+    w zadaniu image captioning'u w środowisku mobilnym Android przy zapewnieniu precyzji pomiarów, 
+    powtarzalności i wiarygodności eksperymentów?
+    
+    \item Jak opracować odpowiednią metodologię badań obejmującą wybór metryk, procedur pomiarowych 
+    oraz protokołów testowych, która umożliwi obiektywną ocenę efektywności badanych modeli AI?
+    
+    \item Do jakich wyników prowadzą przeprowadzone eksperymenty badawcze w zakresie parametrów
+    wydajnościowych i jakościowych dla wybranych lokalnych i chmurowych modeli sztucznej inteligencji?
+    
+    \item Jakie wnioski i rekomendacje wynikają z interpretacji zebranych danych oraz jakie 
+    kompromisy i kryteria decyzyjne powinny kierować wyborem strategii wdrożeniowej 
+    w zależności od specyfiki projektowanej aplikacji mobilnej?
+\end{enumerate}
+
+\noindent
+Sformułowane wyżej cele oraz problemy badawcze stanowiły podstawę do wyprowadzania 
+hipotez badawczych, które określają przewidywane odpowiedzi na postawione pytania badawcze. 
+Hipotezy te zostały skonstruowane w oparciu o dotychczasowy stan wiedzy oraz obserwacje dotyczące kompromisów
+między wydajnością a jakością w systemach uczenia maszynowego i odpowiadają kolejno postawionym problemom badawczym.
+
+\vspace{0.3cm}
+\noindent
+\textbf{Hipoteza wiodąca (HG):} 
+
+Nie istnieje uniwersalnie optymalne rozwiązanie dla wszystkich zastosowań. Modele lokalne 
+charakteryzują się przewagą w zakresie ochrony prywatności, niezależności od sieci i innych dostawców, 
+podczas gdy modele chmurowe oferują wyższą jakość generowanych opisów kosztem zależności od połączenia 
+sieciowego i opłat operacyjnych, co implikuje konieczność doboru strategii wdrożeniowej w oparciu 
+o specyficzne wymagania projektowanej aplikacji.
+
+\vspace{0.3cm}
+\noindent
+\textbf{Hipotezy szczegółowe:}
+
+\begin{enumerate}[leftmargin=*, label=\textbf{H\arabic*.}, itemsep=3pt]
+    \item Architektóry modeli lokalnych charakteryzują się optymalizacją pod kątem ograniczonych zasobów,
+    wykorzystując techniki kompresji, kwantyzacji oraz uproszczone enkodery wizyjne,
+    podczas gdy modele chmurowe bazują na multimodalnych architekturach o znacznie większej pojemności,
+    co przekłada się na fundamentalne różnice w strategiach wdrożeniowych.
+    
+    \item Efektywny pomiar i porównanie poszczególnych modeli AI wymaga dedykowanej platformy badawczej 
+    implementującej ujednolicony interfejs pomiarowy, automatyzującą zbieranie metryk oraz eliminującą 
+    zmienność środowiskową.
+    
+    \item Kompleksowa ocena efektywności modeli image captioning wymaga zdefiniowania 
+    zestawu metryk wydajnościowych oraz jakościowych, 
+    a także opracowania procesu testowego zapewniającego spójność i powtarzalność pomiarów pozwalających na bezpośrednie porównanie działania modeli.
+    
+    \item Modele lokalne charakteryzują się wyższym zużyciem pamięci RAM i energii 
+    ze względu na lokalne przetwarzanie i przechowywanie wag modelu, jednak potencjalnie 
+    oferują szybsze działanie, niezależne od warunków sieciowych, podczas gdy modele 
+    chmurowe wykazują dłuższe czasy odpowiedzi uzależnione od opóźnień sieciowych, 
+    ale zapewniają wyższe wartości metryk jakościowych.
+    
+    \item Interpretacja wyników prowadzi do wniosku, że modele lokalne stanowią optymalny wybór 
+    dla aplikacji wymagających działania offline, niskich opóźnień, ochrony prywatności 
+    oraz przewidywalnych kosztów, podczas gdy modele chmurowe są preferowane w scenariuszach 
+    priorytetyzujących maksymalną jakość opisów i minimalne wymagania 
+    pamięciowe aplikacji, przy akceptacji zależności sieciowej i kosztów proporcjonalnych do użytkowania.
+\end{enumerate}
+
+\noindent
+Realizacja postawionych celów oraz weryfikacja sformułowanych hipotez określa strukturę logiczną pracy,
+a także wyznacza kierunek prowadzonych badań. Osiągnięcie tych celów i odpowiedzi na postawione pytania badawcze
+prowadzi do wyznaczenia praktycznych rekomendacji dotyczących doboru strategii wdrożeniowej systemów sztucznej inteligencji
+w zadaniu image captioning'u w środowisku aplikacji mobilnych.
+
+
+\subsection{Metodologia badawcza}\label{ss:Metodologia badawcza}
+
+\noindent
+W celu zrealizowania postawionych celów badawczych oraz weryfikacji sformułowanych hipotez, 
+zastosowano metodologię badawczą opartą na eksperymencie porównawczym z wykorzystaniem metod ilościowych. 
+Wybór tego podejścia metodologicznego wynikał z charakteru postawionego problemu badawczego, 
+który wymaga obiektywnego, mierzalnego porównania dwóch odmiennych strategii wdrożeniowych 
+w zadaniu generowania opisów obrazów na platformie mobilnej Android.
+
+Wybór metody eksperymentu porównawczego był uzasadniony kilkoma kluczowymi względami. Umożliwił 
+bezpośrednie zestawienie ze sobą dwóch konkurencyjnych podejść w identycznych warunkach środowiskowych, 
+co wyeliminowało wpływ zewnętrznych zmiennych. Pozwolił na kontrolowanie warunków eksperymentu poprzez 
+standaryzację danych wejściowych, procedur pomiarowych oraz środowiska testowego. Zapewnił również 
+powtarzalność badań poprzez precyzyjne zdefiniowanie protokołu testowego, którego szczegółowy 
+opis przedstawiono w rozdziale \ref{s:Metodologia badan}. \textquote{Metodologia badań}.
+Porównanie obejmowało dwa komplementarne wymiary analizy. Wymiar wydajnościowy koncentrował 
+się na aspektach operacyjnych działania modeli w środowisku mobilnym - czasach odpowiedzi, zużyciu 
+zasobów systemowych oraz kosztach eksploatacyjnych. Wymiar jakościowy odnosił się do 
+poprawności i trafności generowanych opisów obrazów mierzonej uznanymi metrykami oceny tekstu 
+w języku naturalnym.
+
+Realizacja eksperymentu porównawczego wymagała zastosowania metod ilościowych, które w przeciwieństwie 
+do metod jakościowych, pozwalają na obiektywną, numeryczną ocenę badanych parametrów oraz umożliwiają 
+statystyczne porównanie wyników między różnymi modelami i strategiami wdrożeniowymi. Metody ilościowe 
+obejmowały pomiary bezpośrednie parametrów mierzalnych w trakcie działania modeli, takich jak 
+czasy inferencji w poszczególnych fazach przetwarzania, zużycie pamięci RAM oraz 
+rozmiary modeli. Zastosowano również pomiary pośrednie dotyczące kosztów operacyjnych modeli chmurowych, 
+wyznaczonych na podstawie oficjalnych cenników dostawców API oraz oszacowania pobór energii urządzenia. W zakresie oceny jakości generowanych 
+opisów wykorzystano uznane w literaturze metryki NLP (Natural Language Processing): CIDEr, SPICE, METEOR oraz BLEU, z których 
+każda ocenia inne aspekty jakości opisu - od zgodności semantycznej, przez pokrycie pojęć, 
+po płynność językową.
+
+Takie podejście pozwoliło na obiektywną ocenę różnic między modelami lokalnymi 
+a chmurowymi, statystyczne porównanie wyników oraz 
+wizualizację wyników w formie wykresów i tabel ułatwiających interpretację i weryfikację postawionych hipotez,
+poprzez porównanie przewidywanych wartości z rzeczywistymi pomiarami, a także sformułowanie 
+konkretnych, mierzalnych rekomendacji dotyczących wyboru strategii wdrożeniowej w zależności 
+od przeznaczenia aplikacji.
+
+\clearpage
 \subsection{Struktura Pracy}\label{ss:Struktura Pracy}
 
 \noindent
-Wskazane cele i zidentyfikowane problemy badawcze w sekcji \ref{ss:Wymagania Projektowe}. \textit{Wymagania projektowe} zdefiniowały 
-podział pracy na poszczególne jednostki redakcyjne, z których każda odpowiada realizacji kolejnych celów badawczych.
+Wskazane cele, problemy i hipotezy badawcze w sekcji \ref{ss:Wymagania Projektowe}. \textquote{Wymagania projektowe}
+zdefiniowały podział pracy na poszczególne jednostki redakcyjne, 
+z których każda odpowiada realizacji kolejnych celów badawczych oraz weryfikacji postawionych hipotez.
 
 Rozdział \ref{s:Modele}. \textit{Modele i technologie AI do generowania opisów obrazów} przedstawia szczegółowy opis teoretycznych podstaw automatycznego generowania opisów obrazów, ewolucji architektur
 oraz mechanizmów działania systemów image captioning'u. Zawarto w nim także omówienie kluczowych różnic między strategiami wdrażania lokalnego i chmurowego,

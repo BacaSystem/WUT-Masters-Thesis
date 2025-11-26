@@ -52,10 +52,22 @@
 %-------------------------------------
 \cleardoublepage % Zaczynamy od nieparzystej strony
 \abstract 
-\lipsum[1]
-% TODO: Napisać streszczenie po polsku
+Praca podejmuje się problemu doboru strategii wdrażania modeli sztucznej inteligencji (AI) do generowania opisów obrazów w aplikacjach mobilnych
+poprzez analizę efektywności wybranych rozwiązań lokalnych i chmurowych. 
+Badania opierają się na eksperymentach porównawczych w dwóch komplementarnych wymiarach- wydajnościowym i jakościowym.
+W celu realizacji badań opracowano dedykowaną platformę testową dla systemu Android, umożliwiającą integrację różnych modeli sztucznej inteligencji poprzez zunifikowany, niezależny od 
+implementacji, interfejs oraz automatyzacje procesu pomiarowego, w tym rejestrację metryk wydajnościowych w czasie inferencji.
+Architektura platformy wykorzystuje ONNX Runtime jako silnik inferencji dla modeli lokalnych oraz REST API dla integracji z usługami chmurowymi.
+Eksperymenty przeprowadzono na reprezentatywnym zbiorze danych obrazów z opisami referencyjnymi, wykorzystując lokalne modele AI uruchamiane na urządzeniu mobilnym,
+oraz modele chmurowe udostępniane przez zewnętrznych dostawców poprzez interfejsy API.
+Każdy model został poddany wielokrotnym iteracjom pomiarowym z fazą rozgrzewką, zapewniając wiarygodność statystyczną zebranych danych.
+Zebrane w trakcie badań dane obejmują szczegółowe metryki wydajnościowe obejmujące czasy odpowiedzi, zużycie zasobów systemowych i 
+koszty operacyjne oraz jakościowym generowanych opisów, ocenianym za pomocą standardowych algorytmów z dziedziny przetwarzania języka naturalnego.
+Dane te stanowią podstawę do wieloaspektowej analizy porównawczej efektywności badanych strategii wdrożeniowych, umożliwiając sformułowanie wniosków
+i rekomendacji dotyczących doboru optymalnego podejścia do implementacji modeli sztucznej inteligencji w zadaniu generowania opisów obrazów w aplikacjach mobilnych,
+uwzględniających specyficzne wymagania projektowanych aplikacji.
 
-\keywords XXXX, XXXX, XXXX, XXXXX, XXXX
+\keywords sztuczna inteligencja, generowanie opisów obrazów, image captioning, aplikacje mobilne, modele lokalne, modele chmurowe, wydajność, Android, ONNX
 
 %----------------------------------------
 % Streszczenie po angielsku dla \langpol
@@ -63,9 +75,22 @@
 %----------------------------------------
 \clearpage
 \secondabstract 
-\lipsum[1]
-% TODO: Write the abstract in English
-\secondkeywords XXXX, XXXX, XXXX, XXXXX, XXXX
+This thesis addresses the problem of selecting deployment strategies for artificial intelligence (AI) models for image captioning in mobile applications
+through the analysis of the effectiveness of selected local and cloud solutions.
+The research is based on comparative experiments in two complementary dimensions - performance and quality.
+To conduct the research, a dedicated testing platform for the Android system was developed, enabling the integration of various artificial intelligence models through a unified, implementation-independent 
+interface and automation of the measurement process, including the recording of performance metrics during inference.
+The platform architecture utilizes ONNX Runtime as the inference engine for local models and REST API for integration with cloud services.
+The experiments were conducted on a representative dataset of images with reference captions, using local AI models running on a mobile device,
+and cloud models provided by external vendors through API interfaces.
+Each model was subjected to multiple measurement iterations with a warm-up phase, ensuring statistical reliability of the collected data.
+The data collected during the research includes detailed performance metrics covering response times, system resource consumption, and 
+operational costs, as well as quality metrics of generated captions, evaluated using standard algorithms from the field of natural language processing.
+This data forms the basis for a multi-faceted comparative analysis of the effectiveness of the studied deployment strategies, enabling the formulation of conclusions
+and recommendations regarding the selection of the optimal approach to implementing artificial intelligence models for image captioning tasks in mobile applications,
+taking into account specific requirements of the designed applications.
+
+\secondkeywords artificial intelligence, image captioning, mobile applications, local models, cloud models, performance, Android, ONNX
 
 \pagestyle{plain}
 
