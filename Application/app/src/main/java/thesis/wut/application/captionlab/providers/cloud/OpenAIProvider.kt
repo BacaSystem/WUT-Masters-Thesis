@@ -12,8 +12,19 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import thesis.wut.application.captionlab.providers.CaptionResult
 import thesis.wut.application.captionlab.providers.CaptioningProvider
 import java.io.ByteArrayOutputStream
+import kotlin.math.min
+import kotlin.math.pow
+import kotlin.random.Random
 
 class OpenAIProvider(private val apiKeyProvider: () -> String?) : CaptioningProvider {
+    
+    companion object {
+        private const val MAX_RETRIES = 3
+        private const val INITIAL_BACKOFF_MS = 500L
+        private const val MAX_BACKOFF_MS = 30000L
+        private const val JITTER_FACTOR = 0.1
+        private const val REQUEST_TIMEOUT_MS = 60000L
+    }
     
     override val id: String = "openai_cloud"
     private val client = OkHttpClient()
@@ -47,6 +58,16 @@ class OpenAIProvider(private val apiKeyProvider: () -> String?) : CaptioningProv
         val json = adapter.toJson(payload)
         val t1 = SystemClock.elapsedRealtimeNanos()
 
+        return executeWithRetry(key, json, t0, t1)
+    }
+
+    private suspend fun executeWithRetry(
+        key: String,
+        json: String,
+        t0: Long,
+        t1: Long,
+        retryCount: Int = 0
+    ): CaptionResult {
         val req = Request.Builder()
             .url("https://api.openai.com/v1/chat/completions")
             .addHeader("Content-Type", "application/json")
@@ -56,35 +77,77 @@ class OpenAIProvider(private val apiKeyProvider: () -> String?) : CaptioningProv
 
         val t2 = SystemClock.elapsedRealtimeNanos()
         
-        client.newCall(req).execute().use { resp ->
-            val t3 = SystemClock.elapsedRealtimeNanos()
-            
-            if (!resp.isSuccessful) {
-                val errorBody = resp.body?.string() ?: "No error body"
-                return CaptionResult("OpenAI Error: ${resp.code}\n${resp.message}\n$errorBody")
+        return try {
+            client.newCall(req).execute().use { resp ->
+                val t3 = SystemClock.elapsedRealtimeNanos()
+                
+                when {
+                    resp.isSuccessful -> {
+                        val bodyStr = resp.body.string()
+                        val out = moshi.adapter(ChatResponse::class.java).fromJson(bodyStr)
+                        val text = out?.choices?.firstOrNull()?.message?.content ?: "(no content)"
+                        val t4 = SystemClock.elapsedRealtimeNanos()
+                        
+                        val usage = out?.usage
+                        CaptionResult(
+                            text = text,
+                            extra = mapOf(
+                                "pre_ms" to (t1 - t0) / 1_000_000.0,
+                                "http_ms" to (t3 - t2) / 1_000_000.0,
+                                "post_ms" to (t4 - t3) / 1_000_000.0,
+                                "e2e_ms" to (t4 - t0) / 1_000_000.0,
+                                "http_status" to resp.code,
+                                "model" to "gpt-4o-mini",
+                                "prompt_tokens" to usage?.prompt_tokens,
+                                "completion_tokens" to usage?.completion_tokens,
+                                "total_tokens" to usage?.total_tokens,
+                                "retry_count" to retryCount
+                            )
+                        )
+                    }
+                    resp.code == 429 && retryCount < MAX_RETRIES -> {
+                        // Rate limited - wait and retry
+                        val retryAfter = resp.headers["Retry-After"]?.toLongOrNull() ?: calculateBackoff(retryCount)
+                        val waitMs = minOf(retryAfter * 1000, MAX_BACKOFF_MS)
+                        
+                        resp.body?.close()
+                        Thread.sleep(waitMs)
+                        
+                        executeWithRetry(key, json, t0, t1, retryCount + 1)
+                    }
+                    resp.code in 500..599 && retryCount < MAX_RETRIES -> {
+                        // Server error - wait and retry
+                        val waitMs = calculateBackoff(retryCount)
+                        val errorBody = resp.body?.string() ?: "No error body"
+                        
+                        Thread.sleep(waitMs)
+                        
+                        executeWithRetry(key, json, t0, t1, retryCount + 1)
+                    }
+                    else -> {
+                        // Other error
+                        val errorBody = resp.body?.string() ?: "No error body"
+                        CaptionResult("OpenAI Error: ${resp.code}\n${resp.message}\n$errorBody")
+                    }
+                }
             }
-            
-            val bodyStr = resp.body.string()
-            val out = moshi.adapter(ChatResponse::class.java).fromJson(bodyStr)
-            val text = out?.choices?.firstOrNull()?.message?.content ?: "(no content)"
-            val t4 = SystemClock.elapsedRealtimeNanos()
-            
-            val usage = out?.usage
-            return CaptionResult(
-                text = text,
-                extra = mapOf(
-                    "pre_ms" to (t1 - t0) / 1_000_000.0,
-                    "http_ms" to (t3 - t2) / 1_000_000.0,
-                    "post_ms" to (t4 - t3) / 1_000_000.0,
-                    "e2e_ms" to (t4 - t0) / 1_000_000.0,
-                    "http_status" to resp.code,
-                    "model" to "gpt-4o-mini",
-                    "prompt_tokens" to usage?.prompt_tokens,
-                    "completion_tokens" to usage?.completion_tokens,
-                    "total_tokens" to usage?.total_tokens
-                )
-            )
+        } catch (e: Exception) {
+            if (retryCount < MAX_RETRIES && e is java.net.SocketTimeoutException) {
+                val waitMs = calculateBackoff(retryCount)
+                Thread.sleep(waitMs)
+                executeWithRetry(key, json, t0, t1, retryCount + 1)
+            } else {
+                CaptionResult("OpenAI Request Error: ${e.message}")
+            }
         }
+    }
+
+    private fun calculateBackoff(retryCount: Int): Long {
+        // Exponential backoff with jitter
+        val exponentialBackoff = INITIAL_BACKOFF_MS * 2.0.pow(retryCount)
+        val jitter = exponentialBackoff * JITTER_FACTOR * Random.nextDouble()
+        val backoffMs = exponentialBackoff + jitter
+        return min(backoffMs.toLong(), MAX_BACKOFF_MS)
     }
 
     @JsonClass(generateAdapter = true)

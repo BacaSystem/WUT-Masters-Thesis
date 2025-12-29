@@ -48,56 +48,66 @@ class Florence2Provider(private val context: Context) : CaptioningProvider {
         )
     }
 
-    override suspend fun caption(bitmap: Bitmap): CaptionResult = runCatching {
-        val start = SystemClock.elapsedRealtimeNanos()
-        val metrics = mutableMapOf<String, Any?>()
-        
-        val preStart = SystemClock.elapsedRealtimeNanos()
-        val pixelValues = ImagePreprocessor.preprocess(
-            bitmap = bitmap,
-            targetSize = config.imageSize,
-            mean = config.imageMean,
-            std = config.imageStd
-        )
-        metrics["pre_ms"] = (SystemClock.elapsedRealtimeNanos() - preStart) / 1_000_000.0
-        
-        val visionStart = SystemClock.elapsedRealtimeNanos()
-        val imageFeatures = encodeImage(pixelValues)
-        metrics["vision_enc_ms"] = (SystemClock.elapsedRealtimeNanos() - visionStart) / 1_000_000.0
-        
-        val promptStart = SystemClock.elapsedRealtimeNanos()
-        val promptIds = tokenizer.encode("Describe image")
-        val promptEmbeds = embedTokens(promptIds)
-        metrics["prompt_ms"] = (SystemClock.elapsedRealtimeNanos() - promptStart) / 1_000_000.0
-        
-        val textEncStart = SystemClock.elapsedRealtimeNanos()
-        val inputsEmbeds = OnnxTensorHelper.concatenate(imageFeatures, promptEmbeds)
-        val seqLen = config.imageSeqLength + promptIds.size
-        val attentionMask = LongArray(seqLen) { 1L }
-        val encoderHiddenStates = encodeText(inputsEmbeds, attentionMask)
-        metrics["text_enc_ms"] = (SystemClock.elapsedRealtimeNanos() - textEncStart) / 1_000_000.0
-        
-        val decStart = SystemClock.elapsedRealtimeNanos()
-        val generatedIds = generateText(encoderHiddenStates, attentionMask, maxTokens = config.maxLength * 5)
-        metrics["dec_ms"] = (SystemClock.elapsedRealtimeNanos() - decStart) / 1_000_000.0
-        
-        val postStart = SystemClock.elapsedRealtimeNanos()
-        val generatedText = tokenizer.decode(generatedIds, skipSpecialTokens = true)
-        metrics["post_ms"] = (SystemClock.elapsedRealtimeNanos() - postStart) / 1_000_000.0
-        
-        metrics["e2e_ms"] = (SystemClock.elapsedRealtimeNanos() - start) / 1_000_000.0
-        metrics["tokens_generated"] = generatedIds.size
-        
-        CaptionResult(
-            text = generatedText,
-            extra = metrics
-        )
-    }.getOrElse { error ->
-        Log.e(TAG, "Inference failed", error)
-        CaptionResult(
-            text = "Error: ${error.message}",
-            extra = mapOf("error" to error.toString())
-        )
+    override suspend fun caption(bitmap: Bitmap): CaptionResult {
+        try {
+            val start = SystemClock.elapsedRealtimeNanos()
+            val metrics = mutableMapOf<String, Any?>()
+
+            val preStart = SystemClock.elapsedRealtimeNanos()
+            val pixelValues = ImagePreprocessor.preprocess(
+                bitmap = bitmap,
+                targetSize = config.imageSize,
+                mean = config.imageMean,
+                std = config.imageStd
+            )
+            metrics["pre_ms"] = (SystemClock.elapsedRealtimeNanos() - preStart) / 1_000_000.0
+
+            val visionStart = SystemClock.elapsedRealtimeNanos()
+            val imageFeatures = encodeImage(pixelValues)
+            metrics["vision_enc_ms"] =
+                (SystemClock.elapsedRealtimeNanos() - visionStart) / 1_000_000.0
+
+            val promptStart = SystemClock.elapsedRealtimeNanos()
+            val promptIds = tokenizer.encode("Describe image")
+            val promptEmbeds = embedTokens(promptIds)
+            metrics["prompt_ms"] = (SystemClock.elapsedRealtimeNanos() - promptStart) / 1_000_000.0
+
+            val textEncStart = SystemClock.elapsedRealtimeNanos()
+            val inputsEmbeds = OnnxTensorHelper.concatenate(imageFeatures, promptEmbeds)
+            val seqLen = config.imageSeqLength + promptIds.size
+            val attentionMask = LongArray(seqLen) { 1L }
+            val encoderHiddenStates = encodeText(inputsEmbeds, attentionMask)
+            metrics["text_enc_ms"] =
+                (SystemClock.elapsedRealtimeNanos() - textEncStart) / 1_000_000.0
+
+            val decStart = SystemClock.elapsedRealtimeNanos()
+            val generatedIds =
+                generateText(encoderHiddenStates, attentionMask, maxTokens = config.maxLength * 5)
+            metrics["dec_ms"] = (SystemClock.elapsedRealtimeNanos() - decStart) / 1_000_000.0
+
+            val postStart = SystemClock.elapsedRealtimeNanos()
+            val generatedText = tokenizer.decode(generatedIds, skipSpecialTokens = true)
+            metrics["post_ms"] = (SystemClock.elapsedRealtimeNanos() - postStart) / 1_000_000.0
+
+            metrics["e2e_ms"] = (SystemClock.elapsedRealtimeNanos() - start) / 1_000_000.0
+            metrics["tokens_generated"] = generatedIds.size
+
+
+            Log.d("Inference result ", "Caption: $generatedText")
+
+            return CaptionResult(
+                text = generatedText,
+                extra = metrics
+            )
+
+        } catch (error: Exception) {
+            Log.e(TAG, "Inference failed", error)
+
+            return CaptionResult(
+                text = "Error: ${error.message}",
+                extra = mapOf("error" to error.toString())
+            )
+        }
     }
 
     private fun loadModel(path: String): OrtSession {

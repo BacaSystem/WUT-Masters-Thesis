@@ -236,6 +236,24 @@ class BenchmarkRunner(
             }
         }
         
+        // Cleanup provider resources after all images processed
+        try {
+            val provider = providerManager.getProvider(providerId)
+            if (provider != null) {
+                Log.d(TAG, "Cleaning up resources for provider: $providerId")
+                provider.cleanup()
+                // Additional GC for local providers (especially Florence2)
+                if (providerId.contains("florence", ignoreCase = true) || 
+                    providerId.contains("blip", ignoreCase = true) ||
+                    providerId.contains("vitgpt", ignoreCase = true)) {
+                    System.gc()
+                    Thread.sleep(200)
+                }
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "Error during provider cleanup: ${e.message}", e)
+        }
+        
         val providerEndTime = System.currentTimeMillis()
         val durationMs = providerEndTime - providerStartTime
         

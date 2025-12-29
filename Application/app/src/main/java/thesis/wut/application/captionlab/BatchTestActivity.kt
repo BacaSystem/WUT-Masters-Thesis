@@ -169,13 +169,15 @@ class BatchTestActivity : AppCompatActivity() {
 
                 val datasetType = binding.spinnerDataset.selectedItem.toString()
                 val imageCount = binding.editImageCount.text.toString().toIntOrNull() ?: 10
+                val startIndex = binding.editStartIndex.text.toString().toIntOrNull() ?: 0
+                val endIndex = binding.editEndIndex.text.toString().toIntOrNull() ?: -1
 
                 loadedImages = when {
-                    datasetType.contains("COCO") -> loadCocoDataset(datasetType, imageCount)
-                    else -> loadCustomDataset(imageCount)
+                    datasetType.contains("COCO") -> loadCocoDataset(datasetType, imageCount, startIndex, endIndex)
+                    else -> loadCustomDataset(imageCount, startIndex, endIndex)
                 }
 
-                binding.textDatasetStatus.text = "Dataset loaded: ${loadedImages.size} images"
+                binding.textDatasetStatus.text = "Dataset loaded: ${loadedImages.size} images (indices: $startIndex-${if(endIndex < 0) "auto" else endIndex})"
                 binding.textDatasetStatus.setTextColor(getColor(android.R.color.holo_green_dark))
                 updateUIState()
 
@@ -187,9 +189,9 @@ class BatchTestActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun loadCocoDataset(type: String, count: Int): List<Pair<Bitmap, String>> {
+    private suspend fun loadCocoDataset(type: String, count: Int, startIndex: Int, endIndex: Int): List<Pair<Bitmap, String>> {
         return try {
-            datasetLoader.loadCocoDataset("val2017", count)
+            datasetLoader.loadCocoDataset("val2017", count, startIndex, endIndex)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to load COCO dataset", e)
             showDatasetInstructions()
@@ -197,9 +199,9 @@ class BatchTestActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun loadCustomDataset(count: Int): List<Pair<Bitmap, String>> {
+    private suspend fun loadCustomDataset(count: Int, startIndex: Int, endIndex: Int): List<Pair<Bitmap, String>> {
         return try {
-            datasetLoader.loadCustomDataset("custom", count)
+            datasetLoader.loadCustomDataset("custom", count, startIndex, endIndex)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to load custom dataset", e)
             showDatasetInstructions()
@@ -487,6 +489,8 @@ class BatchTestActivity : AppCompatActivity() {
         binding.editNumRuns.setText(prefs.getInt("numRuns", 10).toString())
         binding.editWarmupRuns.setText(prefs.getInt("warmupRuns", 3).toString())
         binding.editTimeoutSeconds.setText(prefs.getInt("timeoutSeconds", 30).toString())
+        binding.editStartIndex.setText(prefs.getInt("startIndex", 0).toString())
+        binding.editEndIndex.setText(prefs.getInt("endIndex", -1).toString())
         binding.checkboxAutoExport.isChecked = prefs.getBoolean("autoExport", true)
         binding.spinnerExportFormat.setSelection(prefs.getInt("exportFormat", 2))
     }
@@ -496,6 +500,8 @@ class BatchTestActivity : AppCompatActivity() {
             putInt("numRuns", binding.editNumRuns.text.toString().toIntOrNull() ?: 10)
             putInt("warmupRuns", binding.editWarmupRuns.text.toString().toIntOrNull() ?: 3)
             putInt("timeoutSeconds", binding.editTimeoutSeconds.text.toString().toIntOrNull() ?: 30)
+            putInt("startIndex", binding.editStartIndex.text.toString().toIntOrNull() ?: 0)
+            putInt("endIndex", binding.editEndIndex.text.toString().toIntOrNull() ?: -1)
             putBoolean("autoExport", binding.checkboxAutoExport.isChecked)
             putInt("exportFormat", binding.spinnerExportFormat.selectedItemPosition)
             apply()

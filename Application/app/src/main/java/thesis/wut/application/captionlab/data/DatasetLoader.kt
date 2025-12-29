@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.File
+import kotlin.math.min
 
 class DatasetLoader(private val context: Context) {
     
@@ -23,7 +24,9 @@ class DatasetLoader(private val context: Context) {
     
     suspend fun loadCocoDataset(
         version: String,
-        maxImages: Int = 100
+        maxImages: Int = 100,
+        startIndex: Int = 0,
+        endIndex: Int = -1
     ): List<Pair<Bitmap, String>> = withContext(Dispatchers.IO) {
         val datasetDir = File(getDatasetsDirectory(), "coco_$version")
         val imagesDir = File(datasetDir, "images")
@@ -46,15 +49,28 @@ class DatasetLoader(private val context: Context) {
         Log.i(TAG, "Loading COCO $version dataset from: ${datasetDir.absolutePath}")
         
         // List image files
-        val imageFiles = imagesDir.listFiles { file ->
+        val allImageFiles = imagesDir.listFiles { file ->
             file.isFile && (file.extension == "jpg" || file.extension == "jpeg")
-        }?.sortedBy { it.name }?.take(maxImages) ?: emptyList()
+        }?.sortedBy { it.name } ?: emptyList()
         
-        if (imageFiles.isEmpty()) {
+        if (allImageFiles.isEmpty()) {
             throw IllegalStateException("No images found in: ${imagesDir.absolutePath}")
         }
         
-        Log.i(TAG, "Found ${imageFiles.size} image files")
+        // Calculate actual end index
+        val actualEndIndex = if (endIndex < 0) {
+            min(startIndex + maxImages, allImageFiles.size)
+        } else {
+            min(endIndex, allImageFiles.size)
+        }
+        
+        // Validate startIndex
+        val validStartIndex = startIndex.coerceIn(0, allImageFiles.size - 1)
+        
+        // Extract subset
+        val imageFiles = allImageFiles.subList(validStartIndex, actualEndIndex)
+        
+        Log.i(TAG, "Found ${allImageFiles.size} total image files, loading ${imageFiles.size} images (from $validStartIndex to $actualEndIndex)")
         
         // Load annotations if available
         val annotations = if (annotationsFile.exists()) {
@@ -74,7 +90,7 @@ class DatasetLoader(private val context: Context) {
                     loadedImages.add(Pair(bitmap, imageId))
                     
                     if ((index + 1) % 10 == 0) {
-                        Log.d(TAG, "Loaded ${index + 1}/${imageFiles.size} images")
+                        Log.d(TAG, "Loaded ${index + 1}/${imageFiles.size} images (global index: ${validStartIndex + index + 1}/${allImageFiles.size})")
                     }
                 } else {
                     Log.w(TAG, "Failed to decode image: ${file.name}")
@@ -84,7 +100,7 @@ class DatasetLoader(private val context: Context) {
             }
         }
         
-        Log.i(TAG, "Successfully loaded ${loadedImages.size} images from COCO $version")
+        Log.i(TAG, "Successfully loaded ${loadedImages.size} images from COCO $version (indices: $validStartIndex-$actualEndIndex)")
         loadedImages
     }
     
@@ -112,7 +128,9 @@ class DatasetLoader(private val context: Context) {
     }
     
     suspend fun loadFlickr30kDataset(
-        maxImages: Int = 100
+        maxImages: Int = 100,
+        startIndex: Int = 0,
+        endIndex: Int = -1
     ): List<Pair<Bitmap, String>> = withContext(Dispatchers.IO) {
         val datasetDir = File(getDatasetsDirectory(), "flickr30k")
         val imagesDir = File(datasetDir, "images")
@@ -134,15 +152,28 @@ class DatasetLoader(private val context: Context) {
         Log.i(TAG, "Loading Flickr30k dataset from: ${datasetDir.absolutePath}")
         
         // List image files
-        val imageFiles = imagesDir.listFiles { file ->
+        val allImageFiles = imagesDir.listFiles { file ->
             file.isFile && (file.extension == "jpg" || file.extension == "jpeg")
-        }?.sortedBy { it.name }?.take(maxImages) ?: emptyList()
+        }?.sortedBy { it.name } ?: emptyList()
         
-        if (imageFiles.isEmpty()) {
+        if (allImageFiles.isEmpty()) {
             throw IllegalStateException("No images found in: ${imagesDir.absolutePath}")
         }
         
-        Log.i(TAG, "Found ${imageFiles.size} image files")
+        // Calculate actual end index
+        val actualEndIndex = if (endIndex < 0) {
+            min(startIndex + maxImages, allImageFiles.size)
+        } else {
+            min(endIndex, allImageFiles.size)
+        }
+        
+        // Validate startIndex
+        val validStartIndex = startIndex.coerceIn(0, allImageFiles.size - 1)
+        
+        // Extract subset
+        val imageFiles = allImageFiles.subList(validStartIndex, actualEndIndex)
+        
+        Log.i(TAG, "Found ${allImageFiles.size} total image files, loading ${imageFiles.size} images (from $validStartIndex to $actualEndIndex)")
         
         // Load images
         val loadedImages = mutableListOf<Pair<Bitmap, String>>()
@@ -154,7 +185,7 @@ class DatasetLoader(private val context: Context) {
                     loadedImages.add(Pair(bitmap, imageId))
                     
                     if ((index + 1) % 10 == 0) {
-                        Log.d(TAG, "Loaded ${index + 1}/${imageFiles.size} images")
+                        Log.d(TAG, "Loaded ${index + 1}/${imageFiles.size} images (global index: ${validStartIndex + index + 1}/${allImageFiles.size})")
                     }
                 } else {
                     Log.w(TAG, "Failed to decode image: ${file.name}")
@@ -164,13 +195,15 @@ class DatasetLoader(private val context: Context) {
             }
         }
         
-        Log.i(TAG, "Successfully loaded ${loadedImages.size} images from Flickr30k")
+        Log.i(TAG, "Successfully loaded ${loadedImages.size} images from Flickr30k (indices: $validStartIndex-$actualEndIndex)")
         loadedImages
     }
     
     suspend fun loadCustomDataset(
         directoryName: String,
-        maxImages: Int = 100
+        maxImages: Int = 100,
+        startIndex: Int = 0,
+        endIndex: Int = -1
     ): List<Pair<Bitmap, String>> = withContext(Dispatchers.IO) {
         val imagesDir = File(getDatasetsDirectory(), directoryName)
         
@@ -185,15 +218,28 @@ class DatasetLoader(private val context: Context) {
         Log.i(TAG, "Loading custom dataset from: ${imagesDir.absolutePath}")
         
         // List image files
-        val imageFiles = imagesDir.listFiles { file ->
+        val allImageFiles = imagesDir.listFiles { file ->
             file.isFile && file.extension.lowercase() in listOf("jpg", "jpeg", "png", "bmp")
-        }?.sortedBy { it.name }?.take(maxImages) ?: emptyList()
+        }?.sortedBy { it.name } ?: emptyList()
         
-        if (imageFiles.isEmpty()) {
+        if (allImageFiles.isEmpty()) {
             throw IllegalStateException("No images found in: ${imagesDir.absolutePath}")
         }
         
-        Log.i(TAG, "Found ${imageFiles.size} image files")
+        // Calculate actual end index
+        val actualEndIndex = if (endIndex < 0) {
+            min(startIndex + maxImages, allImageFiles.size)
+        } else {
+            min(endIndex, allImageFiles.size)
+        }
+        
+        // Validate startIndex
+        val validStartIndex = startIndex.coerceIn(0, allImageFiles.size - 1)
+        
+        // Extract subset
+        val imageFiles = allImageFiles.subList(validStartIndex, actualEndIndex)
+        
+        Log.i(TAG, "Found ${allImageFiles.size} total image files, loading ${imageFiles.size} images (from $validStartIndex to $actualEndIndex)")
         
         // Load images
         val loadedImages = mutableListOf<Pair<Bitmap, String>>()
@@ -205,7 +251,7 @@ class DatasetLoader(private val context: Context) {
                     loadedImages.add(Pair(bitmap, imageId))
                     
                     if ((index + 1) % 10 == 0) {
-                        Log.d(TAG, "Loaded ${index + 1}/${imageFiles.size} images")
+                        Log.d(TAG, "Loaded ${index + 1}/${imageFiles.size} images (global index: ${validStartIndex + index + 1}/${allImageFiles.size})")
                     }
                 } else {
                     Log.w(TAG, "Failed to decode image: ${file.name}")
@@ -215,7 +261,7 @@ class DatasetLoader(private val context: Context) {
             }
         }
         
-        Log.i(TAG, "Successfully loaded ${loadedImages.size} images from custom dataset")
+        Log.i(TAG, "Successfully loaded ${loadedImages.size} images from custom dataset (indices: $validStartIndex-$actualEndIndex)")
         loadedImages
     }
     

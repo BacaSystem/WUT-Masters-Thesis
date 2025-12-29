@@ -2,6 +2,7 @@ package thesis.wut.application.captionlab.providers.manager
 
 import android.content.Context
 import thesis.wut.application.captionlab.providers.CaptioningProvider
+import thesis.wut.application.captionlab.providers.RateLimitedProviderWrapper
 import thesis.wut.application.captionlab.providers.cloud.AzureVisionProvider
 import thesis.wut.application.captionlab.providers.cloud.GeminiProvider
 import thesis.wut.application.captionlab.providers.cloud.OpenAIProvider
@@ -33,7 +34,19 @@ class ProviderManager(
     }
 
     private fun registerCloudProvider(provider: CaptioningProvider) {
-        providers[provider.id] = provider
+        // Opakowaj cloud provider w rate limiter
+        // OpenAI: 200,000 TPM limit, ~14,200 tokens per request
+        //   -> Max ~14 req/min = 0.23 req/sec (safe: 0.15 req/sec with buffer)
+        // Azure: 10 TPS (transactions per second) dla Standard tier
+        // Gemini: 60 req/min dla free tier, czyli 1 req/sec
+        val wrappedProvider = when (provider.id) {
+            "openai_cloud" -> RateLimitedProviderWrapper(provider, requestsPerSecond = 0.15, burstSize = 1.0)
+            "azure_vision_cloud" -> RateLimitedProviderWrapper(provider, requestsPerSecond = 0.15, burstSize = 1.0)
+            "gemini_cloud" -> RateLimitedProviderWrapper(provider, requestsPerSecond = 1.0, burstSize = 1.0)
+            else -> provider
+        }
+        
+        providers[provider.id] = wrappedProvider
         cloudProviderIds.add(provider.id)
     }
 
