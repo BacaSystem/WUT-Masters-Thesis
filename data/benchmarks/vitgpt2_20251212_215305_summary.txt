@@ -1,0 +1,54 @@
+======================================================================
+BENCHMARK RESULTS SUMMARY
+======================================================================
+
+Benchmark Information:
+  Name: Unnamed
+  Description: Batch test via BatchTestActivity
+  Dataset: COCO_val2017
+  Start Time: 2025-12-12 21:53:05
+  End Time: 2025-12-12 22:00:13
+  Duration: 427,95 seconds
+  Status: COMPLETED
+
+Device Information:
+  Manufacturer: samsung
+  Model: SM-S921B
+  Android: 16 (SDK 36)
+  CPU ABI: arm64-v8a
+  Total RAM: 7225 MB
+  Available RAM: 2619 MB
+
+Overall Statistics:
+  Total Images: 100
+  Total Runs: 500
+  Successful: 500 (100.0%)
+  Failed: 0
+  Providers Tested: 1
+
+----------------------------------------------------------------------
+PROVIDER RESULTS
+----------------------------------------------------------------------
+
+Provider: ViT-GPT2 (Local) (vit_gpt2_onnx_local)
+  Category: Local
+  Success Rate: 100,0%
+  Images: 100/100
+  Duration: 427,94 seconds
+
+  Performance Metrics:
+    Latency (p50): 772,36 ms
+    Latency (p90): 919,62 ms
+    Latency (mean): 759,96 ± 132,58 ms
+    Latency (range): [405,20, 1192,22] ms
+    Throughput (median): 1,29 img/s
+
+    Inference Time (median): 769,28 ms
+    RAM Peak (mean): 17,6 MB
+    RAM Peak (max): 39,1 MB
+    Energy (mean): 40,942 mWh per image
+    Energy (total sum): 491,31 mWh
+
+======================================================================
+END OF REPORT
+======================================================================

@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "name": null,
+    "description": "Batch test via BatchTestActivity",
+    "dataset": "COCO_val2017",
+    "start_time": "2025-12-12 21:30:02",
+    "end_time": "2025-12-12 21:39:28",
+    "duration_ms": 565480,
+    "status": "COMPLETED"
+  },
+  "device": {
+    "manufacturer": "samsung",
+    "model": "SM-S921B",
+    "android_version": "16",
+    "sdk_int": 36,
+    "cpu_abi": "arm64-v8a",
+    "total_memory_mb": 7225,
+    "available_memory_mb": 2668
+  },
+  "statistics": {
+    "total_images": 100,
+    "total_runs": 500,
+    "successful_runs": 500,
+    "failed_runs": 0,
+    "success_rate": 1.0
+  },
+  "providers": [
+    {
+      "provider_id": "blip_onnx_local",
+      "provider_name": "BLIP (Local)",
+      "category": "Local",
+      "success_rate": 1.0,
+      "total_images": 100,
+      "successful_images": 100,
+      "duration_ms": 565472,
+      "performance_metrics": {
+        "latency": {
+          "p50_ms": 1091.302793,
+          "p90_ms": 1248.1680118,
+          "mean_ms": 1033.6228717879992,
+          "std_ms": 197.1685106739464,
+          "min_ms": 587.419258,
+          "max_ms": 1450.674531
+        },
+        "throughput": {
+          "median_img_per_s": 0.9163359668960362
+        },
+        "inference_time": {
+          "median_ms": 1087.476993
+        },
+        "ram": {
+          "peak_mean_mb": 15.92741473388672,
+          "peak_max_mb": 32.59858703613281
+        },
+        "energy": {
+          "mean_mwh_per_image": 43.431271723214635,
+          "total_mwh": 738.3316192946488
+        }
+      }
+    }
+  ]
+}

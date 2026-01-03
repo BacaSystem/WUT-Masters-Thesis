@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "name": "florence2",
+    "description": "Batch test via BatchTestActivity - MERGED from all runs",
+    "dataset": "COCO_val2017",
+    "start_time": "2025-12-22 00:26:52",
+    "end_time": "2025-12-21 19:47:10",
+    "duration_ms": 3277021,
+    "status": "COMPLETED",
+    "merged_from_runs": 99
+  },
+  "device": {
+    "manufacturer": "samsung",
+    "model": "SM-S921B",
+    "android_version": "16",
+    "sdk_int": 36,
+    "cpu_abi": "arm64-v8a",
+    "total_memory_mb": 7225,
+    "available_memory_mb": 3702
+  },
+  "statistics": {
+    "total_images": 100,
+    "total_runs": 500,
+    "successful_runs": 495,
+    "failed_runs": 5,
+    "success_rate": 0.99
+  },
+  "providers": [
+    {
+      "provider_id": "florence2_onnx_local",
+      "provider_name": "Florence-2 (Local)",
+      "category": "Local",
+      "success_rate": 1.0,
+      "total_images": 100,
+      "successful_images": 100,
+      "duration_ms": 3254333,
+      "performance_metrics": {
+        "latency": {
+          "p50_ms": 6359.528586611113,
+          "p90_ms": 7064.252572311113,
+          "mean_ms": 6326.64937004596,
+          "std_ms": 701.4899654447638,
+          "min_ms": 5403.799966494949,
+          "max_ms": 7296.536682909091
+        },
+        "throughput": {
+          "median_img_per_s": 0.1601171176092207
+        },
+        "inference_time": {
+          "median_ms": 6234.870780353536
+        },
+        "ram": {
+          "peak_mean_mb": 37.75866229124743,
+          "peak_max_mb": 76.36257040621054
+        },
+        "energy": {
+          "mean_mwh_per_image": 31.33739134850341,
+          "total_mwh": 34.552298909788696
+        }
+      }
+    }
+  ]
+}

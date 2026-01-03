@@ -78,7 +78,7 @@ co poprawia spójność i trafność opisów. Schemat tej architektury przedstaw
         \node[above=0.3cm of decoder, font=\small\bfseries] {FAZA 2: Generowanie opisu};
         
     \end{tikzpicture}
-    \caption{Architektura systemu image captioning oparta na modelu enkoder-dekoder z mechanizmem uwagi}
+    \caption{Architektura systemu image captioning oparta na modelu enkoder-dekoder z mechanizmem uwagi.}
     \label{fig:encoder_decoder_architecture}
 \end{figure}
 
@@ -141,7 +141,7 @@ w ramach tej samej sieci \cite{blip_li2022}. Uproszczony schemat architektury mu
 \end{figure}
 
 Takie podejście do budowy modeli umożliwia bardziej efektywne wykorzystanie informacji z różnych modalności, gdyż słowa i regiony obrazu 
-współuczestniczą w budowie kontekstu na każdym etapie przetwarzania. Pozwala to na głębsze zrozumienie relacji między cechami wizualnymi, a generowanym tekstem,
+współuczestniczą w budowie kontekstu na każdym etapie przetwarzania. Pozwala to na głębsze zrozumienie relacji między cechami wizualnymi a generowanym tekstem,
 co przekłada się na opis obrazu, który posiada głębsze zrozumienie kontekstu sceny.
 
 Najnowszym etapem rozwoju są wielkie modele multimodalne (Large Multimodal Models, LMMs), które są bezpośrednim rozszerzeniem wielkich modeli językowych
@@ -165,7 +165,8 @@ oraz formatów modeli dostosowanych do ograniczeń sprzętowych urządzeń. Najp
 które umożliwiają uruchamianie zoptymalizowanych modeli AI na zasobach urządzenia.
 
 W celu optymalizacji modeli pod względem moblinych zastowań stosuje się różnorodne techniki kompresji i przyspieszenia inferencji, takie jak kwantyzacja (Quantization) czy
-przycinanie (Pruning). Kwantyzacja polega na redukcji zapisu precyzji wag, co redukuje rozmiar modelu i przyspiesza obliczenia kosztem niewielkiej utraty dokładności \cite{tflite_quantization_krishnamoorthi2018}.
+przycinanie (Pruning). Kwantyzacja polega na redukcji zapisu precyzji wag, co redukuje rozmiar modelu i przyspiesza obliczenia kosztem niewielkiej utraty dokładności.
+Przycinanie zaś jest techniką optymalizacji polegającą na usuwaniu zbędnych parametrów bez istotnej utraty dokładności \cite{tflite_quantization_krishnamoorthi2018}.
 
 Kluczową zaletą podejścia lokalnego jest pełna niezależność od połączenia sieciowego. Dodatkowo, to podejście zapewnia silniejszą ochronę prywatności i danych
 użytkownika, gdyż wszystkie dane przetwarzane są lokalnie na urządzeniu bez konieczności przesyłania ich do zewnętrznych serwerów \cite{tinyml_reddi2021}.
@@ -173,11 +174,10 @@ użytkownika, gdyż wszystkie dane przetwarzane są lokalnie na urządzeniu bez 
 Ograniczenia takiej implementacji wynikają głównie z konieczności dostosowania modeli do ograniczeń sprzętowych środowiska mobilnego, co wymusza
 stosowanie technik kompresji czy używania mniejszych architektur modeli, w wyniku czego modele lokalne często oferują niższą dokładność i jakość predykcji opisów.
 
-Alternatywą jest wdrożenie AI jako usługi chmurowej poprzez integrację z API dostawców, którzy oferują dostęp do najnowocześniejszych multimodalnych modeli generatywnych 
-o ogromnej mocy obliczeniowej, zdolnych do przetwarzania danych na gigantyczną skalę 
-,co pozwala na uzyskanie najwyższej jakości generowanych opisów obrazów.
+Alternatywą jest wdrożenie AI jako usługi chmurowej poprzez integrację z API dostawców, którzy oferują dostęp do najnowocześniejszych multimodalnych modeli generatywnych
+o ogromnej mocy obliczeniowej, zdolnych do przetwarzania danych na gigantyczną skalę, co pozwala na uzyskanie najwyższej jakości generowanych opisów obrazów.
 
-Wady takiego podejścia obejmują konieczność stałego połączenia sieciowego, co przekłada się na potencjalnie wyższe opóźnienia, czy brak dostępu do usługi. 
+Wady takiego podejścia obejmują konieczność stałego połączenia sieciowego, co przekłada się na potencjalnie wyższe opóźnienia czy brak dostępu do usługi. 
 Badania Yuyi Mao i innych wskazują, że opóźnienie end-to-end w systemach chmurowych może być 3-5 razy wyższe niż w przypadku
 przetwarzania lokalnego, szczególnie w warunkach słabej jakości połączenia sieciowego \cite{edge_vs_cloud_mao2017}.
 Problemem są również koszty związane z wywołaniami API oraz obawy dotyczące prywatności danych.
@@ -259,10 +259,10 @@ Usługa zwraca odpowiedź JSON zawierającą opis tekstowy, wykryte obiekty, tag
 Średni czas odpowiedzi wynosi 500ms-2s.
 Model cenowy obejmuje od \$1.00 do \$1.50 za 1000 transakcji \cite{azure_pricing2024}.
 
-\subsubsection{Gemini 2.5 Flash}\label{sss:Gemini}
+\subsubsection{Gemini 2.5 Flash Lite}\label{sss:Gemini}
 \noindent
-Gemini 2.5 Flash to multimodalny model AI firmy Google zaprojektowany z naciskiem na szybkość i efektywność.
-Wykorzystuje architekturę transformer natively multimodal, przetwarzającą dane wizualne i tekstowe wspólnie od początku treningu,
+Gemini 2.5 Flash Lite to multimodalny model AI firmy Google zaprojektowany z naciskiem na szybkość i efektywność.
+Wykorzystuje architekturę transformer natively multimodal przetwarzającą dane wizualne i tekstowe wspólnie od początku treningu,
 co umożliwia głębszą integrację różnych modalności \cite{gemini_team2024}.
 Model obsługuje długie konteksty do 1 miliona tokenów, osiągając czas odpowiedzi 500ms-1.5s.
 

@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "name": "azure",
+    "description": "Batch test via BatchTestActivity",
+    "dataset": "COCO_val2017",
+    "start_time": "2025-12-21 12:49:34",
+    "end_time": "2025-12-21 13:20:07",
+    "duration_ms": 1833026,
+    "status": "COMPLETED"
+  },
+  "device": {
+    "manufacturer": "samsung",
+    "model": "SM-S921B",
+    "android_version": "16",
+    "sdk_int": 36,
+    "cpu_abi": "arm64-v8a",
+    "total_memory_mb": 7225,
+    "available_memory_mb": 2553
+  },
+  "statistics": {
+    "total_images": 100,
+    "total_runs": 500,
+    "successful_runs": 497,
+    "failed_runs": 3,
+    "success_rate": 0.994
+  },
+  "providers": [
+    {
+      "provider_id": "azure_vision_cloud",
+      "provider_name": "Azure Vision",
+      "category": "Cloud",
+      "success_rate": 1.0,
+      "total_images": 100,
+      "successful_images": 100,
+      "duration_ms": 1833001,
+      "performance_metrics": {
+        "latency": {
+          "p50_ms": 471.067578,
+          "p90_ms": 591.8580625999999,
+          "mean_ms": 479.09689073440694,
+          "std_ms": 480.16892247942405,
+          "min_ms": 312.671446,
+          "max_ms": 10984.390469
+        },
+        "throughput": {
+          "median_img_per_s": 2.122837670649454
+        },
+        "inference_time": {
+          "median_ms": 448.485079
+        },
+        "ram": {
+          "peak_mean_mb": 0.3541488800969882,
+          "peak_max_mb": 1.12506103515625
+        },
+        "energy": {
+          "mean_mwh_per_image": 17.312248526785712,
+          "total_mwh": 484.7429587499999
+        },
+        "cost": {
+          "mean_usd_per_image": 0.001499999999999983,
+          "total_usd": 0.7454999999999915
+        }
+      }
+    }
+  ]
+}

@@ -2,10 +2,10 @@
 \clearpage
 \section{Metodologia badań}\label{s:Metodologia badan}
 \noindent
-Obiektywna ocena efektywności wybranych modeli AI, w zadaniu generowania opisów obrazów, wymagała opracowania odpowiedniej 
+Obiektywna ocena efektywności wybranych modeli AI w zadaniu generowania opisów obrazów wymagała opracowania odpowiedniej 
 metodologii badawczej. W niniejszym rozdziale przedstawiono procedurę pomiarową wraz ze scenariuszem badawczym, 
 które pozwoliły na porównanie rozwiązań lokalnych i chmurowych AI w warunkach środowiska mobilnego.
-Opisano również szczegóły dotyczące wybranego zestawu metryk, pozwalających 
+Opisano również szczegóły dotyczące wybranego zestawu metryk pozwalających 
 na kompleksową ocenę wydajności i jakości generowanych opisów.
 Wszystkie aspekty metodologii badawczej zostały zaprojektowane w sposób zapewniający powtarzalność i wiarygodność uzyskanych wyników,
 unikając potencjalnych wpływów zewnętrznych czynników zakłócających pomiary.
@@ -13,13 +13,13 @@ unikając potencjalnych wpływów zewnętrznych czynników zakłócających pomi
 \subsection{Scenariusz badawczy}\label{ss:Scenariusz badawczy}
 \noindent
 Badania zostały zaprojektowane jako zestaw kontrolowanych eksperymentów porównawczych, w którym sześć wybranych modeli AI,
-trzy działających lokalnie na urządzeniu mobilnym (ViT-GPT2, Florence-2, BLIP) oraz trzy korzystające z usług chmurowych
+trzy działające lokalnie na urządzeniu mobilnym (ViT-GPT2, Florence-2, BLIP) oraz trzy korzystające z usług chmurowych
 (OpenAI GPT-4o mini, Azure Computer Vision, Google Gemini 2.0 Flash Lite), poddano identycznym testom image captioning'u w porównywalnych warunkach.
 Szczegółową charakterystykę oraz uzasadnienie doboru poszczególnych modeli przedstawiono w rozdziale \ref{s:Modele}. \textquote{Modele i technologie AI 
 do generowania opisów obrazów}. Taka konstrukcja badań umożliwiła bezpośrednie porównanie wydajności i jakości generowanych opisów
 w zależności od środowiska i architektury działania modelu.
 
-Do uzyskania powtarzalnych i miarodajnych wyników, użyto standardowego zestawu obrazów testowych w postaci zbioru COCO,
+Do uzyskania powtarzalnych i miarodajnych wyników użyto standardowego zestawu obrazów testowych w postaci zbioru COCO
 będącego uznanym standardem w dziedzinie image captioning'u.
 Na zbiór ten składa się prawie 330 tysięcy złożonych obrazów codziennych scen zawierających powszechne obiekty w naturalnych kontekstach,
 opatrzonych ręcznie tworzonymi opisami w języku angielskim \cite{coco_lin2014}.
@@ -57,14 +57,14 @@ interakcji z użytkownikiem \cite{nielsen_response_times_1993}.
 
 W ramach prowadzonych badań zdefiniowano cztery metryki czasowe (mierzone w milisekundach) dla poszczególnych faz procesu:
 \begin{itemize}
-    \item \textbf{Czas preprocessingu (\texttt{pre\_ms})} -- czas przygotowania obrazu do formatu wymaganego przez model,
+    \item \textbf{Czas preprocessingu (\texttt{pre\_ms})} -- czas przygotowania obrazu do formatu wymaganego przez model
     obejmujący konwersję formatu bitmapy, skalowanie obrazu oraz normalizację wartości pikseli do oczekiwanego zakresu.
     
     \item \textbf{Czas inferencji (\texttt{infer\_ms})} -- czas właściwej inferencji. Dla modeli lokalnych jest to czas 
     wykonania obliczeń przez ONNX Runtime, dla modeli chmurowych obejmuje całość komunikacji HTTP 
     oraz przetwarzania w infrastrukturze dostawcy. Ten czas jest bezpośrednim wskaźnikiem wydajności modelu w danym środowisku.
     
-    \item \textbf{Czas postprocessingu (\texttt{post\_ms})} -- czas konwersji wyniku modelu do tekstu, obejmujący 
+    \item \textbf{Czas postprocessingu (\texttt{post\_ms})} -- czas konwersji wyniku modelu do tekstu obejmujący 
     dekodowanie tokenów (modele lokalne) lub parsowanie odpowiedzi JSON (modele chmurowe).
     
     \item \textbf{Czas end-to-end (\texttt{e2e\_ms})} -- całkowity czas przetwarzania będący sumą trzech powyższych faz. 
@@ -175,7 +175,7 @@ dużej ilości opisów referencyjnych dla każdego obrazu, co może być trudne 
 \textbf{SPICE} (Semantic Propositional Image Caption Evaluation) reprezentuje inne podejście do oceny opisów
 obrazów niż tradycyjne metryki oparte na zgodności fragmentów tekstu. Zamiast liczyć pokrycie sekwencji słów, SPICE
 koncentruje się na poprawną reprezentacją podstawowych faktów o scenie,
-takie jak obecne obiekty, ich cechy wzajemne relacje \cite{spice_anderson2016}.
+takie jak obecne obiekty, ich cechy i wzajemne relacje \cite{spice_anderson2016}.
 
 W pierwszym kroku oba opisy (generowany i referencyjny) są przetwarzane przez parser językowy,
 który rozkłada zdanie na strukturę składniową. Następnie ta struktura jest

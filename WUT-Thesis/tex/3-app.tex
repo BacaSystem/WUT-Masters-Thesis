@@ -139,13 +139,13 @@ Pozwala ona na przeprowadzanie zautomatyzowanych testów wydajnościowych na du�
 powtarzania pomiarów dla większej wiarygodności wyników.
 
 Użytkownik może załadować wcześniej przygotowany zbiór danych (np. podzbiór COCO\cite{coco_lin2014}), bądź wskazać własny katalog
-z obrazami testowymi. Następnie wybiera zestaw modeli AI do przeprowadzenia badań, co ważne system umożliwia jednoczesne testowanie
+z obrazami testowymi. Następnie wybiera zestaw modeli AI do przeprowadzenia badań. Co ważne system umożliwia jednoczesne testowanie
 wielu modeli w ramach jednego eksperymentu, co znacząco przyspiesza proces zbierania danych. Finalnie definiuje kluczowe parametry eksperymentu,
 takie jak liczba właściwych powtórzeń pomiarów, liczba serii rozgrzewkowych, maksymalny czas oczekiwania na odpowiedź oraz
 format eksportu wyników, po czym uruchamia testy.
 
 Podczas trwania eksperymentu, interfejs na bieżąco prezentuje postęp wykonywanych operacji, obejmujący informacje o aktualnym modelu, 
-przetwarzanym obrazie, czy aktualnej iteracji pomiaru. Po zakończeniu testów uruchamiany jest automatyczny 
+przetwarzanym obrazie czy aktualnej iteracji pomiaru. Po zakończeniu testów uruchamiany jest automatyczny 
 proces eksportu zebranych danych zapisujący wyniki w przestrzeni dyskowej aplikacji.
 
 \begin{figure}[!h]
@@ -174,22 +174,22 @@ organizacją testów oraz zbieraniem danych pomiarowych. Kluczowymi komponentami
 moduły monitorujące \texttt{MemoryMonitor} oraz \texttt{PowerMonitor}.
 
 \texttt{ProviderManager} pełni rolę centralnego rejestru modeli AI. Odpowiada za rejestrację i dostarczanie
-konkretnych implementacji providerów AI na żądanie. Umożliwia dynamiczne dodawanie nowych modeli do systemu,
+konkretnych implementacji providerów AI na żądanie. Umożliwia dynamiczne dodawanie nowych modeli do systemu
 bez konieczności modyfikacji pozostałych komponentów aplikacji oraz zarządza cyklem życia instancji providerów.
 
 Organizacją i przebiegiem testów zajmuje się \texttt{BenchmarkRunner}. Algorytm działania tego komponentu 
 opiera się na sekwencyjnym wykonywaniu zdefiniowanych testów, zgodnie z określoną konfiguracją eksperymentu.
-Dla każdego wybranego modelu w pierwszej kolejności przeprowadzana jest seria rozgrzewkowa (\textit{warm-up run}), 
+Dla każdego wybranego modelu w pierwszej kolejności przeprowadzana jest seria rozgrzewkowa (\textit{warm-up run})
 mająca na celu ustabilizowanie warunków pomiarowych. Następnie wykonywane są właściwe iteracje pomiarowe dla każdego 
 obrazu w zbiorze testowym, zbierając dane pomiarowe przy pomocy \texttt{MetricsCollector}. Proces ten jest powtarzany
 dla każdego z modeli zgodnie ze zdefiniowaną konfiguracją. W ten sposób minimalizowany jest wpływ efektów 
-przejściowych, związanych z ładowaniem modeli do pamięci urządzenia i innych nieznaczących dla pomiarów operacji.
+przejściowych związanych z ładowaniem modeli do pamięci urządzenia i innych nieznaczących dla pomiarów operacji.
 
 W trakcie działania \texttt{BenchmarkRunner} inicjuje komponent \texttt{MetricsCollector}, który realizuje kompleksowy pomiar
 parametrów wydajnościowych podczas każdej inferencji. System pomiarowy opiera się na metrykach z czterech głównych kategorii: danych czasowych,
 metryk pamięciowych, kosztach energetycznych działania modeli oraz kosztów wywołań API (dla modeli chmurowych).
 Dokładny opis poszczególnych mechanizmów pomiarowych znajduje się w sekcji \ref{ss:System zbierania metryk}. \textquote{System zbierania metryk}.
-Po zakończeniu wszystkich iteracji, zebrane dane są przekazywane do modułu eksportu \texttt{DataExporter} w celu zapisania ich na dysku.
+Po zakończeniu wszystkich iteracji zebrane dane są przekazywane do modułu eksportu \texttt{DataExporter} w celu zapisania ich na dysku.
 
 Poza tym warstwa biznesowa realizuje również mechanizmy obsługi wyjątków i błędów, zapewniając stabilność działania aplikacji.
 System stale monitoruje limity przekroczenia czasu odpowiedzi modeli dla zbyt długich inferencji, rejestruje wszelkie niepowodzenia,
@@ -201,7 +201,7 @@ logowane i uwzględnione w końcowych wynikach eksportu.
 \noindent
 Warstwa providerów AI stanowi najbardziej rozbudowaną część systemu i zawiera implementacje konkretnych modeli sztucznej inteligencji 
 wykorzystywanych do generowania opisów obrazów. Głównym założeniem architektonicznym tej warstwy jest zastosowanie wzorca strategii 
-(\textit{Strategy Pattern}), poprzez zdefiniowanie wspólnego interfejsu \texttt{CaptioningProvider} dla różnych implementacji modeli AI.
+(\textit{Strategy Pattern}) poprzez zdefiniowanie wspólnego interfejsu \texttt{CaptioningProvider} dla różnych implementacji modeli AI.
 
 Interfejs \texttt{CaptioningProvider} definiuje minimalny kontrakt, który musi spełniać każda implementacja provider'a modelu AI, obejmujący unikalny identyfikator
 oraz asynchroniczną metodę \texttt{caption(bitmap: Bitmap)}, która przyjmuję obiekt bitmapy obrazu i zwraca strukturę \texttt{CaptionResult}
@@ -238,7 +238,7 @@ i dekodowania wygenerowanego opisu z surowych wyników inferencji.
 Provider'y chmurowe komunikują się z usługami zewnętrznych dostawców AI poprzez REST API. Każdy z tych provider'ów implementuje mechanizmy autoryzacji,
 obsługi zapytań HTTP oraz przetwarza odpowiedzi serwera do zgodnego formatu.
 
-Taka architektura systemu pozwala na unifikację dostępu do modeli AI, niezależnie od odmiennych technologii, czy szczegółów implementacji.
+Taka architektura systemu pozwala na unifikację dostępu do modeli AI niezależnie od odmiennych technologii czy szczegółów implementacji.
 
 \subsection{Implementacja providerów AI}\label{ss:Implementacja providerow AI}
 \noindent
@@ -270,8 +270,7 @@ Proces inferencji rozpoczyna się od ekstrakcji cech wizualnych, które są konk
 Dekoder następnie autoregresywnie generuje opis, wykorzystując stany ukryte z enkodera oraz maski uwagi. Ta wieloetapowa architektura pozwala Florence-2 na generowanie 
 bardziej szczegółowych i bogatszych kontekstowo opisów.
 
-Provider'y chmurowe koncentrują się na prawidłowej komunikacji z zewnętrznymi usługami AI poprzez REST API, zarządzając jedynie komunikacją sieciową
-, autoryzacją zapytań oraz formatowaniem danych. 
+Provider'y chmurowe koncentrują się na prawidłowej komunikacji z zewnętrznymi usługami AI poprzez REST API, zarządzając jedynie komunikacją sieciową, autoryzacją zapytań oraz formatowaniem danych. 
 
 OpenAI GPT-4o mini wykorzystuje API Chat Completions, gdzie obraz jest konwertowany do formatu base64 i osadzany w żądaniu JSON jako data URL z autoryzacją Bearer Token.
 Google Gemini 2.0 Flash Lite stosuje podobne podejście z odmienną strukturą API, gdzie obraz jest przesyłany jako część tablicy \texttt{parts}, a autoryzacja realizowana poprzez parametr \texttt{key} w URL.
@@ -291,7 +290,7 @@ minimalny wpływ na mierzone wartości oraz wysoką dokładność rejestrowanych
 
 \subsubsection{Pomiar czasu wykonania}\label{sss:Pomiar czasu}
 \noindent
-Metryki czasowe rejestrowane są z wykorzystaniem wysokorozdzielczego zegara systemowego Android (\texttt{System.nanoTime()}), na poziomie 
+Metryki czasowe rejestrowane są z wykorzystaniem wysokorozdzielczego zegara systemowego Android (\texttt{System.nanoTime()}) na poziomie 
 providerów, który oferuje precyzję rzędu nanosekund i jest niezależny od zmian czasu systemowego urządzenia. Pomiar obejmuje cztery
 fazy przetwarzania:
 \begin{itemize}
@@ -375,14 +374,14 @@ wejściowych (prompt) oraz wyjściowych (completion) według formuły:
 \begin{equation}
 C_{total} = \frac{T_{prompt}}{10^6} \times C_{prompt} + \frac{T_{completion}}{10^6} \times C_{completion}
 \end{equation}
-, gdzie $T_{prompt}$ i $T_{completion}$ to liczby tokenów, a $C_{prompt}$ i $C_{completion}$ to stawki cenowe za milion tokenów w USD.
+gdzie $T_{prompt}$ i $T_{completion}$ to liczby tokenów, a $C_{prompt}$ i $C_{completion}$ to stawki cenowe za milion tokenów w USD.
 Dla OpenAI stosowane są stawki \$0.15 za milion tokenów wejściowych i \$0.60 za milion tokenów wyjściowych, natomiast dla Gemini odpowiednio \$0.10 i \$0.40.
 
 Azure Computer Vision 4.0 wykorzystuje uproszczony model cenowy oparty na liczbie przetworzonych obrazów, gdzie koszt jednostkowy wynosi:
 \begin{equation}
 C = \frac{1.5}{1000} \text{ USD}
 \end{equation}
-, co odpowiada stawce \$1.50 za tysiąc przetworzonych obrazów, niezależnie od złożoności operacji czy długości wygenerowanego opisu.
+co odpowiada stawce \$1.50 za tysiąc przetworzonych obrazów, niezależnie od złożoności operacji czy długości wygenerowanego opisu.
 
 Obliczone koszty są zapisywane w metryce \texttt{costUsd} struktury \texttt{BenchmarkMetrics}, co umożliwia agregację kosztów dla całych zbiorów 
 testowych i porównywanie cen różnych rozwiązań chmurowych w kontekście generowanych opisów obrazów.
@@ -410,7 +409,7 @@ Każdy wiersz pliku reprezenruje pojedyncze wykonanie operacji generowania opisu
     \item \texttt{caption}          - wygenerowany opis,
     \item \texttt{caption\_length}  - długość opisu,
     \item \texttt{timestamp}        - znacznik czasowy pomiaru,
-    \item \texttt{status}           - status operacji
+    \item \texttt{status}           - status operacji.
 \end{itemize}
 Taka struktura danych umożliwia łatwy import do narzędzi analitycznych w których
 mogą być przeprowadzane bardziej zaawansowane analizy zebranych danych pomiarowych.
@@ -422,7 +421,7 @@ Struktura pliku JSON obejmuje następujące sekcje:
     \item \texttt{metadata}     - zawiera informacje o eksperymencie, takie jak nazwa testu, opis, użyty zbiór danych, czas rozpoczęcia i zakończenia,
     \item \texttt{device}       - zawiera szczegóły dotyczące urządzenia testowego, w tym producenta, model, wersję Androida oraz parametry sprzętowe,
     \item \texttt{statistics}   - zawiera ogólne statystyki eksperymentu, takie jak liczba przetworzonych obrazów, liczba iteracji, czy współczynnik sukcesu,
-    \item \texttt{providers}    - zawiera szczegółowe metryki wydajności dla każdego z testowanych modeli AI, w tym czasy inferencji, zużycie pamięci, energii oraz koszty,
+    \item \texttt{providers}    - zawiera szczegółowe metryki wydajności dla każdego z testowanych modeli AI, w tym czasy inferencji, zużycie pamięci, energii oraz koszty.
 \end{itemize}
 Ten format danych jest szczególnie przydatny do automatycznego przetwarzania wyników przez skrypty analizujące oraz do generowania raportów porównawczych między
 różnymi eksperymentami.

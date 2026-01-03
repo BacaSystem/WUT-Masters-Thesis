@@ -1,0 +1,54 @@
+======================================================================
+BENCHMARK RESULTS SUMMARY
+======================================================================
+
+Benchmark Information:
+  Name: Unnamed
+  Description: Batch test via BatchTestActivity
+  Dataset: COCO_val2017
+  Start Time: 2025-12-12 21:30:02
+  End Time: 2025-12-12 21:39:28
+  Duration: 565,48 seconds
+  Status: COMPLETED
+
+Device Information:
+  Manufacturer: samsung
+  Model: SM-S921B
+  Android: 16 (SDK 36)
+  CPU ABI: arm64-v8a
+  Total RAM: 7225 MB
+  Available RAM: 2668 MB
+
+Overall Statistics:
+  Total Images: 100
+  Total Runs: 500
+  Successful: 500 (100.0%)
+  Failed: 0
+  Providers Tested: 1
+
+----------------------------------------------------------------------
+PROVIDER RESULTS
+----------------------------------------------------------------------
+
+Provider: BLIP (Local) (blip_onnx_local)
+  Category: Local
+  Success Rate: 100,0%
+  Images: 100/100
+  Duration: 565,47 seconds
+
+  Performance Metrics:
+    Latency (p50): 1091,30 ms
+    Latency (p90): 1248,17 ms
+    Latency (mean): 1033,62 ± 197,17 ms
+    Latency (range): [587,42, 1450,67] ms
+    Throughput (median): 0,92 img/s
+
+    Inference Time (median): 1087,48 ms
+    RAM Peak (mean): 15,9 MB
+    RAM Peak (max): 32,6 MB
+    Energy (mean): 43,431 mWh per image
+    Energy (total sum): 738,33 mWh
+
+======================================================================
+END OF REPORT
+======================================================================

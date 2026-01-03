@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "name": "openai4",
+    "description": "Batch test via BatchTestActivity",
+    "dataset": "COCO_val2017",
+    "start_time": "2025-12-15 22:01:25",
+    "end_time": "2025-12-15 22:37:10",
+    "duration_ms": 2144191,
+    "status": "COMPLETED"
+  },
+  "device": {
+    "manufacturer": "samsung",
+    "model": "SM-S921B",
+    "android_version": "16",
+    "sdk_int": 36,
+    "cpu_abi": "arm64-v8a",
+    "total_memory_mb": 7225,
+    "available_memory_mb": 2077
+  },
+  "statistics": {
+    "total_images": 100,
+    "total_runs": 500,
+    "successful_runs": 499,
+    "failed_runs": 1,
+    "success_rate": 0.998
+  },
+  "providers": [
+    {
+      "provider_id": "openai_cloud",
+      "provider_name": "OpenAI GPT-4o",
+      "category": "Cloud",
+      "success_rate": 1.0,
+      "total_images": 100,
+      "successful_images": 100,
+      "duration_ms": 2144167,
+      "performance_metrics": {
+        "latency": {
+          "p50_ms": 1513.899375,
+          "p90_ms": 2322.4798515999996,
+          "mean_ms": 1687.3203528977951,
+          "std_ms": 865.5330259650075,
+          "min_ms": 0.0,
+          "max_ms": 8998.94039
+        },
+        "throughput": {
+          "median_img_per_s": 0.6605458833748445
+        },
+        "inference_time": {
+          "median_ms": 1487.049414
+        },
+        "ram": {
+          "peak_mean_mb": 1.2794090683809025,
+          "peak_max_mb": 3.9343109130859375
+        },
+        "energy": {
+          "mean_mwh_per_image": 15.244526482758623,
+          "total_mwh": 442.09126800000007
+        },
+        "cost": {
+          "mean_usd_per_image": 0.0021720495991983998,
+          "total_usd": 1.0838527500000015
+        }
+      }
+    }
+  ]
+}

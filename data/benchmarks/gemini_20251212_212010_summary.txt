@@ -1,0 +1,56 @@
+======================================================================
+BENCHMARK RESULTS SUMMARY
+======================================================================
+
+Benchmark Information:
+  Name: Unnamed
+  Description: Batch test via BatchTestActivity
+  Dataset: COCO_val2017
+  Start Time: 2025-12-12 21:20:10
+  End Time: 2025-12-12 21:27:02
+  Duration: 411,72 seconds
+  Status: COMPLETED
+
+Device Information:
+  Manufacturer: samsung
+  Model: SM-S921B
+  Android: 16 (SDK 36)
+  CPU ABI: arm64-v8a
+  Total RAM: 7225 MB
+  Available RAM: 2475 MB
+
+Overall Statistics:
+  Total Images: 100
+  Total Runs: 500
+  Successful: 500 (100.0%)
+  Failed: 0
+  Providers Tested: 1
+
+----------------------------------------------------------------------
+PROVIDER RESULTS
+----------------------------------------------------------------------
+
+Provider: Google Gemini (gemini_cloud)
+  Category: Cloud
+  Success Rate: 100,0%
+  Images: 100/100
+  Duration: 411,70 seconds
+
+  Performance Metrics:
+    Latency (p50): 660,80 ms
+    Latency (p90): 1053,25 ms
+    Latency (mean): 725,38 ± 267,63 ms
+    Latency (range): [380,07, 1824,17] ms
+    Throughput (median): 1,51 img/s
+
+    Inference Time (median): 641,60 ms
+    RAM Peak (mean): 1,0 MB
+    RAM Peak (max): 2,3 MB
+    Energy (mean): 16,408 mWh per image
+    Energy (total sum): 98,45 mWh
+    Cost (mean): 0,000034 USD per image
+    Cost (total): 0,0168 USD
+
+======================================================================
+END OF REPORT
+======================================================================

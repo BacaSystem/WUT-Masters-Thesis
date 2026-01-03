@@ -2,145 +2,505 @@
 \section{Wyniki badań}\label{s:Wyniki badan}
 
 \noindent
-TODO | Niniejszy rozdział przedstawia wyniki przeprowadzonych badań porównawczych sześciu modeli AI do generowania opisów obrazów. Dane zostały zebrane zgodnie z metodologią opisaną w w rozdziale....
+Analiza wyników działania poszczególnych modeli AI opiera się na badaniach wybranych parametrów wydajnościowych,
+oraz metryk jakościowych
+szczegółowo opisanych w rozdziale \ref{s:Metodologia badan}. \textit{Metodologia badań}.
+
+W ramach badań przeprowadzony został szereg przebiegów testowych dla sześciu referencyjnych modeli AI 
+na zestawie danych COCO składającym się ze stu wyselekcjonowanych obrazów. Każdy model był testowany w pięciu iteracjach, z trzema przebiegami 
+rozgrzewkowymi, co sumarycznie składa się na 3 018 przebiegów inferencji. Parametry przeprowadzonych badań 
+przedstawiono w tabeli \ref{tab:test_summary}. 
+
 \begin{table}[!h] \centering
-\caption{Podsumowanie przeprowadzonych testów}
+\caption{Parametry przeprowadzonych badań}
 \begin{tabular}{|l|c|} \hline
 \label{tab:test_summary}
 \textbf{Parametr} & \textbf{Wartość} \\ \hline\hline
 Liczba providerów AI & 6 (3 local + 3 cloud) \\ \hline
-Dataset COCO (test) & 90 obrazów \\ \hline
-Dataset Custom Mobile & 50 obrazów \\ \hline
-Liczba powtórzeń & 5 iteracji \\ \hline
-\textbf{Total inference runs} & \textbf{4,200} \\ \hline
-Czas trwania testów & ~18 godzin \\ \hline
-Success rate (overall) & 98.7\% \\ \hline
-Failed inference & 55 (timeout/errors) \\ \hline
+Dataset COCO & 100 obrazów \\ \hline
+Liczba powtórzeń pomiarowych & 5 iteracji \\ \hline
+Liczba przebiegów rozgrzewkowych & 3 \\ \hline
+Sumaryczna ilość inferencji & 3 018 \\ \hline
+Ilość nieudanych inferencji & 29 \\ \hline
+Sumaryczny wskaźnik sukcesu & 99\% \\ \hline
 \end{tabular}
 \end{table}
 
+Spośród przeprowadzonych 3 018 przebiegów inferencji, 29 zakończyło się niepowodzeniem, co przekłada się na 
+ogólny wskaźnik sukcesu na poziomie 99\%. Większość, bo aż 83\% nieudanych przebiegów pochodzi z testów modeli chmurowych,
+co wskazuje na większą podatność tych rozwiązań na problemy z łącznością sieciową i ograniczenia czasowe
+w porównaniu do modeli lokalnych. Dokładne porównanie wskaźników sukcesu dla poszczególnych modeli przedstawiono na rysunku \ref{fig:success_rate}.
+
+Największym problemem w trakcie badań chmurowych rozwiązań okazał się limit żądań (ang. \textit{rate limit}) nałożony przez dostawców API,
+który skutkował odrzuceniem części zapytań w przypadku zbyt dużej ilości wywołań. 
+W celu obejścia tego problemu do badań wprowadzono mechanizm kolejkowania zapytań, który pozwolił na ograniczenie liczby nieudanych inferencji 
+kosztem wydłużenia czasu badania. Nie miało to jednak wpływu na mierzony czas inferencji, który jest wyznaczany indywidualnie dla każdego zapytania.
+
+Poza tym, w przypadku modeli chmurowych odnotowano również pojedyncze przypadki przekroczenia limitu czasowego oczekiwania na odpowiedź serwera,
+co również skutkowało błędami w przebiegach testowych. Jest to dość istotne ograniczenie w kontekście zastosowań mobilnych, gdzie stabilność i szybkość połączenia sieciowego
+nie zawsze może być zagwarantowana, co bezpośrednio pokazują wyniki badań.
+
+Dodatkowo, duże multimodalne modele językowe (LLM), takie jak OpenAI GPT-4o, czy Google Gemini są bardziej podatne na tzw. halucynacje,
+czyli generowanie nieprawdziwych lub nieistotnych informacji z punktu widzenia zadania image captioning'u w odpowiedziach. W wynikach odnotowano kilka takich przypadków,
+które również zostały zakwalifikowane jako nieudane przebiegi inferencji. Więcej informacji na temat jakości generowanych opisów znajduje się w sekcji \ref{ss:Analiza metryk jakosciowych}. \textit{Analiza metryk jakościowych}.
+
+Modele lokalne wykazały się znacznie wyższą niezawodnością, przy zaledwie pięciu nieudanych przebiegach na 1 509 testów,
+co przekłada się na wskaźnik sukcesu na poziomie 99.67\%. Niepowodzenia te były głównie związane z problemami wewnętrznymi modelu lub błędami w przetwarzaniu danych wejściowych
+oraz limitami zasobów urządzenia testowego.
+
+Najbardziej problematyczny okazał się model Florence-2, który ze względu na swoją architekturę i złożoność stanowił duże wyzwanie dla urządzenia mobilnego.
+Proces inferencji tego modelu często prowadził do przeciążenia pamięci, co skutkowało zabijaniem procesu przez system operacyjny Android. 
+W celu uniknięcia tego problemu badania dla tego modelu musiały zostać podzielone na mniejsze partie, które następnie scalono w jeden końcowy plik danych.
+W rezultacie model ten odnotował najniższy wskaźnik sukcesu wśród modeli lokalnych, wynoszący 99\%.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{success_rate.png}
+    \caption{Wskaźnik sukcesu inferencji dla modeli AI}
+    \label{fig:success_rate}    
+\end{figure}
+
+Stabilność modeli lokalnych wynika z ich niezależności od połączenia sieciowego oraz deterministycznej natury przetwarzania lokalnego.
+W przypadku modeli chmurowych, zmienność warunków sieciowych, obciążenie serwerów dostawców oraz ograniczenia nałożone na API
+wpływają negatywnie na stabilność i powtarzalność wyników inferencji, co jest istotnym czynnikiem do rozważenia przy wyborze rozwiązań AI.
 
 \subsection{Analiza czasów inferencji}\label{ss:Analiza czasow inferncji}
 
 \noindent
-TODO | Opóźnienie inference jest kluczowym parametrem wpływającym na user experience w aplikacjach mobilnych.....
+Czas inferencji mierzony dla każdego przebiegu obejmuje trzy główne etapy: preprocessing, inferencję i postprocessing.
+Czas end-to-end (E2E) to całkowity czas od momentu przesłania obrazu do otrzymania wygenerowanego opisu i jest wyznaczany jako suma wszystkich trzech etapów przetwarzania.
+Analiza wyników wykazała, że czas inferencji stanowi dominującą część całkowitego czasu przetwarzania, często przekraczając 98\% czasu E2E, z czego wynika że 
+preprocessing i postprocessing mają znikomy wpływ na całkowity czas inferencji.
+Z tego względu dalsza analiza skupia się na czasie end-to-end, jako bezpośredniej mierze wydajności. 
 
-\subsubsection{Czas end-to-end (E2E)}\label{sss:czas e2e}
-\noindent
-TODO | Czas end-to-end (E2E) obejmuje cały proces od momentu przesłania obrazu do otrzymania wygenerowanego opisu...
+Na rysunku \ref{fig:e2e_individual}. przedstawiono przebiegi czasów end-to-end (E2E) dla poszczególnych modeli AI.
+Wykresy przedstawiają kolejno wyznaczone czasy dla każdego z sześciu badanych modeli sztucznej inteligencji. 
+Niebieskie linie reprezentują rzeczywiste czasy zebrane w trakcie badań, podczas gdy pomarańczowe linie wskazują medianę tych czasów,
+jako miarę tendencji centralnej, co pozwala na szybkie i łatwe porównanie wydajności poszczególnych modeli.
+Ze względu na fakt, że miara średnia jest bardzo podatna na skrajne wartości pomiarów (wysoką wariancję wyników), 
+zdecydowano się na wykorzystanie mediany jako bardziej reprezentatywnej miary wydajności.
 
-\begin{table}[!h] \centering
-\caption{Przykładowa tabela}
-\begin{tabular}{|l|c|c|c|c|} \hline
-\label{tab:example_table}
-\textbf{Model} & \textbf{metric 1} & \textbf{metric 2} & \textbf{+} & \textbf{-} \\ \hline\hline
-ViT-GPT2 (local)       & 8.4  & 2.1 & 4  & 15 \\ \hline
-BLIP (local)           & 10.2 & 2.8 & 5  & 18 \\ \hline
-Florence-2 (local)     & 12.6 & 3.4 & 6  & 24 \\ \hline
-\hline
-Azure Vision (cloud)   & 14.8 & 3.9 & 7  & 27 \\ \hline
-Gemini Pro (cloud)     & 22.4 & 5.6 & 12 & 38 \\ \hline
-GPT-4o Vision (cloud)  & 26.7 & 6.8 & 14 & 45 \\ \hline
-\end{tabular}
-\end{table}
-
-
-\subsubsection{Breakdown czasów: Pre/Infer/Post}\label{sss:Time breakdown}
-\noindent
-TODO | Tabela \ref{tab:time_breakdown} przedstawia szczegółowy breakdown czasów dla preprocessing, inference i postprocessing...
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{e2e_individual.png}
+    \caption{Czas end-to-end (E2E) dla poszczególnych modeli AI}
+    \label{fig:e2e_individual}    
+\end{figure}
 
 
-\begin{table}[!h] \centering
-\caption{Przykładowa tabela}
-\begin{tabular}{|l|c|c|c|c|} \hline
-\label{tab:example_table}
-\textbf{Model} & \textbf{metric 1} & \textbf{metric 2} & \textbf{+} & \textbf{-} \\ \hline\hline
-ViT-GPT2 (local)       & 8.4  & 2.1 & 4  & 15 \\ \hline
-BLIP (local)           & 10.2 & 2.8 & 5  & 18 \\ \hline
-Florence-2 (local)     & 12.6 & 3.4 & 6  & 24 \\ \hline
-\hline
-Azure Vision (cloud)   & 14.8 & 3.9 & 7  & 27 \\ \hline
-Gemini Pro (cloud)     & 22.4 & 5.6 & 12 & 38 \\ \hline
-GPT-4o Vision (cloud)  & 26.7 & 6.8 & 14 & 45 \\ \hline
-\end{tabular}
-\end{table}
+
+Modele lokalne, takie jak ViT-GPT2, BLIP i Florence-2, w początkowej fazie eksperymentu wykazują wyraźny trend wzrostowy.
+W związku z przeprowadzonymi przebiegami rozgrzewkowymi na początku każdej serii pomiarów, można wykluczyć związek
+ładowania modeli do pamięci, czy ich początkową inicjalizację z lepszą wydajnością na początku pomiarów.
+Można zatem przypuszczać, że jest to wpływ nagrzewania się urządzenia mobilnego podczas długotrwałego obciążenia, 
+co prowadzi do dławienia termicznego (ang. \textit{thermal throttling}) i spadku wydajności w kolejnych iteracjach.
+Przez co średnie czasy inferencji dla modeli lokalnych są wyższe niż można by się spodziewać w optymalnych warunkach.
+
+Rozwiązania chmurowe, reprezentowane przez OpenAI GPT-4o, Google Gemini oraz Azure Computer Vision, 
+wykazują większą stabilność czasów E2E, szczególnie widoczną w przypadku Azure Computer Vision.
+Mimo dodatkowego narzutu sieciowego, modele te korzystają z wysoko zoptymalizowanej infrastruktury obliczeniowej, 
+co pozwala na utrzymanie krótkich i powtarzalnych czasów odpowiedzi. 
+Warto jednak zauważyć, że w przypadku modeli chmurowych występują sporadyczne, lecz znaczące piki czasowe, co dobrze obrazuje wykres wszystkich modeli na rysunku \ref{fig:e2e_all}.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{e2e_all.png}
+    \caption{Czas end-to-end (E2E) dla wszystkich modeli AI}
+    \label{fig:e2e_all}    
+\end{figure}
+
+Bezpośrednie porównanie przebiegów czasowych wszystkich modeli jednoznacznie pokazuje dominacje pozostałych modeli nad Florence-2,
+który ze względu na swoją złożoność i wymagania sprzętowe wykazuje znacznie wyższe czasy inferencji na poziomie 6 000 milisekund
+z bardzo wysoką wariancją wyników wahającej się w zakresie od 5 aż do 9 sekund. 
+Wartości te są kilkukrotnie wyższe niż w przypadku innych modeli, zarówno lokalnych jak i chmurowych, co czyni go najmniej wydajnym rozwiązaniem w kontekście czasu E2E.
+
+Rozwiązanie chmurowe OpenAI GPT-4o uplasowało sie na drugim miejscu od końca z medianą czasu E2E wynoszącą około 1 500 milisekund.
+Jest to drugi najgorszy wynik wśród badanych modeli, co może być zaskakujące biorąc pod uwagę zaawansowaną architekturę tego modelu.
+Jednak powodem takiego wyniku jest duża liczba przetwarzanych tokenów oraz złożoność generowanych opisów, względem pozostałych rozwiązań.
+
+Zarówno dla modelu OpenAI jak i pozostałych chmurowych reprezentantów widoczne są sporadyczne piki czasowe, które mogą być wynikiem chwilowego obciążenia serwerów dostawców lub zmiennych warunków sieciowych.
+Najwyższą chwilową wartość opóźnienia zanotowano dla modelu Azure Computer Vision, gdzie w jednym z przebiegów czas E2E przekroczył aż 10 sekund.
+Pomimo tego, mediana czasu dla tego modelu wyniosła zaledwie 470 milisekund, jednocześnie będąc najniższym wynikiem wśród wszystkich badanych modeli.
+Wyniki te podkreślają efektywność i optymalizację infrastruktury modelu Azure, mimo występowania sporadycznych opóźnień.
+
+Na rysunku \ref{fig:e2e_median}. przedstawiono bezpośrednie porównanie median czasów end-to-end (E2E) dla wszystkich badanych modeli AI.
+Najlepszym wynikiem wyróżnia się model Azure Computer Vision z medianą czasu E2E wynoszącą zaledwie 471 milisekund.
+Na drugim miejscu uplasował się model Google Gemini 2.5 Flash z medianą na poziomie 657 milisekund. Podium domyka 
+lokalny model ViT-GPT2 z wynikiem 772 milisekund.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{e2e_median.png}
+    \caption{Mediana czasu end-to-end (E2E) dla poszczególnych modeli AI}
+    \label{fig:e2e_median}    
+\end{figure}
+
+Lokalne rozwiązania, z wyjątkiem modelu Florence-2, wykazały się niezwykle konkurencyjnymi czasami inferencji w porównaniu do modeli chmurowych,
+co podkreśla potencjał lokalnego przetwarzania na urządzeniach mobilnych. Kluczowym czynnikiem wpływającym na te wyniki jest eliminacja narzutu sieciowego,
+co pozwala na szybsze i bardziej przewidywalne czasy odpowiedzi.
 
 \subsection{Analiza zużycia zasobów}\label{ss:Analiza zasobow}
 \noindent
-TODO | Analiza zużycia zasobów obejmuje pomiary CPU, RAM oraz energii podczas inferencji....
+Pomiary zużycia zasobów urządzenia mobilnego podczas działania modeli AI obejmują dwa główne aspekty: zużycie pamięci RAM oraz zużycie energii.
+Analiza tych parametrów pozwala na skuteczne porównanie wydajności poszczególnych modeli w kontekście ich wpływu na zasoby systemowe urządzenia mobilnego.
 
 \subsubsection{Zużycie pamięci RAM}\label{sss:Zuzycie pamieci RAM}
+\noindent
+Badanie zużycia pamięci operacyjnej skupiało się na monitorowaniu szczytowego zużycia RAM podczas pojedynczej inferencji dla każdego modelu AI.
+Na rysunku \ref{fig:ram_all}. przedstawiono przebiegi szczytowego zużycia pamięci RAM na przestrzeni kolejnych iteracji dla wszystkich badanych modeli AI.
 
-\begin{table}[!h] \centering
-\caption{Przykładowa tabela}
-\begin{tabular}{|l|c|c|c|c|} \hline
-\label{tab:example_table}
-\textbf{Model} & \textbf{metric 1} & \textbf{metric 2} & \textbf{+} & \textbf{-} \\ \hline\hline
-ViT-GPT2 (local)       & 8.4  & 2.1 & 4  & 15 \\ \hline
-BLIP (local)           & 10.2 & 2.8 & 5  & 18 \\ \hline
-Florence-2 (local)     & 12.6 & 3.4 & 6  & 24 \\ \hline
-\hline
-Azure Vision (cloud)   & 14.8 & 3.9 & 7  & 27 \\ \hline
-Gemini Pro (cloud)     & 22.4 & 5.6 & 12 & 38 \\ \hline
-GPT-4o Vision (cloud)  & 26.7 & 6.8 & 14 & 45 \\ \hline
-\end{tabular}
-\end{table}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{ram_all.png}
+    \caption{Zużycie pamięci RAM dla poszczególnych modeli AI}
+    \label{fig:ram_all}    
+\end{figure}
+
+Wykresy jasno wykazują diametralną różnicę w zużyciu pamięci pomiędzy lokalnymi a chmurowymi modelami AI.
+Rozwiązania lokalne charakteryzują się znacznie wyższym zużyciem pamięci RAM, co jest bezpośrednim związane z 
+operowaniem na załadowanym modelu w pamięci urządzenia oraz lokalnym przetwarzaniem danych.
+Modele chmurowe natomiast wykazują znacznie niższe zużycie pamięci RAM, gdyż większość obliczeń odbywa się na zewnętrznych serwerach dostawców usług AI,
+a jedyne operacje wykonywane lokalnie to komunikacja sieciowa i końcowe przetwarzanie odpowiedzi.
+
+Dodatkowo, lokalne modele wykazują dużo większą zmienność w zużyciu pamięci RAM pomiędzy poszczególnymi przebiegami,
+co może być wynikiem dynamicznego zarządzania pamięcią przez system operacyjny Android oraz różnic w przetwarzanych danych wejściowych.
+W przypadku modeli chmurowych, zużycie pamięci RAM pozostaje stosunkowo stabilne, co wskazuje na bardziej przewidywalne i zoptymalizowane wykorzystanie zasobów.
+
+Ze względu na dużą wariancję wyników, do dalszej analizy wyznaczono medianę szczytowego zużycia pamięci RAM dla każdego z modeli,
+co ułatwia bezpośrednie porównanie ich efektywności w kontekście zarządzania zasobami systemowymi. Porównanie wyników median przedstawiono na rysunku \ref{fig:ram_median}.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{ram_median.png}
+    \caption{Mediana szczytowego zużycia pamięci RAM dla poszczególnych modeli AI}
+    \label{fig:ram_median}    
+\end{figure}
+
+Bezpośrednie porównanie szczytowego zużycia pamięci RAM wyraźnie wskazują dysproporcje pomiędzy lokalnymi a chmurowymi modelami AI.
+Chmurowe rozwiązania wykazują się minimalnym zużyciem pamięci RAM, z medianą na poziomie zaledwie 0.34 MB dla modelu Azure Computer Vision, i kolejno
+1.00 MB i 1.20 MB dla modeli Google Gemini i OpenAI GPT-4o. Modele lokalne zużywają wielokrotnie więcej pamięci RAM,
+z medianami wynoszącymi odpowiednio 17.08 MB dla BLIP, 19.72 MB dla VIT-GPT2 oraz aż 33.46 MB dla Florence-2.
+
+Prawie dwukrotnie wyższe zużycie pamięci RAM przez model Florence-2 w porównaniu do modelu BLIP,
+wskazuje na jego większą złożoność i zasobożerność, co może tłumaczyć zarówno dłuższe czasy inferencji, jak i problemy z masowym testowaniem tego rozwiązania.
+
+
 \subsubsection{Zużycie energii}\label{sss:Zuzycie energii}
 
 \noindent
-TODO | Pomiary energii na emulatorze są symulowane, ale pokazują relatywne różnice....
+Analiza zużycia energii urządzenia mobilnego podczas działania modeli AI skupia się na monitorowaniu mocy pobieranej z baterii w trakcie pojedynczej inferencji.
+Ograniczenia techniczne platformy Android uniemożliwiają bezpośredni pomiar zużycia energii przez poszczególne procesy, 
+dlatego pomiary te obejmują całkowite zużycie energii urządzenia w trakcie inferencji przez wszystkie aktywne procesy systemu.
+Z tego względu, wyniki te należy traktować jako względne wskaźniki zużycia energii związane z działaniem modeli AI, a nie 
+jako dokładne pomiary zużycia energii przez same modele.
 
-\begin{table}[!h] \centering
-\caption{Przykładowa tabela}
-\begin{tabular}{|l|c|c|c|c|} \hline
-\label{tab:example_table}
-\textbf{Model} & \textbf{metric 1} & \textbf{metric 2} & \textbf{+} & \textbf{-} \\ \hline\hline
-ViT-GPT2 (local)       & 8.4  & 2.1 & 4  & 15 \\ \hline
-BLIP (local)           & 10.2 & 2.8 & 5  & 18 \\ \hline
-Florence-2 (local)     & 12.6 & 3.4 & 6  & 24 \\ \hline
-\hline
-Azure Vision (cloud)   & 14.8 & 3.9 & 7  & 27 \\ \hline
-Gemini Pro (cloud)     & 22.4 & 5.6 & 12 & 38 \\ \hline
-GPT-4o Vision (cloud)  & 26.7 & 6.8 & 14 & 45 \\ \hline
-\end{tabular}
-\end{table}
+Niestety w trakcie badań odnotowano pewne problemy z pomiarem stanu baterii na urządzeniu testowym.
+Moduł monitorujący stan napięcia baterii bazujący na \texttt{BatteryManager} systemu Android, nie udostępniał wartości
+prądu i napięcia chwilowego, co wymusiło zastosowanie alternatywnej, mniej precyzyjnej, metody pomiaru zużycia energii, poprzez
+monitorowanie zmiany poziomu naładowania baterii w czasie inferencji.
+
+Doprowadziło to do zmniejszenia precyzji pomiarów, szczególnie w przypadku krótkich czasów inferencji, w których
+zmiana poziomu naładowania baterii mogła być zbyt mała, aby zostać wykryta.
+Pomimo tego, analiza zużycia energii dostarcza cennych informacji na temat względnej efektywności energetycznej poszczególnych modeli AI
+oraz jest dobrym wyznacznikiem wykorzystania zasobów urządzenia.
+
+Na rysunku \ref{fig:energy_median}. poniżej, przedstawiono porównanie zużycia energii dla wszystkich badanych modeli AI.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{energy_median.png}
+    \caption{Mediana zużycia energii dla poszczególnych modeli AI}
+    \label{fig:energy_median}    
+\end{figure}
+
+Podobnie jak w przypadku pomiarów pamięci operacyjnej, modele chmurowe wykazują znacznie niższe zużycie energii w porównaniu do lokalnych rozwiązań AI.
+Różnica w wartościach jest jednak mniej wyraźna niż w przypadku pamięci RAM, co może wynikać z faktu, że mierzone wartości obejmują całkowite zużycie energii urządzenia
+i są obarczone stałym narzutem energetycznym związanym z działaniem systemu operacyjnego i innych procesów w tle.
+Mimo to, inferencja modeli lokalnych wykorzystuje średnio dwukrotnie więcej energii niż modeli chmurowych, 
+choć w obrębie jednego rodzaju modeli, różnice są na mniejszym poziomie. 
+
+Najniższym zużyciem energii wykazał sie model OpenAI GPT-4o na poziomie 14.74 mWh, a pozostałe modele chmurowe
+wykazały zbliżone wartości zużycia energii, wynoszące odpowiednio 16.46 mWh dla Google Gemini oraz 16.73 mWh dla Azure Computer Vision.
+Najwyższą wartość zużycia energii zanotowano dla modelu BLIP, który zużywał średnio aż 32.22 mWh na pojedynczą inferencję, a pomiary pozostałych modeli lokalnych oscylowały w zakresie 30-32 mWh.
 
 \subsection{Analiza kosztów modeli chmurowych}\label{ss:Analiza kosztow modeli chmurowych}
 
 \noindent
-TODO | Analiza kosztów wywołań API dla modeli chmurowych...
+Wykorzystanie chmurowych rozwiązań sztucznej inteligencji bezpośrednio wiąże się z kosztami finansowymi, które zależą od liczby przetwarzanych zapytań oraz polityki cenowej dostawców usług AI.
+Analiza kosztów inferencji dla badanych modeli chmurowych opiera się na wyliczeniu średniego kosztu pojedynczej inferencji na podstawie oficjalnych cenników dostawców.
+Rysunek \ref{fig:cost_median}. przedstawia wykres kosztów inferencji dla każdego z trzech badanych modeli chmurowych.
 
-\begin{table}[!h] \centering
-\caption{Przykładowa tabela}
-\begin{tabular}{|l|c|c|c|c|} \hline
-\label{tab:example_table}
-\textbf{Model} & \textbf{metric 1} & \textbf{metric 2} & \textbf{+} & \textbf{-} \\ \hline\hline
-ViT-GPT2 (local)       & 8.4  & 2.1 & 4  & 15 \\ \hline
-BLIP (local)           & 10.2 & 2.8 & 5  & 18 \\ \hline
-Florence-2 (local)     & 12.6 & 3.4 & 6  & 24 \\ \hline
-\hline
-Azure Vision (cloud)   & 14.8 & 3.9 & 7  & 27 \\ \hline
-Gemini Pro (cloud)     & 22.4 & 5.6 & 12 & 38 \\ \hline
-GPT-4o Vision (cloud)  & 26.7 & 6.8 & 14 & 45 \\ \hline
-\end{tabular}
-\end{table}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{cost_median.png}
+    \caption{Mediana kosztów inferencji dla chmurowych modeli AI}
+    \label{fig:cost_median}    
+\end{figure}
+
+Model OpenAI GPT-4o wykazał się najwyższym kosztem inferencji, wynoszącym średnio 0.002148 USD za pojedyncze zapytanie.
+Tak wysoki koszt związany jest z dużą ilością przetwarzanych tokenów podczas generowania opisów, co bezpośrednio przekłada się na wyższe opłaty zgodnie z cennikiem OpenAI.
+Ilość tokenów przetwarzanych przez ten model jest znacząco większa niż w przypadku pozostałych modeli, co dodatkowo potęguje koszty zapytań.
+Szczegółowy wykres średniej liczby tokenów dla pojedynczej inferencji przedstawiono na rysunku \ref{fig:tokens_median}.
+
+Google Gemini 2.5 Flash-lite okazał się najbardziej ekonomicznym rozwiązaniem wśród badanych modeli chmurowych,
+z kosztem inferencji na poziomie zaledwie 0.0000032 USD za zapytanie. Mała liczba generowanych tokenów oraz konkurencyjna polityka cenowa Google sprawiają,
+że jest to atrakcyjna opcja dla zastosowań wymagających dużej liczby inferencji przy ograniczonym budżecie.
+
+Azure Computer Vision w przeciwieństwie do pozostałych modeli chmurowych, oferuje stałą opłatę za zapytanie niezależnie od liczby przetwarzanych tokenów.
+Dzięki temu koszt inferencji jest przewidywalny i wynosi średnio 0.0015 USD za zapytanie, co nie czyni go jednak najbardziej ekonomicznym rozwiązaniem w badanym zestawieniu.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{tokens_median.png}
+    \caption{Mediana liczby tokenów używanych podczas inferencji dla chmurowych modeli AI}
+    \label{fig:tokens_median}    
+\end{figure}
+
+Porównanie liczby tokenów przetwarzanych przez poszczególne modele chmurowe jednoznacznie wskazuje na bolączkę modelu OpenAI GPT-4o,
+w którym średnia liczba tokenów na pojedynczą inferencję wynosi aż 14 218. Jest to wartość wyższa o kilka rzędów wielkości od pozostałych modeli, 
+co generuje znaczne koszty przy większej liczbie zapytań. Wynika to z faktu, że OpenAI GPT-4o wykorzystuje API \textquote{Chat Completions}, w którym 
+obrazy są przekształcane do tekstowej reprezentacji formatu \textit{base64} i przesyłane jako część promptu do modelu językowego \textcite{openai_completions2025},
+wykazując tym samym niezgodność tego modelu do zadania image captioning'u.
 
 \subsection{Analiza metryk jakościowych}\label{ss:Analiza metryk jakosciowych}
 
 \noindent
-TODO | Analiza jakości generowanych opisów na podstawie metryk CIDEr, SPICE, BLEU, METEOR....
+Metryki jakościowe służą do automatycznej oceny poprawności semantycznej i użyteczności generowanych opisów obrazów.
+Do wyznaczenia jakości generowanych tekstów wykorzystano cztery komplementarne metryki: CIDEr, SPICE, BLEU oraz METEOR - które 
+w kompleksowy sposób odzwierciedlają różne aspekty jakości generowanych opisów. Szczegółowy opis każdej z metryk znajduje się w rozdziale \ref{ss:Metryki jakosciowe}. \textit{Metryki jakościowe}.
+
+\subsubsection{Analiza szczegółowa obrazu 285}\label{sss:Analiza szczegolowa obrazu 285}
+
+\noindent
+W celu ilustracji sposobu działania metryk jakościowych oraz identyfikacji ograniczeń w procesie oceny, 
+szczegółowo przeanalizowano przypadek obrazu o identyfikatorze 285 z zestawu COCO, 
+przedstawiający niedźwiedzia brunatnego w naturalnym otoczeniu, zobrazowany na rysunku \ref{fig:image_285}.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.66\textwidth]{285.jpg}
+    \caption{Referencyjny obraz z zestawu COCO o identyfikatorze 285}
+    \label{fig:image_285}    
+\end{figure}
+
+W walidacyjnym zestawie danych, obraz ten jest opatrzony następującymi 5. opisami referencyjnymi, stworzonymi niezależnie przez ekspertów COCO:
+
+\begin{enumerate}
+    \item \textquote{A big burly grizzly bear is show with grass in the background.}
+    \item \textquote{The large brown bear has a black nose.}
+    \item \textquote{Closeup of a brown bear sitting in a grassy area.}
+    \item \textquote{A large bear that is sitting on grass.}
+    \item \textquote{A close up picture of a brown bear's face.}
+\end{enumerate}
+
+Opisy referencyjne w naturalny sposób skupiają się na różnych aspektach sceny, jeden na postawie zwierzęcia, 
+inny na jego fizycznych cechach, jeszcze inny na kompozycji kadru. Ta różnorodność opisów stanowi zarówno 
+zaletę stanowiąc bogatszy zestaw odniesień dla oceny, jak i wyzwanie, gdyż pojedyncza wygenerowana odpowiedź nie może 
+w pełni pokryć wszystkich perspektyw.
+
+Poniżej w tabeli \ref{tab:image_285_results} przedstawiono wygenerowane opisy przez poszczególne modele sztucznej inteligencji 
+dla obrazu niedźwiedzia o identyfikatorze 285.
 
 \begin{table}[!h] \centering
-\caption{Przykładowa tabela}
-\begin{tabular}{|l|c|c|c|c|} \hline
-\label{tab:example_table}
-\textbf{Model} & \textbf{metric 1} & \textbf{metric 2} & \textbf{+} & \textbf{-} \\ \hline\hline
-ViT-GPT2 (local)       & 8.4  & 2.1 & 4  & 15 \\ \hline
-BLIP (local)           & 10.2 & 2.8 & 5  & 18 \\ \hline
-Florence-2 (local)     & 12.6 & 3.4 & 6  & 24 \\ \hline
-\hline
-Azure Vision (cloud)   & 14.8 & 3.9 & 7  & 27 \\ \hline
-Gemini Pro (cloud)     & 22.4 & 5.6 & 12 & 38 \\ \hline
-GPT-4o Vision (cloud)  & 26.7 & 6.8 & 14 & 45 \\ \hline
+\caption{Wygenerowane opisy przez poszczególne modele AI dla obrazu 285}
+\label{tab:image_285_results}
+\begin{tabular}{|l|p{9cm}|} \hline
+\textbf{Model} & \textbf{Wygenerowany opis} \\ \hline\hline
+ViT-GPT2                        & a brown bear sitting on a green field \\ \hline
+BLIP                            & a brown bear is sitting in the grass \\ \hline
+Florence-2                      & A brown bear is smiling in the grass \\ \hline
+Azure Computer Vision           & a bear sitting in the grass \\ \hline
+Google Gemini 2.5 Flash Lite    & A close-up of a brown bear's face \\ \hline
+OpenAI GPT-4o mini              & A close-up of a majestic brown bear, showcasing its thick fur and expressive eyes, set against a backdrop of lush green grass \\ \hline
 \end{tabular}
 \end{table}
+
+Zarówno BLIP jak i Azure CV wygenerowały krótkie, proste opisy zawierające główne elementy sceny: niedźwiedzia,
+jego kolor (tylko w BLIP) oraz otoczenie (trawę). Opisy te są w podobnym stylu do opisów referencyjnych, szczególnie do opisów 1 i 4 w zbiorze COCO.
+ViT-GPT2 wygenerował opis zawierający prawidłowe informacje semantyczne (niedźwiedź, kolor, postura, otoczenie),
+jednakże użył słowa \textquote{field} zamiast \textquote{grass}. Słowa te są ze sobą blisko powiązane,
+ale nie są synonimami - pole i trawnik to inne typy otoczenia. Dlatego metryki mierzące dokładne dopasowanie
+słów (BLEU) mogą ukarać ten opis, podczas gdy SPICE (mierzące semantykę) najpewniej przyzna mu wysoki wynik, ponieważ
+koncept i otoczenie zostały poprawnie rozpoznane.
+
+Model Florence-2 wygenerował opis zawierający słowo \textquote{smiling}, które w rzeczywistości nie pojawia się na obrazie. 
+Jest to przykład klasycznej halucynacji modelu — dodania szczegółów, które nie znajdują się w obrazie ani nie są wspominane 
+w opisach referencyjnych. Ta błędna cecha obniży ocenę SPICE oraz CIDEr, które penalizują za nieprawdziwe cechy, choć pod względem 
+ogólnego słownictwa opis pozostaje zbliżony do referencji, co może skutkować dobrym wynikiem BLEU.
+
+Google Gemini skupił się wyłącznie na jednym aspekcie sceny, zbliżeniu na twarz niedźwiedzia, ignorując pozostałe elementy scenerii.
+Brak istotnych informacji o posturze zwierzęcia i jego otoczeniu obniża całościową przydatność opisu, mimo lokalnego dopasowania słów 
+dla jednego z opisów referencyjnych. Jego opis zawiera słowa \textquote{close-up}, \textquote{brown}, \textquote{bear's}, \textquote{face}, 
+które są bezpośrednio dopasowywane do opisu referencyjnego nr 5.
+
+GPT-4o mini wygenerował znacznie dłuższy opis zawierający aż 24 słowa, podczas gdy pozostałe opisy zawierały od 5 do 10 słów. 
+Chociaż opis zawiera dokładne informacje semantyczne (niedźwiedź, cechy, otoczenie), jego długość najpewniej doprowadzi do 
+katastrofalnego wyniku BLEU.
+Dodatkowo, użycie kwiecistych słów (\textquote{majestic}, \textquote{expressive}, \textquote{backdrop}) 
+zmniejsza dopasowanie do prostych, faktycznych opisów w zbiorze referencyjnym, odbijając się na wyniku CIDEr, 
+który mierzy konsensus ze względu na istotne cechy obrazu.
+
+
+\subsubsection{Obserwacje i ograniczenia}\label{sss:obserwacje i ograniczenia}
+\noindent
+Analiza obrazu 285 ujawnia szersze problemy w ocenie jakości opisów oraz ograniczenia poszczególnych modeli. 
+W poniższych akapitach omówiono najistotniejsze z nich, zidentyfikowane na podstawie badania wszystkich 100 obrazów testowych.
+
+\paragraph{Długość i ekspresyjność opisów}
+
+Duże modele językowe, w szczególności OpenAI GPT-4o mini, wykazują tendencję do generowania opisów znacznie bardziej 
+obszernych i ornamentacyjnych niż opisy w referencyjnym zbiorze danych. Ta różnica wynika z fundamentalnie różnych zastosowań modeli.
+Podczas gdy modele lokalne takie jak BLIP czy ViT-GPT2 zostały wytrenowane na zbiorach podobnych do COCO i naturalnie nauczyły się generować opisy 
+o zbliżonej długości i stylu, duże modele językowe takie jak GPT-4o nie zostały specyficznie dostrojone do zadania image captioning'u.
+
+Zamiast tego, GPT-4o mini wykorzystuje ogólny model generowania tekstu, który ma tendencję do tworzenia
+opisów bardziej przypominających ludzki styl narracyjny, niż zwięzłe podpisy do obrazów. 
+Zjawisko to bezpośrednio obniża wyniki BLEU i CIDEr, gdyż metryki te są wrażliwe na długość odpowiedzi oraz
+dobór słownictwa. Autorzy metryki BLEU ostrzegają przed używaniem jej do porównania systemów o 
+znacząco różnych parametrach takich jak długość generowanej sekwencji \cite{bleu_papineni2002}, jednak w praktyce te metryki pozostają standardem
+w ocenie jakości generowanych opisów obrazów.
+
+\paragraph{Halucynacje i niekompletne opisy}
+
+Podczas badań zaobserwowano, że model Google Gemini 2.5 Flash Lite ma tendencję do generowania niekompletnych opisów, 
+skupiających się na zaledwie jednym lub dwóch aspektach sceny, pomijając inne istotne elementy. 
+W niektórych przypadkach model generował opisowe listy 
+wariantów zdań zamiast pojedynczego, zwartego opisu, co wskazuje na niedostosowanie 
+modelu do precyzyjnie zdefiniowanego formatu wyjścia. Przykład takiego zachowania zilustrowano we fragmencie \ref{lst:gemini_hallucination}.
+
+\begin{lstlisting}[
+    caption={Przykład halucynacji modelu Google Gemini 2.5 Flash Lite}, 
+    label={lst:gemini_hallucination},
+    ]
+    Here are a few caption options for the image, playing with 
+    different focuses:
+
+    **Short & Sweet:**
+
+    * Tennis match in progress.
+    * On the court.
+    * Ready to serve.
+
+    **More Descriptive:**
+
+    * A tennis player prepares to serve during a match, 
+    with spectators in the background.
+    * Action on the blue hard court.
+    * The intensity of a tennis game.
+
+    **Focusing on the Atmosphere:**
+
+    * The roar of the crowd fuels the game."
+\end{lstlisting}
+
+Ponadto, w zbiorze badawczym odnotowano kilka przypadków halucynacji, gdzie modele 
+dodawały szczegóły wizualne nieobecne na obrazie, opisując obiekty które nie były widoczne,
+lub przypisując nieistniejące cechy. Takie zachowanie, jest zauważalne w przypadku wszystkich dużych modeli językowych 
+(OpenAI GPT-4o, Google Gemini, Florence 2), które mają tendencję do generowania wiarygodnie brzmiącego 
+tekstu nawet w sytuacjach braku pewności \cite{massenon2025}. Zjawisko to jest szczególnie 
+problematyczne w zadaniach wymagających dokładności, takich jak opis treści obrazu i może prowadzić 
+do obniżenia ocen metryk jakościowych.
+
+\paragraph{Ograniczenia metryk jakościowych}
+
+Pomimo wykorzystania czterech komplementarnych metryk jakościowych, analiza ujawnia istotne ograniczenia
+w ich zdolności do pełnej oceny jakości generowanych opisów obrazów. Największym ograniczeniem jest fakt,
+że wszystkie cztery metryki opierają się na porównaniu z zestawem referencyjnych opisów.
+W przypadku obrazów z zestawu COCO, każdy obraz zawiera pięć opisów referencyjnych, co w teorii, jest wystarczające
+dla uzyskania reprezentatywnego konsensusu. Jednakże, istnieje wiele poprawnych sposobów opisania obrazu,
+które nie są zawarte w zbiorze referencyjnym. Model może zatem wygenerować całkowicie poprawny i semantycznie trafny opis,
+który jednak nie będzie wysoko oceniany przez metryki, ponieważ używa słownictwa lub struktury zdania
+różnych od opisów referencyjnych. Dobrym przykładem są tu opisy generowane przez OpenAI GPT-4o mini, który
+tworzy długie, szczegółowe opisy, często używając słów i fraz nieobecnych w referencjach, co skutkuje niskimi wynikami BLEU i CIDEr,
+pomimo semantycznej poprawności.
+
+W przypadku metryki SPICE, która ocenia poprawność opisów na podstawie grafów sceny,
+jej skuteczność jest silnie uzależniona od jakości automatycznego parsowania zdań. Błędy w parsowaniu mogą prowadzić do nieprawidłowej oceny,
+nawet jeśli sam opis jest semantycznie poprawny. Na przykład, jeśli parser nie rozpozna pewnej struktury gramatycznej lub relacji między obiektami,
+może to skutkować niską oceną SPICE, mimo że opis trafnie oddaje zawartość obrazu.
+
+Dodatkowo, żadna z metryk nie bierze pod uwagę aspektów takich jak oryginalność, kreatywność 
+czy estetyka opisu, które są istotnymi wymiarami z punktu widzenia użytkownika finalnego. Metryki mierzą 
+zgodność z referencjami, nie zaś ogólną użyteczność lub jakość tekstu.
+
+Dla pełnej oceny jakości generowanych opisów, konieczne może być uzupełnienie automatycznych metryk o
+oceny ludzkie, które mogą uwzględnić subiektywne aspekty jakości tekstu, takie jak płynność, naturalność i przydatność w kontekście zastosowania.
+Niestety ze względu na ograniczenia czasowe i zasobowe, w niniejszej pracy nie przeprowadzono
+ręcznej oceny jakości opisów przez ludzi, co stanowi istotne ograniczenie niniejszej analizy.
+
+Ze względu na powyższe ograniczenia, wyniki metryk jakościowych należy interpretować jako 
+względne porównanie między modelami raczej niż jako absolutną ocenę jakości. Ranking modeli 
+ukazany w tabeli \ref{tab:jakosc_table} ma solidną podstawę empiryczną, jednak konkretne wartości metryki mogą 
+niedoszacowywać rzeczywistej przydatności wygenerowanych opisów dla zastosowań praktycznych.
+
+\subsubsection{Wyniki metryk jakościowych}\label{sss:Wyniki metryk jakosciowych}
+
+\noindent
+Na podstawie analizy wszystkich 100 obrazów testowych za pomocą czterech komplementarnych metryk, 
+uzyskano wyniki uszeregowane względem sumarycznie najwyzszych wyników dal każdej z metryk i przedstawiono w tabeli \ref{tab:jakosc_table}. 
+
+\begin{table}[!h] \centering
+\caption{Wyniki metryk jakościowych dla badanych modeli AI}
+\begin{tabular}{|c|l|c|c|c|c|} \hline
+\label{tab:jakosc_table}
+\textbf{Nr} & \textbf{Model} & \textbf{CIDEr} & \textbf{SPICE} & \textbf{BLEU} & \textbf{METEOR} \\ \hline\hline
+1. & BLIP (local)           & 1.3579 & 0.2243 & 0.4079 & 0.2813 \\ \hline
+2. & Azure Vision (cloud)   & 1.2573 & 0.2014 & 0.3201 & 0.2634 \\ \hline
+3. & Florence-2 (local)     & 1.1560 & 0.2010 & 0.3216 & 0.2775 \\ \hline
+4. & ViT-GPT2 (local)       & 1.0761 & 0.1914 & 0.3000 & 0.2455 \\ \hline
+5. & Gemini Pro (cloud)     & 0.6960 & 0.1848 & 0.1383 & 0.2428 \\ \hline
+6. & GPT-4o Vision (cloud)  & 0.0337 & 0.1522 & 0.0484 & 0.2040 \\ \hline
+\end{tabular}
+\end{table}
+
+Wyniki zawarte w tabeli \ref{tab:jakosc_table} przedstawiają wyraźną hierarchię w jakości generowanych opisów przez poszczególne modele AI.
+Lokalny model BLIP osiągnął najwyższe wyniki we wszystkich czterech metrykach (CIDEr = 1.3579, SPICE = 0.2243, BLEU = 0.4079, METEOR = 0.2813), 
+co wskazuje na jego zdolność do generowania opisów najbardziej zbliżonych do referencyjnych pod względem zarówno leksykalnym, jak i semantycznym.
+
+Bezpośrednio za BLIP plasuje się usługa chmurowa Azure Computer Vision, która osiągnęła drugie miejsce (z wynikami CIDEr = 1.2573, SPICE = 0.2014, BLEU = 0.3201 oraz METEOR = 0.2634).
+Oczekiwana przewaga modeli chmurowych w rankingu jakościowym nie została potwierdzona, co sugeruje, że specjalizacja modelu do zadania image captioning'u
+jest dużo ważniejsza niż środowisko wdrożenia. Potwierdza to wynik modelu Azure, który jako jedyny z chmurowych rozwiązań nie bazuje na architekturze dużych modeli językowych,
+lecz na wyspecjalizowanym modelu do generowania opisów obrazów.
+
+Florence-2 zajął trzecie miejsce w rankingu (CIDEr = 1.1560, SPICE = 0.2010, BLEU = 0.3216, METEOR = 0.2775) z wynikami zbliżonymi do Azure CV.
+Praktycznie identyczne wyniki pomiędzy Azure, a Florence-2 nie są przypadkowe. 
+Według dokumentacji Microsoftu, Azure Computer Vision wykorzystuje modele sztucznej inteligencji bazujące na Florence
+jako bazę dla swojej usługi image captioning'u \cite{azurecv_florence}.
+
+ViT-GPT2 plasuje się na czwartej pozycji (CIDEr = 1.0761, SPICE = 0.1914, BLEU = 0.3000, METEOR = 0.2455). Model ten
+generuje semantycznie poprawne opisy (SPICE = 0.191), jednak jego dobór słownictwa (na przykład \textquote{field} zamiast \textquote{grass}) zmniejsza dopasowanie do referencji,
+co odbija się na wynikach CIDEr i BLEU. Mimo to, relatywnie wysoki wskaźnik METEOR wskazuje, że generowane opisy są płynne
+i poprawnie odzwierciedlają znaczenia kontekstu.
+
+Gemini Pro zajmuje piąte miejsce w rankingu (CIDEr = 0.6960, SPICE = 0.1848, BLEU = 0.1383, METEOR = 0.2428), znacznie poniżej poprzednich czterech modeli.
+Wynik ten jest szczególnie zaskakujący, biorąc pod uwagę relatywnie wysoki wynik SPICE (0.1848). Jak wyjaśniono wcześniej, niskie wyniki BLEU wynikają z selektywnego podejścia modelu Gemini do opisu obrazów.
+Model skupia się na pojedynczych aspektach sceny zamiast dostarczania kompleksowych opisów, co obniża jego użyteczność w kontekście image captioning'u.
+METEOR na poziomie 0.2428 sugeruje jednak, że model generuje tekst o porównywalnej płynności co inne rozwiązania, problemem jest zatem kompletność informacji i halucynacje.
+
+Ostatnią pozycję w rankingu zajmuje OpenAI GPT-4o Vision (CIDEr = 0.0337, SPICE = 0.1522, BLEU = 0.0484, METEOR = 0.2040) z drugzoczącymi wynikami BLEU oraz CIDEr.
+Jak zaobserwowano przy analizie obrazu 285, przyczyna leży w fundamentalnej niezgodności pomiędzy stylem generowanego tekstu do oczekiwanego formatu w referencyjnych opisach.
+Model ten generuje długie, opisowe teksty z dużą ilością szczegółów, podczas gdy porównywany jest do krótkich, zwięzłych opisów. 
+Choć model jest technologicznie zaawansowany, jego całkowita nieadaptacja do konkretnego zadania powoduje jego całkowity brak przydatności w ocenie standardowych metryk.
+
+
+
+% \paragraph{Analiza wyników — Wnioski praktyczne}
+
+% Analiza wyników jakościowych prowadzi do kilku ważnych wniosków dla praktyków rozwijających aplikacje mobilne z image captioning'iem:
+
+% \textbf{1. Specjalizacja pokonuje ogólność.} BLIP i Azure Vision, mimo że reprezentują różne podejścia (lokalny model vs. wyspecjalizowana 
+% usługa chmurowa), osiągają znacznie lepsze wyniki niż ogólne duże modele językowe (GPT-4o, Gemini). To wskazuje, że wytrenowanie 
+% lub fine-tuning modelu na konkretnym zadaniu jest znacznie ważniejsze niż wykorzystanie najbardziej zaawansowanej, ogólnej technologii.
+
+% \textbf{2. Rozmiar i złożoność modelu nie gwarantują jakości opisów.} GPT-4o jest większym i bardziej zaawansowanym modelem niż BLIP, 
+% jednak jego wyniki są katastrofalne. Wielkość modelu samo w sobie nie jest wystarczającym predyktorem jego przydatności 
+% do konkretnego zadania — znacznie ważniejsza jest historia treningowa i dostrajanie do konkretnego problemu.
+
+% \textbf{3. Halucynacje pozostają problemem.} Florence-2 i Gemini wykazały tendencję do dodawania fałszywych szczegółów lub pomijania 
+% ważnych elementów sceny. Problem ten jest szczególnie istotny w aplikacjach wymagających wysokiej wiarygodności, takich jak 
+% systemy wspomagające osoby niedowidzące czy katalogowanie treści biznesowych. Automatyczne wykrywanie halucynacji w opisach 
+% pozostaje otwartym problemem w dziedzinie generowania tekstu.
+
+% \textbf{4. Dane wydajnościowe muszą być rozważane razem z metrykami jakości.} BLIP osiąga najlepsze wyniki jakości, jednak 
+% posiada duże zużycie pamięci i energii. Decyzja o wyborze konkretnego modelu musi uwzględniać całość kontekstu — 
+% ograniczenia sprzętu urządzenia mobilnego, wymagania dotyczące opóźnienia, budżet energetyczny oraz dostępne łącze sieciowe.

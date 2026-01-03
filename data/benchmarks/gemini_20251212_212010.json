@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "name": null,
+    "description": "Batch test via BatchTestActivity",
+    "dataset": "COCO_val2017",
+    "start_time": "2025-12-12 21:20:10",
+    "end_time": "2025-12-12 21:27:02",
+    "duration_ms": 411719,
+    "status": "COMPLETED"
+  },
+  "device": {
+    "manufacturer": "samsung",
+    "model": "SM-S921B",
+    "android_version": "16",
+    "sdk_int": 36,
+    "cpu_abi": "arm64-v8a",
+    "total_memory_mb": 7225,
+    "available_memory_mb": 2475
+  },
+  "statistics": {
+    "total_images": 100,
+    "total_runs": 500,
+    "successful_runs": 500,
+    "failed_runs": 0,
+    "success_rate": 1.0
+  },
+  "providers": [
+    {
+      "provider_id": "gemini_cloud",
+      "provider_name": "Google Gemini",
+      "category": "Cloud",
+      "success_rate": 1.0,
+      "total_images": 100,
+      "successful_images": 100,
+      "duration_ms": 411703,
+      "performance_metrics": {
+        "latency": {
+          "p50_ms": 660.8037895,
+          "p90_ms": 1053.2455706,
+          "mean_ms": 725.3821098319995,
+          "std_ms": 267.6291031574002,
+          "min_ms": 380.071601,
+          "max_ms": 1824.168789
+        },
+        "throughput": {
+          "median_img_per_s": 1.5133085128895134
+        },
+        "inference_time": {
+          "median_ms": 641.5993550000001
+        },
+        "ram": {
+          "peak_mean_mb": 1.0358653259277344,
+          "peak_max_mb": 2.3437957763671875
+        },
+        "energy": {
+          "mean_mwh_per_image": 16.407634815789475,
+          "total_mwh": 98.44580889473684
+        },
+        "cost": {
+          "mean_usd_per_image": 3.3516799999999984E-5,
+          "total_usd": 0.016758399999999993
+        }
+      }
+    }
+  ]
+}

@@ -1,3 +1,8 @@
+#Custom
+/data/coco
+/data/florence
+/metrics_repo
+
 # Android
 *.iml
 .gradle

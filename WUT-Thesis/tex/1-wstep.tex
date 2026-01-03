@@ -6,19 +6,19 @@ Dynamiczny rozwój technologii oraz systemów sztucznej inteligencji umożliwił
 realizację zaawansowanych i skomplikowanych obliczeniowo zadań bezpośrednio na urządzeniach mobilnych.
 Postęp w architekturze modeli, metodach kompresji oraz wydajności układów (CPU/NPU) sprawił,
 że aplikacje korzystające z AI stały się powszechne w środowisku mobilnym.
-Równolegle, wielcy dostawcy usług chmurowych udostępniają najnowocześniejsze modele AI,
+Równolegle wielcy dostawcy usług chmurowych udostępniają najnowocześniejsze modele AI
 oferujące zaawansowane możliwości o niespotykanej wcześniej jakości i skali.
 Rozwiązania te niosą jednak ze sobą zależność od zewnętrznej infrastruktury oraz wiążą się
 z kwestiami prywatności, bezpieczeństwa i opłat subskrypcyjnych.
 
 Na tym tle szczególne znaczenie zyskuje kwestia automatycznego generowania opisów obrazów 
-(image captioning), łączące zaawansowane przetwarzanie obrazu z generowaniem języka naturalnego.
+(image captioning), łączącej zaawansowane przetwarzanie obrazu z generowaniem języka naturalnego.
 Technologia ta znajduje zastosowanie w wielu aspektach, od wsparcia osób z dysfunkcją wzroku,
 przez automatyczną kategoryzację treści, aż po integrację z asystentami głosowymi.
 
 
 W obliczu tych możliwości twórcy aplikacji mobilnych stają przed dylematem wyboru
-między wdrażaniem lokalnych modeli sztucznej inteligencji, a integracją z usługami chmurowych dostawców.
+między wdrażaniem lokalnych modeli sztucznej inteligencji a integracją z usługami chmurowych dostawców.
 
 Celem niniejszej pracy jest przeprowadzenie kompleksowej analizy porównawczej modeli działających 
 w warunkach lokalnych oraz chmurowych w kontekście generowania opisów obrazów na urządzeniach 
@@ -34,7 +34,7 @@ sztucznej inteligencji w zależności od przeznaczenia projektowanej aplikacji m
 
 Do realizacji powyższych celów zaprojektowano i zaimplementowano platformę badawczą CaptionLab, która
 umożliwia prowadzenie badań, zbieranie metryk oraz zautomatyzowane testy na dużych zbiorach danych.
-Architektura platformy badawczej została opracowana z myślą o elastyczności i rozszerzalności,
+Architektura platformy badawczej została opracowana z myślą o elastyczności i rozszerzalności
 dzięki jednolitemu podejściu do implementacji poszczególnych modeli w formie osobnych providerów.
 
 Ostatecznie praca dostarcza nie tylko analityczną wiedzę odnośnie strategii wdrażania systemów 
@@ -51,7 +51,7 @@ decyzji architektonicznych w projektowaniu aplikacji mobilnych.
 Systemy sztucznej inteligencji w ostatnich latach przeszły znaczną ewolucję od naukowych koncepcji
 do powszechnie wykorzystywanych narzędzi, które zrewolucjonizowały wiele dziedzin życia i przemysłu.
 AI znalazła zastosowanie i zmieniła funkcjonowanie całych sektorów gospodarki, począwszy od technologii i
-rozrywki przez dziennikarstwo, kończąc na finansach, czy medycynie. Według danych Presedence Research globalny rynek AI
+rozrywki przez dziennikarstwo, kończąc na finansach czy medycynie. Według danych Presedence Research globalny rynek AI
 osiągnął wartość ponad 750 miliardów USD w 2025 roku, a prognozowany dalszy wzrost, przewiduje wzrost
 do prawie 3.7 bilionów USD do roku 2034 \cite{ai_market_precedence_2025}.
 
@@ -77,14 +77,14 @@ i przetwarzania danych \cite{edge_computing_shi2016}.
 Jednym z najbardziej dynamicznie rozwijających się obszarów zastosowań sztucznej inteligencji
 są aplikacje i systemy mobilne. Współczesne urządzenia mobilne, niegdyś pełniące funkcję jedynie
 narzędzi komunikacji i prostej rozrywki, dziś wyposażone są w zaawansowane układy obliczeniowe
-(Neural Processing Unit, NPU) umożliwiające przetwarzanie złożonych modeli AI bezpośrednio na urządzeniach. Według raportu z 2025 roku opublikowanego przez Statista, na świecie jest ponad 7 miliardów
+(Neural Processing Unit, NPU) umożliwiające przetwarzanie złożonych modeli AI bezpośrednio na urządzeniach. Według raportu z 2025 roku opublikowanego przez Statista na świecie jest ponad 7 miliardów
 zarejestrowanych w sieci smartfonów, co przekłada się na niemal 80\% globalnej populacji \cite{smartphone_users_2025}.
-Ta masywna baza użytkowników połączona z ciągle rosnącą mocą obliczeniową układów mobilnych, sprawia,
+Ta masywna baza użytkowników połączona z ciągle rosnącą mocą obliczeniową układów mobilnych sprawia,
 że platformy mobilne stają się kluczowym obszarem dla wdrażania rozwiązań opartych na sztucznej inteligencji.
 
 
 Wybór aplikacji mobilnych jako obszaru badań nad efektywnością modeli AI jest konsekwencją szeregu specyficznych uwarunkowań środowiskowych.
-Po pierwsze, urządzenia mobilne charakteryzują się ścisłymi ograniczeniami sprzętowymi, takimi jak limitowana ilość pamięci RAM, mocy obliczeniowej, 
+Po pierwsze, urządzenia mobilne charakteryzują się ścisłymi ograniczeniami sprzętowymi, takimi jak limitowana ilość pamięci RAM, mocy obliczeniowej
 czy ograniczonym źródłem zasilania. Po drugie, urządzenia funkcjonują w warunkach zmiennej jakości połączeń sieciowych, co podważa niezawodność rozwiązań 
 zależnych wyłącznie od infrastruktury chmurowych dostawców. Po trzecie, kwestia prywatności i bezpieczeństwa danych użytkownika nabiera szczególnego 
 znaczenia w kontekście osobistych urządzeń z dostępem do bardzo wrażliwych danych. Czynniki te powodują, że architektura systemów AI na platformach mobilnych
@@ -93,7 +93,7 @@ musi uwzględniać precyzyjny dobór rozwiązań, miejsca przetwarzania danych o
 W kontekście tych ograniczeń zarysowuje się istotny kompromis między podejściem lokalnym a chmurowym.
 Modele uruchamiane lokalnie oferują działanie bez połączenia z siecią,
 przewidywalność czasu odpowiedzi oraz silniejszą ochronę prywatności. Z drugiej strony usługi chmurowe oferują dostęp 
-do najnowszych, dużych generatywnych modeli bez konieczności ich instalacji, aktualizacji, czy obciążania pamięci urządzenia,
+do najnowszych, dużych generatywnych modeli bez konieczności ich instalacji, aktualizacji czy obciążania pamięci urządzenia
 kosztem zależności od sieci, kosztów subskrypcyjnych i zewnętrznego przetwarzania danych. Badania Yuyi Mao i innych wykazały,
 że wybór miejsca wykonywania obliczeń (edge vs. cloud) ma istotny wpływ na opóźnienie, zużycie energii
 oraz przepustowość systemu \cite{edge_vs_cloud_mao2017}. W przypadku środowiska o ograniczonych zasobach, 
@@ -124,13 +124,13 @@ do analizy, należało zgłębić temat image captioning'u, poznać sam mechaniz
 dostępnych na rynku. W tym celu przeprowadzono szczegółową analizę literatury oraz dokumentacji technicznej
 dotyczącej zarówno klasycznych, jak i współczesnych podejść do zadania automatycznego generowania opisów obrazów.
 
-Na bazie tej wiedzy, dokonano selekcji reprezentatywnych modeli AI, różniących się architekturą, podejściem do przetwarzania danych, a także miejscem wykonywania obliczeń (lokalne vs. chmurowe). 
+Na bazie tej wiedzy dokonano selekcji reprezentatywnych modeli AI różniących się architekturą, podejściem do przetwarzania danych, a także miejscem wykonywania obliczeń (lokalne vs. chmurowe). 
 Wybrane modele miały pokrywać szerokie spektrum dostępnych rozwiązań,
 umożliwiając w ten sposób analizę technologii o różnych podejściach i możliwościach.
 
-Następnie, mając wyselekcjonowane rozwiązania, zaprojektowano i zaimplementowano dedykowaną platformę badawczą, przystosowaną do wdrażania
+Następnie, mając wyselekcjonowane rozwiązania, zaprojektowano i zaimplementowano dedykowaną platformę badawczą przystosowaną do wdrażania
 i testowania różnorakich modeli AI w zadaniu image captioning'u. Platforma ta, poza wsparciem dla uruchamiania różnorodnych modeli, musiała także umożliwiać 
-zbieranie precyzyjnych statystyk, niezbędnych do obiektywnej analizy efektywności poszczególnych rozwiązań.
+zbieranie precyzyjnych statystyk niezbędnych do obiektywnej analizy efektywności poszczególnych rozwiązań.
 
 Opracowanie metodologii badawczej obejmowało zdefiniowanie zestawu metryk wydajnościowych i jakościowych, 
 procedur pomiarowych oraz protokołu testowego, pozwalającego na zebranie odpowiednich danych, które w dalszej kolejności 
@@ -139,7 +139,7 @@ będą służyć do obiektywnej oceny efektywności badanych modeli AI.
 Z opracowaną metodologią i sformułowanymi wymaganiami projektowymi, przystąpiono do realizacji badań, przeprowadzając serię eksperymentów
 badawczych, zbierając dane dotyczące parametrów dla wybranych lokalnych i chmurowych modeli sztucznej inteligencji.
 
-Ostatnim i zarazem kluczowym etapem była wizualizacja i interpretacja uzyskanych wyników badań, identyfikacja kompromisów między wydajnością, a jakością
+Ostatnim i zarazem kluczowym etapem była wizualizacja i interpretacja uzyskanych wyników badań, identyfikacja kompromisów między wydajnością a jakością
 generowanych opisów oraz sformułowanie rekomendacji doboru strategii wdrożeniowej w zależności od specyfiki i wymagań projektowanej aplikacji mobilnej.
 
 Wyżej sformułowane wymagania zebrano i przedstawiono w formie poszczególnych celów badawczych, których realizacja prowadzi do osiągnięcia głównego celu pracy.
@@ -196,8 +196,8 @@ czy chmurowe) jest bardziej efektywne w środowisku mobilnym oraz jakie kryteria
 \noindent
 \textbf{Problemy szczegółowe:}
 
-Analogicznie do dekompozycji celu głównego na cele szczegółowe, problem główny został rozłożony na pięć 
-problemów szczegółowych, bezpośrednio odpowiadających celom szczegółowym C1-C5.
+Analogicznie do dekompozycji celu głównego na cele szczegółowe problem główny został rozłożony na pięć 
+problemów szczegółowych bezpośrednio odpowiadających celom szczegółowym C1-C5.
 
 \begin{enumerate}[leftmargin=*, label=\textbf{P\arabic*.}, itemsep=3pt]
     \item Jak działa zadanie automatycznego generowania opisów obrazów,
@@ -307,7 +307,7 @@ po płynność językową.
 
 Takie podejście pozwoliło na obiektywną ocenę różnic między modelami lokalnymi 
 a chmurowymi, statystyczne porównanie wyników oraz 
-wizualizację wyników w formie wykresów i tabel ułatwiających interpretację i weryfikację postawionych hipotez,
+wizualizację wyników w formie wykresów i tabel ułatwiających interpretację i weryfikację postawionych hipotez
 poprzez porównanie przewidywanych wartości z rzeczywistymi pomiarami, a także sformułowanie 
 konkretnych, mierzalnych rekomendacji dotyczących wyboru strategii wdrożeniowej w zależności 
 od przeznaczenia aplikacji.

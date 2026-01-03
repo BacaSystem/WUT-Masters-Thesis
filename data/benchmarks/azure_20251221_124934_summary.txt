@@ -1,0 +1,56 @@
+======================================================================
+BENCHMARK RESULTS SUMMARY
+======================================================================
+
+Benchmark Information:
+  Name: azure
+  Description: Batch test via BatchTestActivity
+  Dataset: COCO_val2017
+  Start Time: 2025-12-21 12:49:34
+  End Time: 2025-12-21 13:20:07
+  Duration: 1833,03 seconds
+  Status: COMPLETED
+
+Device Information:
+  Manufacturer: samsung
+  Model: SM-S921B
+  Android: 16 (SDK 36)
+  CPU ABI: arm64-v8a
+  Total RAM: 7225 MB
+  Available RAM: 2553 MB
+
+Overall Statistics:
+  Total Images: 100
+  Total Runs: 500
+  Successful: 497 (99.4%)
+  Failed: 3
+  Providers Tested: 1
+
+----------------------------------------------------------------------
+PROVIDER RESULTS
+----------------------------------------------------------------------
+
+Provider: Azure Vision (azure_vision_cloud)
+  Category: Cloud
+  Success Rate: 100,0%
+  Images: 100/100
+  Duration: 1833,00 seconds
+
+  Performance Metrics:
+    Latency (p50): 471,07 ms
+    Latency (p90): 591,86 ms
+    Latency (mean): 479,10 ± 480,17 ms
+    Latency (range): [312,67, 10984,39] ms
+    Throughput (median): 2,12 img/s
+
+    Inference Time (median): 448,49 ms
+    RAM Peak (mean): 0,4 MB
+    RAM Peak (max): 1,1 MB
+    Energy (mean): 17,312 mWh per image
+    Energy (total sum): 484,74 mWh
+    Cost (mean): 0,001500 USD per image
+    Cost (total): 0,7455 USD
+
+======================================================================
+END OF REPORT
+======================================================================

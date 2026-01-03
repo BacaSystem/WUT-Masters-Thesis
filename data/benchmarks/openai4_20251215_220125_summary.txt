@@ -1,0 +1,56 @@
+======================================================================
+BENCHMARK RESULTS SUMMARY
+======================================================================
+
+Benchmark Information:
+  Name: openai4
+  Description: Batch test via BatchTestActivity
+  Dataset: COCO_val2017
+  Start Time: 2025-12-15 22:01:25
+  End Time: 2025-12-15 22:37:10
+  Duration: 2144,19 seconds
+  Status: COMPLETED
+
+Device Information:
+  Manufacturer: samsung
+  Model: SM-S921B
+  Android: 16 (SDK 36)
+  CPU ABI: arm64-v8a
+  Total RAM: 7225 MB
+  Available RAM: 2077 MB
+
+Overall Statistics:
+  Total Images: 100
+  Total Runs: 500
+  Successful: 499 (99.8%)
+  Failed: 1
+  Providers Tested: 1
+
+----------------------------------------------------------------------
+PROVIDER RESULTS
+----------------------------------------------------------------------
+
+Provider: OpenAI GPT-4o (openai_cloud)
+  Category: Cloud
+  Success Rate: 100,0%
+  Images: 100/100
+  Duration: 2144,17 seconds
+
+  Performance Metrics:
+    Latency (p50): 1513,90 ms
+    Latency (p90): 2322,48 ms
+    Latency (mean): 1687,32 ± 865,53 ms
+    Latency (range): [0,00, 8998,94] ms
+    Throughput (median): 0,66 img/s
+
+    Inference Time (median): 1487,05 ms
+    RAM Peak (mean): 1,3 MB
+    RAM Peak (max): 3,9 MB
+    Energy (mean): 15,245 mWh per image
+    Energy (total sum): 442,09 mWh
+    Cost (mean): 0,002172 USD per image
+    Cost (total): 1,0839 USD
+
+======================================================================
+END OF REPORT
+======================================================================

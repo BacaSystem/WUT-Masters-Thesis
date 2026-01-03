@@ -1,0 +1,646 @@
+timestamp,provider_id,provider_name,category,image_id,run_number,e2e_ms,inference_ms,throughput,ram_peak_mb,energy_mwh,model_size_mb,total_tokens,cost_usd,caption_text,model_name,success,error
+2025-12-12 21:20:14,gemini_cloud,Google Gemini,Cloud,000000000139,1,571.589024,554.329648,1.7495087519385257,0.8164520263671875,,,282,3.24E-5,"A woman stands in a sunlit kitchen, preparing for a meal.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:15,gemini_cloud,Google Gemini,Cloud,000000000139,2,549.665312,527.055859,1.819288898477916,0.7344207763671875,,,284,3.32E-5,"A cozy living room with a dining area and kitchen, bathed in warm sunlight.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:16,gemini_cloud,Google Gemini,Cloud,000000000139,3,801.396328,781.884922,1.2478220389350223,0.7070770263671875,,,284,3.32E-5,"A cozy living room with a dining area and kitchen, bathed in warm sunlight.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:17,gemini_cloud,Google Gemini,Cloud,000000000139,4,680.494805,660.135937,1.469518933359087,0.8242645263671875,,,284,3.32E-5,"A warm and inviting living space with a dining area, kitchen, and fireplace.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:18,gemini_cloud,Google Gemini,Cloud,000000000139,5,1046.59711,1027.690742,0.9554775093923201,0.7852020263671875,,,284,3.32E-5,"A cozy living room with a dining area and kitchen, bathed in warm sunlight.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:19,gemini_cloud,Google Gemini,Cloud,000000000285,1,1239.293086,1220.395079,0.8069116267142639,2.3437957763671875,,,280,3.16E-5,"A close-up of a brown bear's face.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:20,gemini_cloud,Google Gemini,Cloud,000000000285,2,791.718281,765.152656,1.2630755459339962,2.3398895263671875,,,280,3.16E-5,"A close-up of a brown bear's face.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:21,gemini_cloud,Google Gemini,Cloud,000000000285,3,710.905312,682.515508,1.4066570935961722,2.3086395263671875,,,280,3.16E-5,"A close-up of a brown bear's face.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:22,gemini_cloud,Google Gemini,Cloud,000000000285,4,1418.236172,1393.123047,0.7051011811310649,2.3398895263671875,,,280,3.16E-5,"A close-up of a brown bear's face.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:23,gemini_cloud,Google Gemini,Cloud,000000000285,5,589.388984,567.705274,1.6966723626446332,2.3398895263671875,,,280,3.16E-5,"A close-up of a brown bear's face.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:24,gemini_cloud,Google Gemini,Cloud,000000000632,1,1036.12289,1020.681133,0.9651364810596935,1.5625457763671875,,,297,3.84E-5,"A cozy bedroom bathed in sunlight, featuring a plush blue comforter, a wooden dresser with a mirror, and a tall bookshelf filled with books.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:25,gemini_cloud,Google Gemini,Cloud,000000000632,2,515.900429,494.745508,1.9383585354607253,1.5391082763671875,,,280,3.16E-5,"A cozy bedroom filled with books and bathed in natural light.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:26,gemini_cloud,Google Gemini,Cloud,000000000632,3,579.43293,554.965508,1.7258252823152456,1.4531707763671875,,,280,3.16E-5,"A cozy bedroom filled with books and bathed in natural light.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:26,gemini_cloud,Google Gemini,Cloud,000000000632,4,441.810429,418.562539,2.2634142029272923,1.5625457763671875,,,280,3.16E-5,"A cozy bedroom filled with books and bathed in natural light.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:27,gemini_cloud,Google Gemini,Cloud,000000000632,5,651.622696,631.036328,1.5346304021307446,1.5391082763671875,,,296,3.8E-5,"A cozy bedroom bathed in natural light, with a plush blue comforter, a well-stocked bookshelf, and a window overlooking lush greenery.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:28,gemini_cloud,Google Gemini,Cloud,000000000724,1,1028.107461,1009.222539,0.9726609697271713,0.8711395263671875,,,275,2.96E-5,"A stop sign is upside down.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:28,gemini_cloud,Google Gemini,Cloud,000000000724,2,438.754571,418.169336,2.2791785341878525,0.8047332763671875,,,275,2.96E-5,"A stop sign is upside down.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:30,gemini_cloud,Google Gemini,Cloud,000000000724,3,981.78625,959.251328,1.0185516450245662,0.7617645263671875,,,275,2.96E-5,"A stop sign is upside down.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:30,gemini_cloud,Google Gemini,Cloud,000000000724,4,467.243906,450.596485,2.140209828654245,0.7695770263671875,,,275,2.96E-5,"A stop sign is upside down.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:31,gemini_cloud,Google Gemini,Cloud,000000000724,5,979.747929,964.724297,1.0206706953906712,0.8437957763671875,,,275,2.96E-5,"A stop sign is upside down.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:32,gemini_cloud,Google Gemini,Cloud,000000000776,1,1072.73582,1054.220274,0.9321959622826801,1.6445770263671875,16.160653894736843,,275,2.96E-5,"A cozy pile of teddy bears.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:33,gemini_cloud,Google Gemini,Cloud,000000000776,2,627.508906,604.766484,1.593602880275296,1.6406707763671875,,,275,2.96E-5,"A cozy pile of teddy bears.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:34,gemini_cloud,Google Gemini,Cloud,000000000776,3,722.11457,699.172696,1.3848218018921845,1.6367645263671875,,,278,3.08E-5,"A trio of teddy bears snuggled together.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:35,gemini_cloud,Google Gemini,Cloud,000000000776,4,605.265078,582.871602,1.6521686717897839,1.67584228515625,,,275,2.96E-5,"A cozy pile of teddy bears.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:35,gemini_cloud,Google Gemini,Cloud,000000000776,5,709.723437,687.230469,1.4089995452693498,1.6445770263671875,,,275,2.96E-5,"A cozy pile of teddy bears.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:36,gemini_cloud,Google Gemini,Cloud,000000000785,1,920.17668,905.714609,1.0867478189079949,0.6992645263671875,,,281,3.2E-5,"A skier in a red jacket glides down a snowy slope.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:37,gemini_cloud,Google Gemini,Cloud,000000000785,2,657.413164,630.181836,1.5211134409228226,0.7109832763671875,,,281,3.2E-5,"A skier in a red jacket glides down a snowy slope.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:38,gemini_cloud,Google Gemini,Cloud,000000000785,3,503.538789,486.61168,1.985944324142226,0.7500457763671875,,,281,3.2E-5,"A skier in a red jacket glides down a snowy slope.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:38,gemini_cloud,Google Gemini,Cloud,000000000785,4,516.203985,493.789804,1.9372186752878322,0.6992645263671875,,,281,3.2E-5,"A skier in a red jacket glides down a snowy slope.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:39,gemini_cloud,Google Gemini,Cloud,000000000785,5,608.244765,589.044609,1.6440749802425343,0.7031707763671875,,,281,3.2E-5,"A skier in a red jacket glides down a snowy slope.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:40,gemini_cloud,Google Gemini,Cloud,000000000802,1,663.131524,648.973594,1.5079964740147085,0.6406707763671875,,,285,3.3600000000000004E-5,"A compact kitchen with a white stove, wooden cabinets, and a large white refrigerator.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:41,gemini_cloud,Google Gemini,Cloud,000000000802,2,1322.800469,1306.677735,0.7559719121932063,0.6406707763671875,,,284,3.32E-5,"A compact kitchen with a white stove, wooden cabinets, and a white refrigerator.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:42,gemini_cloud,Google Gemini,Cloud,000000000802,3,715.244336,696.38168,1.398123619674494,0.6367645263671875,,,285,3.3600000000000004E-5,"A compact kitchen with a white stove, wooden cabinets, and a large white refrigerator.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:43,gemini_cloud,Google Gemini,Cloud,000000000802,4,610.364609,583.846367,1.6383649793168136,0.64459228515625,,,285,3.3600000000000004E-5,"A compact kitchen with a white stove, wooden cabinets, and a large white refrigerator.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:43,gemini_cloud,Google Gemini,Cloud,000000000802,5,513.436523,494.455078,1.9476604316284685,0.6406707763671875,,,285,3.3600000000000004E-5,"A compact kitchen with a white stove, wooden cabinets, and a large white refrigerator.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:44,gemini_cloud,Google Gemini,Cloud,000000000872,1,1022.038398,999.415859,0.978436819944215,2.22161865234375,,,282,3.24E-5,"A baseball player runs on the field while another player prepares to throw.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:45,gemini_cloud,Google Gemini,Cloud,000000000872,2,800.19289,777.159571,1.24969868202653,2.2305145263671875,,,282,3.24E-5,"A baseball player runs on the field while another player prepares to throw.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:46,gemini_cloud,Google Gemini,Cloud,000000000872,3,603.898047,580.199766,1.6559086504215834,2.2227020263671875,,,277,3.04E-5,"Baseball players in action on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:47,gemini_cloud,Google Gemini,Cloud,000000000872,4,563.449531,528.620156,1.7747818482078035,2.1914520263671875,,,299,3.9200000000000004E-5,"A baseball player in a white shirt and gray pants runs on a dirt field, while another player in a green shirt and cap prepares to throw a ball.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:47,gemini_cloud,Google Gemini,Cloud,000000000872,5,623.533828,598.525508,1.603762226032747,2.2227020263671875,,,282,3.24E-5,"A baseball player runs on the field while another player prepares to throw.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:49,gemini_cloud,Google Gemini,Cloud,000000000885,1,1503.154688,1484.277774,0.6652675256799652,0.6172332763671875,,,300,3.96E-5,"A tennis player lunges for a shot on a sunny court, with ""J.P. Morgan"" and ""Polo"" branding visible in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:49,gemini_cloud,Google Gemini,Cloud,000000000885,2,450.159453,429.537382,2.2214350789163593,0.5469207763671875,,,281,3.2E-5,"A tennis player lunges for a shot on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:50,gemini_cloud,Google Gemini,Cloud,000000000885,3,543.107735,525.746797,1.8412553082124672,0.5547332763671875,,,281,3.2E-5,"A tennis player lunges for a shot on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:51,gemini_cloud,Google Gemini,Cloud,000000000885,4,499.401915,481.202109,2.002395205072452,0.52349853515625,,,281,3.2E-5,"A tennis player lunges for a shot on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:52,gemini_cloud,Google Gemini,Cloud,000000000885,5,1193.818008,1175.96789,0.8376486141931275,0.5469207763671875,,,281,3.2E-5,"A tennis player lunges for a shot on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:53,gemini_cloud,Google Gemini,Cloud,000000001000,1,967.977968,949.265117,1.0330813645130401,1.6914520263671875,,,283,3.28E-5,"A group of young tennis players pose with a trophy on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:54,gemini_cloud,Google Gemini,Cloud,000000001000,2,509.712539,485.792304,1.961890131174505,1.7070770263671875,,,282,3.24E-5,"A group of young tennis players pose with a trophy after a match.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:54,gemini_cloud,Google Gemini,Cloud,000000001000,3,486.946289,473.193086,2.053614582531504,1.6641082763671875,,,283,3.28E-5,"A group of young tennis players pose with a trophy on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:55,gemini_cloud,Google Gemini,Cloud,000000001000,4,678.276836,656.454258,1.4743242683876647,1.6602020263671875,,,283,3.28E-5,"A group of young tennis players pose with a trophy on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:56,gemini_cloud,Google Gemini,Cloud,000000001000,5,551.59,528.746875,1.812940771225004,1.6602020263671875,,,282,3.24E-5,"A group of young tennis players pose with a trophy after a match.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:57,gemini_cloud,Google Gemini,Cloud,000000001268,1,843.711485,824.19914,1.1852392882858527,1.1328582763671875,,,284,3.32E-5,"A swan drinks from the river as people watch and take photos under a bridge.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:57,gemini_cloud,Google Gemini,Cloud,000000001268,2,567.61957,544.356836,1.7617433451070055,1.1250457763671875,,,280,3.16E-5,"A swan drinks from the river while a woman photographs it.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:58,gemini_cloud,Google Gemini,Cloud,000000001268,3,1039.543906,1018.64082,0.9619603310915854,1.1289520263671875,,,284,3.32E-5,"A swan drinks from the river as people watch and take photos under a bridge.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:20:59,gemini_cloud,Google Gemini,Cloud,000000001268,4,554.249062,533.676602,1.8042430173747412,1.1250457763671875,,,281,3.2E-5,"A swan drinks from the river as people watch and take photos.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:00,gemini_cloud,Google Gemini,Cloud,000000001268,5,538.96336,515.966172,1.8554136963967274,1.1250457763671875,,,284,3.32E-5,"A swan drinks from the river as people watch and take photos under a bridge.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:01,gemini_cloud,Google Gemini,Cloud,000000001296,1,1723.194297,1707.895078,0.5803176123208815,0.8711395263671875,,,283,3.28E-5,"A young woman with a Hello Kitty phone case looks intently at her phone.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:02,gemini_cloud,Google Gemini,Cloud,000000001296,2,795.480703,778.001211,1.257101518903847,0.8359832763671875,,,283,3.28E-5,"A young woman with a Hello Kitty phone case looks intently at her phone.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:03,gemini_cloud,Google Gemini,Cloud,000000001296,3,462.798242,444.873985,2.160768795660205,0.7617645263671875,,,283,3.28E-5,"A young woman with a Hello Kitty phone case looks intently at her phone.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:03,gemini_cloud,Google Gemini,Cloud,000000001296,4,413.248829,395.649219,2.419849567196233,0.76959228515625,,,283,3.28E-5,"A young woman with a Hello Kitty phone case looks intently at her phone.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:04,gemini_cloud,Google Gemini,Cloud,000000001296,5,553.164766,536.018984,1.8077796372157224,0.84381103515625,,,281,3.2E-5,"A young woman with a Hello Kitty phone case captures a moment.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:05,gemini_cloud,Google Gemini,Cloud,000000001353,1,765.943359,752.142344,1.3055795683189675,0.4219207763671875,,,277,3.04E-5,"Children enjoy a ride on a miniature train.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:05,gemini_cloud,Google Gemini,Cloud,000000001353,2,417.444141,399.929218,2.395530088419662,0.4453582763671875,,,277,3.04E-5,"Children enjoy a ride on a miniature train.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:06,gemini_cloud,Google Gemini,Cloud,000000001353,3,548.063007,533.707344,1.8246077316435263,0.4141082763671875,,,277,3.04E-5,"Children enjoy a ride on a miniature train.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:07,gemini_cloud,Google Gemini,Cloud,000000001353,4,1024.736602,1004.196015,0.9758605265472893,0.4570770263671875,,,277,3.04E-5,"Children enjoy a ride on a miniature train.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:08,gemini_cloud,Google Gemini,Cloud,000000001353,5,916.79082,898.301055,1.0907613581907374,0.4453582763671875,,,277,3.04E-5,"Children enjoy a ride on a miniature train.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:10,gemini_cloud,Google Gemini,Cloud,000000001425,1,1352.054101,1337.866171,0.7396153743111201,0.6445770263671875,,,289,3.52E-5,"A close-up, black and white shot of a half-eaten sandwich on a white plate.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:10,gemini_cloud,Google Gemini,Cloud,000000001425,2,673.163868,656.258946,1.4855223928923054,0.6094207763671875,,,289,3.52E-5,"A close-up, black and white shot of a half-eaten sandwich on a white plate.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:11,gemini_cloud,Google Gemini,Cloud,000000001425,3,1030.538906,1011.437188,0.9703660814529209,0.6484832763671875,,,288,3.4800000000000006E-5,"A close-up black and white shot of a half-eaten sandwich on a white plate.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:12,gemini_cloud,Google Gemini,Cloud,000000001425,4,767.017812,749.682891,1.3037506878653815,0.6016082763671875,,,289,3.52E-5,"A close-up, black and white shot of a half-eaten sandwich on a white plate.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:13,gemini_cloud,Google Gemini,Cloud,000000001425,5,489.621484,470.766328,2.0423940384119255,0.6680145263671875,,,288,3.4800000000000006E-5,"A close-up, black and white shot of a delicious-looking sandwich on a white plate.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:14,gemini_cloud,Google Gemini,Cloud,000000001490,1,1319.012734,1295.0125,0.75814279439701,0.7305145263671875,,,288,3.4800000000000006E-5,"A lone paddleboarder glides across the calm water, with a distant shoreline in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:15,gemini_cloud,Google Gemini,Cloud,000000001490,2,508.659922,489.913516,1.9659500517911848,0.7852020263671875,,,287,3.44E-5,"A lone paddleboarder glides across the water, with a distant shoreline in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:16,gemini_cloud,Google Gemini,Cloud,000000001490,3,518.145469,490.109453,1.9299599433532824,0.7461395263671875,,,286,3.4E-5,"A lone figure paddleboards on a calm sea, with a distant coastline in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:16,gemini_cloud,Google Gemini,Cloud,000000001490,4,646.837734,623.976407,1.5459827827546004,0.7344207763671875,,,287,3.44E-5,"A lone paddleboarder glides across the water, with a distant coastline in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:17,gemini_cloud,Google Gemini,Cloud,000000001490,5,711.518477,692.046992,1.4054448792620744,0.7070770263671875,,,286,3.4E-5,"A lone figure paddleboards on a calm sea, with a distant shoreline in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:18,gemini_cloud,Google Gemini,Cloud,000000001503,1,702.472656,689.376641,1.4235429542470333,0.2734832763671875,,,368,6.68E-5,"Here are a few short, descriptive captions for the image, playing on different aspects:
+
+**Focusing on the setup:**
+
+*   Retro Apple workstation.
+*   Classic iMac setup.
+*   A blast from the past: vintage Apple tech.
+*   Clean and functional Apple desk.
+
+**Focusing on the aesthetic:**
+
+*   Iconic white Apple design.
+*   Timeless tech on display.
+*   Sleek and simple Apple setup.
+
+**",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:19,gemini_cloud,Google Gemini,Cloud,000000001503,2,1209.528399,1195.501289,0.8267685164124865,0.2344207763671875,,,368,6.68E-5,"Here are a few caption options for the image, playing on different aspects:
+
+**Short & Sweet:**
+
+* Retro tech setup.
+* A blast from the past.
+* Vintage Apple vibes.
+* Classic desktop.
+
+**Descriptive:**
+
+* A clean, retro Apple desktop setup featuring an iMac G4, laptop, and clear peripherals.
+* Nostalgic workspace with an iconic iMac G4, a sleek laptop, and transparent accessories.
+* A glimpse into a past",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:20,gemini_cloud,Google Gemini,Cloud,000000001503,3,852.916875,838.361055,1.1724471977412805,0.2031707763671875,,,368,6.68E-5,"Here are a few caption options for the image, playing on different aspects:
+
+**Short & Sweet:**
+
+* Retro tech setup.
+* A blast from the past.
+* Classic Apple workspace.
+* Vintage computing.
+
+**Descriptive:**
+
+* A clean, minimalist desk setup featuring a classic Apple iMac G4, a MacBook, and a clear keyboard.
+* Reliving the early 2000s with this iconic Apple workstation.
+* The iconic ""lamp""",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:21,gemini_cloud,Google Gemini,Cloud,000000001503,4,1233.319922,1219.717929,0.8108196277072707,0.2344207763671875,,,368,6.68E-5,"Here are a few caption options for the image, playing on different aspects:
+
+**Short & Sweet:**
+
+* Retro tech setup.
+* A blast from the past.
+* Classic Apple workspace.
+* Vintage computing.
+
+**Descriptive:**
+
+* A nostalgic Apple workspace featuring an iMac G4, laptop, and clear peripherals.
+* The iconic ""iLamp"" iMac G4 takes center stage in this retro tech setup.
+* A clean and functional desk with a vintage Apple",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:22,gemini_cloud,Google Gemini,Cloud,000000001503,5,723.663672,712.424688,1.3818573996346744,0.2734832763671875,,,368,6.68E-5,"Here are a few caption options for the image, playing on different aspects:
+
+**Short & Sweet:**
+
+* Retro Apple setup.
+* A blast from the past.
+* Classic tech.
+* Vintage computing.
+
+**Descriptive:**
+
+* A nostalgic Apple workstation featuring an iMac G4, laptop, and classic peripherals.
+* Reliving the early 2000s with this iconic Apple setup.
+* A clean and functional desk with a beloved iMac G4 at",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:23,gemini_cloud,Google Gemini,Cloud,000000001532,1,1019.172109,998.732812,0.9811885462418988,0.8008270263671875,,,283,3.28E-5,"Highway signs point the way to Ventura, Hollywood Blvd, and Sunset Blvd.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:24,gemini_cloud,Google Gemini,Cloud,000000001532,2,660.683321,640.044883,1.513584448425935,0.7930145263671875,,,283,3.28E-5,"Highway signs point the way to Ventura, Hollywood Boulevard, and Sunset Boulevard.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:25,gemini_cloud,Google Gemini,Cloud,000000001532,3,842.302617,822.461679,1.1872217654524988,0.80084228515625,,,283,3.28E-5,"Highway signs point the way to Ventura, Hollywood Blvd, and Sunset Blvd.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:26,gemini_cloud,Google Gemini,Cloud,000000001532,4,715.752813,695.542344,1.3971303805410265,0.8047332763671875,,,283,3.28E-5,"Highway signs point the way to Ventura, Hollywood Boulevard, and Sunset Boulevard.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:27,gemini_cloud,Google Gemini,Cloud,000000001532,5,835.070937,816.57043,1.1975030571564484,0.8242645263671875,,,283,3.28E-5,"Highway signs point the way to Ventura, Hollywood Boulevard, and Sunset Boulevard.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:28,gemini_cloud,Google Gemini,Cloud,000000001584,1,957.176953,933.908867,1.0447389031524248,1.1602020263671875,,,291,3.6E-5,"A classic red double-decker bus drives down a city street, its iconic design a familiar sight in London.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:28,gemini_cloud,Google Gemini,Cloud,000000001584,2,451.565664,432.539375,2.214517355331959,1.18756103515625,,,282,3.24E-5,"A classic red double-decker bus travels down a city street.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:29,gemini_cloud,Google Gemini,Cloud,000000001584,3,512.568906,493.075586,1.9509572045714378,1.1484832763671875,,,282,3.24E-5,"A classic red double-decker bus drives down a city street.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:30,gemini_cloud,Google Gemini,Cloud,000000001584,4,752.917304,733.317226,1.3281671103683388,1.1602020263671875,,,282,3.24E-5,"A classic red double-decker bus travels down a city street.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:31,gemini_cloud,Google Gemini,Cloud,000000001584,5,917.235195,898.109609,1.090232914579777,1.1484832763671875,,,282,3.24E-5,"A classic red double-decker bus drives down a city street.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:32,gemini_cloud,Google Gemini,Cloud,000000001675,1,941.812148,927.91914,1.0617828641556235,1.1719207763671875,,,281,3.2E-5,"A fluffy black and white cat peeks over a laptop keyboard.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:33,gemini_cloud,Google Gemini,Cloud,000000001675,2,895.834219,878.638282,1.1162779661579327,1.1133270263671875,,,279,3.12E-5,"A fluffy black and white cat lounges on a laptop.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:34,gemini_cloud,Google Gemini,Cloud,000000001675,3,833.013672,813.741757,1.200460488960618,1.1094207763671875,,,276,3.0E-5,"A tuxedo cat lounges on a laptop.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:35,gemini_cloud,Google Gemini,Cloud,000000001675,4,777.684766,759.562461,1.2858680582666835,1.0781707763671875,,,279,3.12E-5,"A fluffy black and white cat rests on a laptop.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:35,gemini_cloud,Google Gemini,Cloud,000000001675,5,499.663047,480.398555,2.0013487209111145,1.1523895263671875,,,279,3.12E-5,"A fluffy black and white cat rests on a laptop.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:36,gemini_cloud,Google Gemini,Cloud,000000001761,1,830.821133,817.152734,1.2036285071241681,0.5859832763671875,,,280,3.16E-5,"Two planes fly over Sydney Harbour Bridge and the Opera House.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:37,gemini_cloud,Google Gemini,Cloud,000000001761,2,646.886992,625.178437,1.5458650620076158,0.6133270263671875,,,280,3.16E-5,"Two planes fly over Sydney Harbour Bridge and the Opera House.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:38,gemini_cloud,Google Gemini,Cloud,000000001761,3,921.013086,904.517618,1.0857609030758113,0.57818603515625,,,279,3.12E-5,"Two planes fly over Sydney Harbour Bridge and Opera House.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:39,gemini_cloud,Google Gemini,Cloud,000000001761,4,479.141484,462.62457,2.0870662077759063,0.6172332763671875,,,280,3.16E-5,"Two planes fly over Sydney Harbour Bridge and the Opera House.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:39,gemini_cloud,Google Gemini,Cloud,000000001761,5,517.349375,491.589805,1.9329297537085068,0.5859832763671875,,,280,3.16E-5,"Two planes fly over Sydney Harbour Bridge and the Opera House.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:40,gemini_cloud,Google Gemini,Cloud,000000001818,1,999.394258,981.175039,1.000606109145766,1.7383270263671875,,,276,3.0E-5,"A zebra foal nurses from its mother.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:41,gemini_cloud,Google Gemini,Cloud,000000001818,2,910.013946,888.531992,1.0988842581979508,1.7070770263671875,,,279,3.12E-5,"A mother zebra nurses her foal in the tall grass.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:42,gemini_cloud,Google Gemini,Cloud,000000001818,3,569.497422,547.532813,1.75593419982154,1.7383270263671875,,,276,3.0E-5,"A zebra foal nurses from its mother.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:43,gemini_cloud,Google Gemini,Cloud,000000001818,4,553.066328,531.861796,1.8081013964748185,1.7422332763671875,,,279,3.12E-5,"A mother zebra nurses her foal in the tall grass.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:43,gemini_cloud,Google Gemini,Cloud,000000001818,5,545.461992,522.916211,1.8333083050083534,1.7695770263671875,,,285,3.3600000000000004E-5,"A zebra foal nurses from its mother, their stripes blending into a striking monochrome pattern.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:44,gemini_cloud,Google Gemini,Cloud,000000001993,1,861.415586,840.548007,1.160879854337811,1.0547332763671875,,,291,3.6E-5,"A cozy room with a stone wall, a bed with a patterned duvet, and a small table by the window.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:45,gemini_cloud,Google Gemini,Cloud,000000001993,2,525.27082,506.109727,1.9037798444619485,1.1016082763671875,,,291,3.6E-5,"A cozy room with a stone wall, a bed with a colorful duvet, and a small table by the window.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:45,gemini_cloud,Google Gemini,Cloud,000000001993,3,514.854687,495.03957,1.9422956132086255,1.09771728515625,,,290,3.56E-5,"A cozy room with a stone wall, a bed with a patterned duvet, and a small table with chairs.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:46,gemini_cloud,Google Gemini,Cloud,000000001993,4,923.704805,905.083945,1.082596945027259,1.0625457763671875,,,290,3.56E-5,"A cozy room with a stone wall, a bed with a colorful duvet, and a small table with chairs.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:47,gemini_cloud,Google Gemini,Cloud,000000001993,5,564.830977,542.474883,1.7704411420763846,1.0625457763671875,,,291,3.6E-5,"A cozy room with a stone wall, a bed with a patterned duvet, and a small table by the window.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:48,gemini_cloud,Google Gemini,Cloud,000000002006,1,809.888789,791.66461,1.2347374276346479,1.3437957763671875,,,284,3.32E-5,"A purple South Tyne bus, route 96, travels through the city.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:49,gemini_cloud,Google Gemini,Cloud,000000002006,2,616.156601,587.220977,1.622964029561699,1.3516082763671875,,,284,3.32E-5,"A purple South Tyne bus, route 96, travels down the road.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:49,gemini_cloud,Google Gemini,Cloud,000000002006,3,609.747031,590.040195,1.640024385784996,1.3125457763671875,,,284,3.32E-5,"A purple South Tyne bus, route 96, travels through the city.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:50,gemini_cloud,Google Gemini,Cloud,000000002006,4,506.138789,485.301641,1.9757426653186227,1.3125457763671875,,,284,3.32E-5,"A purple South Tyne bus, route 96, drives past a pedestrian.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:51,gemini_cloud,Google Gemini,Cloud,000000002006,5,1009.810742,988.130156,0.9902845735423955,1.3203582763671875,,,286,3.4E-5,"A purple South Tyne bus, route 96, heads towards Metrocentre via Bens.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:52,gemini_cloud,Google Gemini,Cloud,000000002149,1,968.746328,954.607031,1.0322619772552057,0.6172332763671875,,,275,2.96E-5,"A bowl of vibrant green apples.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:53,gemini_cloud,Google Gemini,Cloud,000000002149,2,528.417812,513.688047,1.8924418846047528,0.51568603515625,,,275,2.96E-5,"A bowl of vibrant green apples.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:53,gemini_cloud,Google Gemini,Cloud,000000002149,3,483.425781,466.059101,2.0685698597444064,0.5234832763671875,,,275,2.96E-5,"A bowl of vibrant green apples.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:54,gemini_cloud,Google Gemini,Cloud,000000002149,4,500.621601,480.189726,1.9975166832643325,0.5469207763671875,,,275,2.96E-5,"A bowl of vibrant green apples.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:54,gemini_cloud,Google Gemini,Cloud,000000002149,5,476.147071,461.505743,2.1001914343394126,0.5547332763671875,,,275,2.96E-5,"A bowl of vibrant green apples.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:55,gemini_cloud,Google Gemini,Cloud,000000002153,1,796.557344,776.373281,1.2554023982484306,1.3477020263671875,,,281,3.2E-5,"A batter prepares to swing at a pitch during a baseball game.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:56,gemini_cloud,Google Gemini,Cloud,000000002153,2,607.304024,587.366368,1.6466217256614126,1.3437957763671875,,,285,3.3600000000000004E-5,"A baseball player at bat, with the pitcher, catcher, and umpire in position.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:57,gemini_cloud,Google Gemini,Cloud,000000002153,3,611.550859,592.039453,1.6351869763296336,1.3437957763671875,,,290,3.56E-5,"A baseball player in a red uniform swings a bat at a pitch, with the umpire and catcher behind him.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:57,gemini_cloud,Google Gemini,Cloud,000000002153,4,386.758984,357.359492,2.58558958258097,1.3906707763671875,,,274,2.92E-5,"A baseball game in progress.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:58,gemini_cloud,Google Gemini,Cloud,000000002153,5,721.460157,700.723515,1.3860779286249623,1.3477020263671875,,,274,2.92E-5,"A baseball game in progress.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:21:59,gemini_cloud,Google Gemini,Cloud,000000002157,1,857.207187,840.508867,1.1665791131543557,1.2187957763671875,,,281,3.2E-5,"A festive spread of cake, cheese, and grapes awaits guests.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:00,gemini_cloud,Google Gemini,Cloud,000000002157,2,515.923359,497.635742,1.9382723859184674,1.25396728515625,,,291,3.6E-5,"A delightful spread of a berry-topped cake, cheese board, and wine glasses awaits on a red tablecloth.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:01,gemini_cloud,Google Gemini,Cloud,000000002157,3,1409.975508,1391.138047,0.7092321776698549,1.2734832763671875,,,281,3.2E-5,"A festive spread of cake, cheese, and grapes awaits guests.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:02,gemini_cloud,Google Gemini,Cloud,000000002157,4,803.562734,785.060664,1.2444579093684054,1.2187957763671875,,,281,3.2E-5,"A festive spread of cake, cheese, and grapes awaits guests.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:03,gemini_cloud,Google Gemini,Cloud,000000002157,5,451.003672,432.078203,2.217276847360125,1.2539520263671875,,,281,3.2E-5,"A festive spread of cake, cheese, and grapes awaits guests.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:04,gemini_cloud,Google Gemini,Cloud,000000002261,1,1003.681211,988.886406,0.9963322906121435,1.2695770263671875,16.457031,,286,3.4E-5,"A young person enjoys a ride on a boogie board as a wave crashes around them.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:04,gemini_cloud,Google Gemini,Cloud,000000002261,2,502.768828,486.124688,1.9889856815068894,1.1641082763671875,,,286,3.4E-5,"A young person enjoys a ride on a boogie board as a wave crashes around them.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:05,gemini_cloud,Google Gemini,Cloud,000000002261,3,692.47375,674.12711,1.4440980614788648,1.2031707763671875,,,286,3.4E-5,"A young person enjoys a ride on a boogie board as a wave crashes around them.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:06,gemini_cloud,Google Gemini,Cloud,000000002261,4,466.408359,447.777969,2.144043906382904,1.1680145263671875,,,286,3.4E-5,"A young person enjoys a ride on a boogie board as a wave crashes around them.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:06,gemini_cloud,Google Gemini,Cloud,000000002261,5,567.199297,548.968945,1.763048729589663,1.1602020263671875,,,286,3.4E-5,"A young person enjoys a ride on a boogie board as a wave crashes around them.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:07,gemini_cloud,Google Gemini,Cloud,000000002299,1,936.822187,922.087187,1.0674384252173994,0.8594207763671875,,,278,3.08E-5,"A group of children pose for a class photo.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:08,gemini_cloud,Google Gemini,Cloud,000000002299,2,500.257031,481.656641,1.9989724042479275,0.9297332763671875,,,278,3.08E-5,"A group of children pose for a class photo.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:08,gemini_cloud,Google Gemini,Cloud,000000002299,3,470.396445,452.972656,2.125866406154494,0.89849853515625,,,283,3.28E-5,"A group of children pose for a photo in front of a brick building.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:09,gemini_cloud,Google Gemini,Cloud,000000002299,4,560.467461,540.607344,1.7842249007922337,0.8945770263671875,,,278,3.08E-5,"A group of children pose for a school photo.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:10,gemini_cloud,Google Gemini,Cloud,000000002299,5,559.959141,539.162188,1.785844585399848,0.8945770263671875,,,278,3.08E-5,"A group of children pose for a class photo.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:11,gemini_cloud,Google Gemini,Cloud,000000002431,1,1126.821602,1111.753007,0.8874519251539873,0.7109832763671875,,,286,3.4E-5,"A rustic bread basket with a bone marrow bone, served with a glass of red wine.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:11,gemini_cloud,Google Gemini,Cloud,000000002431,2,448.974023,429.563711,2.2273003531876943,0.7109832763671875,,,286,3.4E-5,"A rustic bread basket with a bone marrow bone, served with a glass of red wine.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:12,gemini_cloud,Google Gemini,Cloud,000000002431,3,589.031992,565.535274,1.697700657318457,0.7109832763671875,,,288,3.4800000000000006E-5,"A rustic bread basket with grilled bread, a small bowl of spread, and a bone marrow presentation.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:13,gemini_cloud,Google Gemini,Cloud,000000002431,4,524.928828,506.233008,1.9050201601806485,0.6992645263671875,,,286,3.4E-5,"A rustic bread basket with a bone marrow bone, served with a glass of red wine.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:14,gemini_cloud,Google Gemini,Cloud,000000002431,5,835.896914,812.795312,1.1963197653341258,0.7109832763671875,,,288,3.4800000000000006E-5,"A rustic bread basket with grilled bread, a small bowl of dip, and a bone marrow presentation.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:15,gemini_cloud,Google Gemini,Cloud,000000002473,1,866.763828,849.656914,1.1537168115418863,0.8242645263671875,,,292,3.6400000000000004E-5,"A skier soars through the air against a clear blue sky, performing a mid-air trick with skis spread wide.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:16,gemini_cloud,Google Gemini,Cloud,000000002473,2,878.822657,861.819336,1.1378860024087885,0.7773895263671875,,,292,3.6400000000000004E-5,"A skier soars through the air against a clear blue sky, performing a mid-air trick with skis spread wide.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:16,gemini_cloud,Google Gemini,Cloud,000000002473,3,745.120391,729.508946,1.3420650032915284,0.81256103515625,,,292,3.6400000000000004E-5,"A skier soars through the air against a clear blue sky, performing a mid-air trick with skis spread wide.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:17,gemini_cloud,Google Gemini,Cloud,000000002473,4,702.184218,683.77043,1.4241277066127396,0.8086395263671875,,,290,3.56E-5,"A skier soars through the air against a clear blue sky, performing a trick with skis and poles extended.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:19,gemini_cloud,Google Gemini,Cloud,000000002473,5,1171.311797,1147.330039,0.8537436424368224,0.8086395263671875,,,288,3.4800000000000006E-5,"A skier soars through the air against a clear blue sky, performing a mid-air trick.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:19,gemini_cloud,Google Gemini,Cloud,000000002532,1,760.52836,739.559804,1.3148753584941921,1.2227020263671875,,,292,3.6400000000000004E-5,"A lone skier stands on a snowy mountain, ready to carve their path through the pristine landscape under a bright blue sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:20,gemini_cloud,Google Gemini,Cloud,000000002532,2,776.181602,755.574102,1.2883582880904203,1.1797332763671875,,,289,3.52E-5,"A lone skier stands on a snowy mountain, ready to carve down the slopes under a bright blue sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:21,gemini_cloud,Google Gemini,Cloud,000000002532,3,787.920976,769.324883,1.2691628100531747,1.2539520263671875,,,292,3.6400000000000004E-5,"A lone skier stands on a snowy ridge, ready to descend into a vast, mountainous landscape under a bright blue sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:22,gemini_cloud,Google Gemini,Cloud,000000002532,4,538.394414,515.64457,1.857374396904497,1.1914520263671875,,,289,3.52E-5,"A lone skier stands on a snow-covered mountain, ready to descend into a vast, winter landscape.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:22,gemini_cloud,Google Gemini,Cloud,000000002532,5,615.698476,594.324336,1.6241716342984742,1.1914520263671875,,,292,3.6400000000000004E-5,"A lone skier stands on a snowy mountain, ready to carve their path through the pristine landscape under a bright blue sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:23,gemini_cloud,Google Gemini,Cloud,000000002587,1,704.975078,690.293437,1.4184898604316334,0.6719207763671875,,,278,3.08E-5,"A banana and a chocolate donut are packaged together.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:24,gemini_cloud,Google Gemini,Cloud,000000002587,2,433.212383,411.08293,2.308336601726364,0.6094207763671875,,,279,3.12E-5,"A banana and a chocolate donut in a plastic bag.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:24,gemini_cloud,Google Gemini,Cloud,000000002587,3,425.81125,410.08418,2.348458383849652,0.7578582763671875,,,278,3.08E-5,"A banana and a chocolate donut are packaged together.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:25,gemini_cloud,Google Gemini,Cloud,000000002587,4,492.55539,480.369571,2.030228519070718,0.6016082763671875,,,278,3.08E-5,"A banana and a chocolate donut are packaged together.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:26,gemini_cloud,Google Gemini,Cloud,000000002587,5,617.57168,601.104414,1.6192452348203532,0.6367645263671875,,,278,3.08E-5,"A banana and a chocolate donut are packaged together.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:26,gemini_cloud,Google Gemini,Cloud,000000002592,1,601.508008,584.852109,1.662488257346692,1.1211395263671875,,,277,3.04E-5,"A pirate mug and a serrated knife.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:27,gemini_cloud,Google Gemini,Cloud,000000002592,2,865.511719,843.974805,1.155385857923895,1.1602020263671875,,,277,3.04E-5,"A pirate mug and a serrated knife.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:28,gemini_cloud,Google Gemini,Cloud,000000002592,3,940.831953,922.723125,1.0628890704778178,1.08990478515625,,,277,3.04E-5,"A pirate mug and a serrated knife.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:29,gemini_cloud,Google Gemini,Cloud,000000002592,4,399.85668,381.378203,2.500896071062262,1.1445770263671875,,,277,3.04E-5,"A pirate mug and a serrated knife.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:30,gemini_cloud,Google Gemini,Cloud,000000002592,5,1042.357266,1026.11918,0.9593639653297146,1.1250457763671875,,,277,3.04E-5,"A pirate mug and a serrated knife.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:31,gemini_cloud,Google Gemini,Cloud,000000002685,1,1008.070117,988.924414,0.9919944884151347,1.4844207763671875,,,282,3.24E-5,"A group of people are gathered around a tasting counter in a winery.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:32,gemini_cloud,Google Gemini,Cloud,000000002685,2,1190.232266,1169.484687,0.8401721483830115,1.4141082763671875,,,282,3.24E-5,"A group of people are gathered around a tasting counter, sampling wine.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:33,gemini_cloud,Google Gemini,Cloud,000000002685,3,1046.112656,1025.427929,0.9559199903227249,1.4375457763671875,,,282,3.24E-5,"A group of people are gathered around a tasting counter, sampling wine.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:34,gemini_cloud,Google Gemini,Cloud,000000002685,4,587.566055,565.599922,1.7019363039956419,1.4492645263671875,,,287,3.44E-5,"A group of people are gathered around a counter, possibly at a wine tasting or a shop.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:35,gemini_cloud,Google Gemini,Cloud,000000002685,5,1058.125625,1035.120469,0.9450673685366991,1.4141082763671875,,,282,3.24E-5,"A group of people are gathered around a tasting counter, sampling wine.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:36,gemini_cloud,Google Gemini,Cloud,000000002923,1,721.653593,706.007344,1.3857063966700156,0.5703582763671875,,,291,3.6E-5,"A serene marsh scene with egrets wading in the foreground and fishing boats docked in the background under a cloudy sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:37,gemini_cloud,Google Gemini,Cloud,000000002923,2,1028.027969,1013.276524,0.9727361804881011,0.5781707763671875,,,291,3.6E-5,"A serene marsh scene with egrets wading in the foreground and fishing boats docked in the background under a cloudy sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:38,gemini_cloud,Google Gemini,Cloud,000000002923,3,692.701718,677.616406,1.443622809089092,0.64849853515625,,,294,3.72E-5,"A serene marsh scene with egrets wading in the foreground and a fleet of fishing boats docked in the distance under a cloudy sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:39,gemini_cloud,Google Gemini,Cloud,000000002923,4,773.365508,758.303203,1.2930496507222042,0.5781707763671875,,,293,3.68E-5,"A serene marsh scene with egrets in the foreground and a fleet of fishing boats docked in the distance under a cloudy sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:40,gemini_cloud,Google Gemini,Cloud,000000002923,5,571.128359,555.198477,1.7509198838434845,0.5781707763671875,,,291,3.6E-5,"A serene marsh scene with egrets wading in the foreground and fishing boats docked in the background under a cloudy sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:40,gemini_cloud,Google Gemini,Cloud,000000003156,1,605.209062,588.757657,1.652321590650604,0.8672332763671875,,,277,3.04E-5,"A plumber in gloves works on a toilet.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:41,gemini_cloud,Google Gemini,Cloud,000000003156,2,450.377539,428.698946,2.220359394965298,0.8750457763671875,,,277,3.04E-5,"A plumber in gloves works on a toilet.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:41,gemini_cloud,Google Gemini,Cloud,000000003156,3,710.400899,693.575235,1.407655876291339,0.8711395263671875,,,275,2.96E-5,"A plumber works on a toilet.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:42,gemini_cloud,Google Gemini,Cloud,000000003156,4,575.353633,559.213359,1.738061502776676,0.8711395263671875,,,275,2.96E-5,"A plumber works on a toilet.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:43,gemini_cloud,Google Gemini,Cloud,000000003156,5,439.32875,416.827226,2.276199770672873,0.9023895263671875,,,277,3.04E-5,"A plumber in gloves works on a toilet.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:44,gemini_cloud,Google Gemini,Cloud,000000003255,1,1037.666797,1021.102656,0.9637004893007094,1.1562957763671875,,,285,3.3600000000000004E-5,"A group of skiers admire the pristine, snow-covered slopes of a majestic mountain.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:44,gemini_cloud,Google Gemini,Cloud,000000003255,2,499.832383,475.388633,2.0006706928390434,1.0625457763671875,,,293,3.68E-5,"A group of skiers stand at the base of a majestic snow-covered mountain, surrounded by fresh tracks on the pristine slopes.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:45,gemini_cloud,Google Gemini,Cloud,000000003255,3,510.654258,490.7875,1.9582721270484342,1.1367645263671875,,,292,3.6400000000000004E-5,"A group of skiers stand at the base of a majestic snow-covered mountain, with fresh tracks winding down the slope.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:46,gemini_cloud,Google Gemini,Cloud,000000003255,4,557.590156,538.915625,1.7934319486085046,1.0625457763671875,,,293,3.68E-5,"A group of skiers stand at the base of a majestic snow-covered mountain, their tracks a testament to their recent descent.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:46,gemini_cloud,Google Gemini,Cloud,000000003255,5,510.654375,493.859883,1.9582716783734595,1.0625457763671875,,,293,3.68E-5,"A group of skiers stand at the base of a majestic snow-covered mountain, their tracks a testament to their recent descent.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:47,gemini_cloud,Google Gemini,Cloud,000000003501,1,853.404336,836.739649,1.171777500788325,1.2578582763671875,,,278,3.08E-5,"A hearty bowl of chili with rice and broccoli.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:48,gemini_cloud,Google Gemini,Cloud,000000003501,2,580.944297,561.713164,1.7213354277923139,1.2656707763671875,,,281,3.2E-5,"A hearty bowl of chili, fluffy rice, and steamed broccoli.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:48,gemini_cloud,Google Gemini,Cloud,000000003501,3,454.770664,435.039843,2.1989105260316437,1.25787353515625,,,278,3.08E-5,"A hearty bowl of chili with rice and broccoli.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:49,gemini_cloud,Google Gemini,Cloud,000000003501,4,457.089375,436.831836,2.1877559503543482,1.2930145263671875,,,278,3.08E-5,"A hearty bowl of chili with rice and broccoli.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:50,gemini_cloud,Google Gemini,Cloud,000000003501,5,497.177852,464.895118,2.011352669828905,1.2500457763671875,,,278,3.08E-5,"A hearty bowl of chili with rice and broccoli.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:50,gemini_cloud,Google Gemini,Cloud,000000003553,1,866.603398,849.146211,1.1539303934277905,0.8437957763671875,,,281,3.2E-5,"Skater's feet on a skateboard, ready to ride.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:51,gemini_cloud,Google Gemini,Cloud,000000003553,2,682.96793,665.004297,1.4641975941681478,0.8398895263671875,,,277,3.04E-5,"Skater's feet on a skateboard.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:53,gemini_cloud,Google Gemini,Cloud,000000003553,3,1371.794648,1354.144258,0.7289720815414641,0.7969207763671875,,,280,3.16E-5,"Skater's feet in Vans shoes on a skateboard.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:54,gemini_cloud,Google Gemini,Cloud,000000003553,4,797.033086,778.318242,1.2546530596598093,0.8359832763671875,,,284,3.32E-5,"A skateboarder's feet are captured mid-trick on a wooden ramp.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:54,gemini_cloud,Google Gemini,Cloud,000000003553,5,555.789922,538.246172,1.799240972922859,0.8789520263671875,,,276,3.0E-5,"Skateboarding on a wooden ramp.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:56,gemini_cloud,Google Gemini,Cloud,000000003661,1,1253.024766,1237.425078,0.7980688228471934,0.5234832763671875,,,279,3.12E-5,"A bunch of ripe bananas rests on a wooden surface.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:56,gemini_cloud,Google Gemini,Cloud,000000003661,2,383.776875,368.890938,2.605680709657141,0.5469207763671875,,,279,3.12E-5,"A bunch of ripe bananas rests on a wooden surface.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:57,gemini_cloud,Google Gemini,Cloud,000000003661,3,738.159258,723.59457,1.3547212057049076,0.51568603515625,,,279,3.12E-5,"A bunch of ripe bananas rests on a wooden surface.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:57,gemini_cloud,Google Gemini,Cloud,000000003661,4,380.071601,363.974492,2.631083188980489,0.5234832763671875,,,279,3.12E-5,"A bunch of ripe bananas rests on a wooden surface.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:58,gemini_cloud,Google Gemini,Cloud,000000003661,5,449.868164,423.356562,2.2228734549884708,0.5469207763671875,,,279,3.12E-5,"A bunch of ripe bananas rests on a wooden surface.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:22:59,gemini_cloud,Google Gemini,Cloud,000000003845,1,853.611094,838.33289,1.1714936778926166,0.7930145263671875,,,285,3.3600000000000004E-5,"A delicious chicken and vegetable stir-fry served with a side of fluffy white rice.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:00,gemini_cloud,Google Gemini,Cloud,000000003845,2,606.476758,590.568203,1.6488678037683349,0.7695770263671875,,,285,3.3600000000000004E-5,"A delicious chicken and vegetable stir-fry served with a mound of fluffy white rice.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:00,gemini_cloud,Google Gemini,Cloud,000000003845,3,490.358437,471.674492,2.0393245522968333,0.8437957763671875,,,285,3.3600000000000004E-5,"A delicious chicken and vegetable stir-fry served with a side of fluffy white rice.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:01,gemini_cloud,Google Gemini,Cloud,000000003845,4,662.617695,647.236563,1.5091658546788431,0.7617645263671875,,,285,3.3600000000000004E-5,"A delicious chicken and vegetable stir-fry served with a mound of fluffy white rice.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:02,gemini_cloud,Google Gemini,Cloud,000000003845,5,445.890781,430.866992,2.242701671824877,0.7617645263671875,,,285,3.3600000000000004E-5,"A delicious chicken and vegetable stir-fry served with a mound of fluffy white rice.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:02,gemini_cloud,Google Gemini,Cloud,000000003934,1,855.198476,838.427617,1.1693192025753796,0.7383270263671875,,,290,3.56E-5,"A young girl in a colorful skirt dances while a bride-to-be and friends gather in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:03,gemini_cloud,Google Gemini,Cloud,000000003934,2,449.834141,430.108515,2.2230415810079656,0.7383270263671875,,,283,3.28E-5,"A young girl in a grass skirt plays a video game at a party.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:04,gemini_cloud,Google Gemini,Cloud,000000003934,3,538.807851,522.506718,1.8559491999681348,0.7266082763671875,16.457031,,290,3.56E-5,"A young girl in a colorful skirt dances while a bride-to-be and guests mingle in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:04,gemini_cloud,Google Gemini,Cloud,000000003934,4,502.639297,485.388555,1.9894982464930513,0.7383270263671875,,,285,3.3600000000000004E-5,"A young girl in a colorful hula skirt plays a video game at a party.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:05,gemini_cloud,Google Gemini,Cloud,000000003934,5,467.536133,452.650195,2.138872120072054,0.73834228515625,,,284,3.32E-5,"A young girl in a hula skirt plays a video game at a party.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:06,gemini_cloud,Google Gemini,Cloud,000000004134,1,1662.634609,1648.437461,0.6014550608936591,0.9648895263671875,,,279,3.12E-5,"Two men in formal attire shake hands at a banquet.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:07,gemini_cloud,Google Gemini,Cloud,000000004134,2,537.458945,519.703164,1.8606072320556504,0.8672332763671875,,,279,3.12E-5,"Two men in suits shake hands at a formal event.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:08,gemini_cloud,Google Gemini,Cloud,000000004134,3,458.971016,442.242696,2.178786819078789,0.8672332763671875,,,279,3.12E-5,"Two men in suits shake hands at a formal event.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:09,gemini_cloud,Google Gemini,Cloud,000000004134,4,862.51625,844.848008,1.1593984461162326,0.8672332763671875,,,279,3.12E-5,"Two men in suits shake hands at a formal event.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:09,gemini_cloud,Google Gemini,Cloud,000000004134,5,412.642305,396.173086,2.4234063930987393,0.8672332763671875,,,279,3.12E-5,"Two men in suits shake hands at a formal event.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:10,gemini_cloud,Google Gemini,Cloud,000000004395,1,993.429883,978.089844,1.0066135689216025,0.7266082763671875,,,278,3.08E-5,"A man in a white shirt and striped tie.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:11,gemini_cloud,Google Gemini,Cloud,000000004395,2,410.349922,392.383047,2.4369445353519525,0.7266082763671875,,,278,3.08E-5,"A man in a white shirt and striped tie.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:11,gemini_cloud,Google Gemini,Cloud,000000004395,3,677.971211,659.929687,1.4749888841518966,0.7578582763671875,,,280,3.16E-5,"A young man in a white dress shirt and striped tie.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:12,gemini_cloud,Google Gemini,Cloud,000000004395,4,750.308672,728.967305,1.3327848088633047,0.7148895263671875,,,279,3.12E-5,"A man in a white dress shirt and striped tie.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:13,gemini_cloud,Google Gemini,Cloud,000000004395,5,506.105273,487.922461,1.9758735056688492,0.75787353515625,,,279,3.12E-5,"A man in a white dress shirt and striped tie.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:14,gemini_cloud,Google Gemini,Cloud,000000004495,1,1024.901602,1011.029843,0.9757034217222348,0.5273895263671875,,,281,3.2E-5,"A cozy room with a plaid sofa, armchair, and television.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:15,gemini_cloud,Google Gemini,Cloud,000000004495,2,448.241797,432.300078,2.2309387627231914,0.5352020263671875,,,286,3.4E-5,"A cozy living room with a plaid sofa and armchair, a television, and a whiteboard.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:15,gemini_cloud,Google Gemini,Cloud,000000004495,3,642.323399,620.908672,1.556848157107227,0.5352020263671875,,,286,3.4E-5,"A cozy living room with a plaid sofa and armchair, a television, and a whiteboard.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:16,gemini_cloud,Google Gemini,Cloud,000000004495,4,474.16625,456.661953,2.108964946366385,0.5742645263671875,,,284,3.32E-5,"A cozy living room setup with a plaid sofa, armchair, and vintage television.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:17,gemini_cloud,Google Gemini,Cloud,000000004495,5,636.957969,621.574531,1.5699623031170522,0.5352020263671875,,,286,3.4E-5,"A cozy living room with a plaid sofa and armchair, a television, and a whiteboard.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:17,gemini_cloud,Google Gemini,Cloud,000000004765,1,698.97418,682.217461,1.4306680112275392,1.2539520263671875,,,276,3.0E-5,"A surfer carves through a wave.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:18,gemini_cloud,Google Gemini,Cloud,000000004765,2,628.143789,608.683711,1.5919921799943166,1.2852020263671875,,,274,2.92E-5,"Surfer carving a wave.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:19,gemini_cloud,Google Gemini,Cloud,000000004765,3,443.788125,424.033399,2.253327531014941,1.2891082763671875,,,275,2.96E-5,"Surfer carving through a wave.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:19,gemini_cloud,Google Gemini,Cloud,000000004765,4,453.391055,430.448594,2.2056015198623626,1.2461395263671875,,,276,3.0E-5,"A surfer carves through a wave.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:20,gemini_cloud,Google Gemini,Cloud,000000004765,5,523.346797,502.237891,1.9107788673444388,1.2539520263671875,,,279,3.12E-5,"A surfer carves through a wave, spray flying.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:22,gemini_cloud,Google Gemini,Cloud,000000004795,1,1716.856485,1698.839649,0.5824598670517297,1.4766082763671875,,,281,3.2E-5,"A fluffy black cat peeks over a laptop and computer monitor.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:22,gemini_cloud,Google Gemini,Cloud,000000004795,2,523.470117,499.035547,1.910328722737768,1.4844207763671875,,,281,3.2E-5,"A fluffy black cat peeks over a laptop and computer monitor.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:23,gemini_cloud,Google Gemini,Cloud,000000004795,3,506.456836,485.177774,1.974501929716277,1.4844207763671875,,,282,3.24E-5,"A cat's furry head obscures a computer screen displaying news articles.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:24,gemini_cloud,Google Gemini,Cloud,000000004795,4,1114.611328,1087.865352,0.897173727629655,1.4727020263671875,,,281,3.2E-5,"A fluffy black cat peeks over a laptop and computer monitor.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:25,gemini_cloud,Google Gemini,Cloud,000000004795,5,502.510469,482.895351,1.9900082917476491,1.4453582763671875,,,281,3.2E-5,"A fluffy black cat peeks over a laptop and computer monitor.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:25,gemini_cloud,Google Gemini,Cloud,000000005001,1,655.808477,638.692578,1.5248354284386598,1.40631103515625,,,278,3.08E-5,"A ribbon-cutting ceremony with children in helmets.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:26,gemini_cloud,Google Gemini,Cloud,000000005001,2,465.063398,441.061836,2.150244470539907,1.3516082763671875,,,283,3.28E-5,"A ribbon-cutting ceremony with children and adults, celebrating a new beginning.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:27,gemini_cloud,Google Gemini,Cloud,000000005001,3,493.053282,473.03582,2.028178366329179,1.3789520263671875,,,278,3.08E-5,"A ribbon-cutting ceremony with children and adults.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:27,gemini_cloud,Google Gemini,Cloud,000000005001,4,397.912969,379.462187,2.5131123584966644,1.4141082763671875,,,278,3.08E-5,"A ribbon-cutting ceremony with children and adults.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:28,gemini_cloud,Google Gemini,Cloud,000000005001,5,777.174726,757.015586,1.2867119407586087,1.3437957763671875,,,285,3.3600000000000004E-5,"A ribbon-cutting ceremony with children in helmets and adults, celebrating a new beginning.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:29,gemini_cloud,Google Gemini,Cloud,000000005037,1,733.466328,713.587226,1.363389104346178,1.2109832763671875,,,283,3.28E-5,"A First Group bus with ""FREE WI-FI ON BOARD"" displayed.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:30,gemini_cloud,Google Gemini,Cloud,000000005037,2,766.374453,742.58336,1.3048451655525108,1.2187957763671875,,,286,3.4E-5,"A First Group bus with ""FREE WI-FI ON BOARD"" displayed on its front.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:30,gemini_cloud,Google Gemini,Cloud,000000005037,3,558.820117,541.771407,1.7894846115570318,1.2500457763671875,,,289,3.52E-5,"A white and pink First Group bus with ""FREE WI-FI ON BOARD"" displayed on the front.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:31,gemini_cloud,Google Gemini,Cloud,000000005037,4,510.236054,492.501563,1.9598771826500523,1.2539520263671875,,,288,3.4800000000000006E-5,"A white and pink bus with ""First Group"" displayed on its front is parked on a street.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:32,gemini_cloud,Google Gemini,Cloud,000000005037,5,624.280625,603.674687,1.601843722124165,1.2734832763671875,,,286,3.4E-5,"A First Group bus with ""FREE WI-FI ON BOARD"" displayed on its front.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:33,gemini_cloud,Google Gemini,Cloud,000000005060,1,903.30254,882.876289,1.1070488078113896,1.41412353515625,,,287,3.44E-5,"A man takes a selfie while sitting cross-legged in front of a large, ornate mirror.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:33,gemini_cloud,Google Gemini,Cloud,000000005060,2,612.491992,593.477539,1.632674407276169,1.4453582763671875,,,283,3.28E-5,"A man takes a mirror selfie while sitting cross-legged on the floor.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:34,gemini_cloud,Google Gemini,Cloud,000000005060,3,477.224023,457.846914,2.0954519299209715,1.4492645263671875,,,285,3.3600000000000004E-5,"A man sits cross-legged in front of a large mirror, taking a selfie.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:35,gemini_cloud,Google Gemini,Cloud,000000005060,4,778.027851,757.583281,1.2853010322377263,1.4141082763671875,,,283,3.28E-5,"A man takes a mirror selfie while sitting cross-legged on the floor.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:35,gemini_cloud,Google Gemini,Cloud,000000005060,5,648.461875,626.395899,1.5421107061999597,1.4141082763671875,,,283,3.28E-5,"A man takes a mirror selfie while sitting cross-legged on the floor.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:37,gemini_cloud,Google Gemini,Cloud,000000005193,1,1129.177813,1111.295078,0.885600114071671,1.1523895263671875,,,281,3.2E-5,"A group of young surfers pose for a photo with their boards.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:38,gemini_cloud,Google Gemini,Cloud,000000005193,2,959.595,937.016094,1.0421063052642,1.0898895263671875,,,281,3.2E-5,"A group of young surfers pose for a photo with their boards.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:38,gemini_cloud,Google Gemini,Cloud,000000005193,3,652.878554,631.622578,1.5316784321881707,1.1523895263671875,,,281,3.2E-5,"A group of young surfers pose for a photo with their boards.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:39,gemini_cloud,Google Gemini,Cloud,000000005193,4,816.11875,797.337031,1.2253118801644982,1.12506103515625,,,281,3.2E-5,"A group of young surfers pose for a photo with their boards.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:40,gemini_cloud,Google Gemini,Cloud,000000005193,5,964.952656,946.21039,1.0363202731057097,1.1211395263671875,,,281,3.2E-5,"A group of young surfers pose for a photo with their boards.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:42,gemini_cloud,Google Gemini,Cloud,000000005477,1,1088.367695,1075.62418,0.9188071316284337,0.6445770263671875,,,287,3.44E-5,"A golden LOT Polish Airlines Boeing 737-400 with a special livery.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:42,gemini_cloud,Google Gemini,Cloud,000000005477,2,615.907617,596.222617,1.6236201215871633,0.6680145263671875,,,287,3.44E-5,"A golden LOT Polish Airlines Boeing 737 taxis on the tarmac under a cloudy sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:43,gemini_cloud,Google Gemini,Cloud,000000005477,3,559.855586,542.914336,1.7861749083271627,0.6719207763671875,,,287,3.44E-5,"A golden LOT Polish Airlines Boeing 737 taxis on the tarmac under a cloudy sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:44,gemini_cloud,Google Gemini,Cloud,000000005477,4,908.669219,893.590078,1.1005104818016291,0.7109832763671875,,,287,3.44E-5,"A golden LOT Polish Airlines Boeing 737-400 with a special livery.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:45,gemini_cloud,Google Gemini,Cloud,000000005477,5,810.422734,795.254492,1.2339239239554698,0.7148895263671875,,,287,3.44E-5,"A golden LOT Polish Airlines Boeing 737-500 with a special livery.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:45,gemini_cloud,Google Gemini,Cloud,000000005503,1,499.893321,485.594297,2.000426807062701,0.3555145263671875,,,287,3.44E-5,"A close-up, black and white shot of a toilet bowl with a fuzzy toilet seat.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:46,gemini_cloud,Google Gemini,Cloud,000000005503,2,449.751484,434.791093,2.2234501398554585,0.3867645263671875,,,290,3.56E-5,"A close-up, black and white shot of a toilet bowl with a stream of urine flowing into it.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:47,gemini_cloud,Google Gemini,Cloud,000000005503,3,446.528789,432.311797,2.239497261172112,0.3555145263671875,,,282,3.24E-5,"A person's legs are visible as they stand over a toilet.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:47,gemini_cloud,Google Gemini,Cloud,000000005503,4,448.463555,431.724688,2.2298355994613654,0.36334228515625,,,290,3.56E-5,"A close-up, black and white shot of a toilet bowl with a stream of urine flowing into it.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:48,gemini_cloud,Google Gemini,Cloud,000000005503,5,413.786602,399.144648,2.4167046375271473,0.3594207763671875,,,284,3.32E-5,"A close-up, overhead view of a toilet in a dimly lit room.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:49,gemini_cloud,Google Gemini,Cloud,000000005529,1,1566.1025,1547.221367,0.638527810280617,1.5469207763671875,,,280,3.16E-5,"A skier carves through fresh powder in a snowy forest.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:50,gemini_cloud,Google Gemini,Cloud,000000005529,2,594.484492,571.96586,1.6821296660502287,1.5156707763671875,,,280,3.16E-5,"A skier carves through fresh powder in a snowy forest.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:51,gemini_cloud,Google Gemini,Cloud,000000005529,3,966.52289,943.74414,1.0346366447668922,1.5430145263671875,,,280,3.16E-5,"A skier carves through fresh powder in a snowy forest.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:52,gemini_cloud,Google Gemini,Cloud,000000005529,4,766.56375,739.316563,1.3045229441126063,1.5078582763671875,,,280,3.16E-5,"A skier carves through fresh powder in a snowy forest.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:53,gemini_cloud,Google Gemini,Cloud,000000005529,5,552.748359,530.943828,1.80914150845991,1.5156707763671875,,,280,3.16E-5,"A skier carves through fresh powder in a snowy forest.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:54,gemini_cloud,Google Gemini,Cloud,000000005586,1,1153.521836,1141.632929,0.866910333893324,0.3320770263671875,,,368,6.68E-5,"Here are a few caption options for the image, playing with different focuses:
+
+**Short & Sweet:**
+
+* Tennis match in progress.
+* On the court.
+* Ready to serve.
+
+**More Descriptive:**
+
+* A tennis player prepares to serve during a match, with spectators in the background.
+* Action on the blue hard court.
+* The intensity of a tennis game.
+
+**Focusing on the Atmosphere:**
+
+* The roar of the crowd fuels the game.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:55,gemini_cloud,Google Gemini,Cloud,000000005586,2,912.746485,900.775821,1.0955944683807795,0.3672332763671875,,,368,6.68E-5,"Here are a few caption options for the image, playing on different aspects:
+
+**Short & Sweet:**
+
+* Tennis match in progress.
+* On the court.
+* Ready to serve.
+
+**More Descriptive:**
+
+* A tennis player prepares to serve on a bright blue court, with spectators in the background.
+* Intense focus on the tennis court during a match.
+* The action unfolds on the tennis court, with a player poised for a shot.
+
+**Focusing on",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:55,gemini_cloud,Google Gemini,Cloud,000000005586,3,640.04836,628.08125,1.5623819425144687,0.2930145263671875,,,367,6.64E-5,"Here are a few caption options for the image, playing on different aspects:
+
+**Short & Sweet:**
+
+* Tennis match in progress.
+* On the court.
+* Ready to serve.
+
+**Descriptive:**
+
+* A tennis player in a yellow shirt prepares to serve on a blue court, with spectators in the background.
+* Action on the tennis court during a match.
+* The intensity of a tennis game captured from the stands.
+
+**More Evocative:**
+
+",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:57,gemini_cloud,Google Gemini,Cloud,000000005586,4,1015.001719,1004.083945,0.9852200063121272,0.3242645263671875,,,368,6.68E-5,"Here are a few caption options for the image, playing on different aspects:
+
+**Short & Sweet:**
+
+* Tennis match in progress.
+* On the court.
+* Ready to serve.
+
+**More Descriptive:**
+
+* A tennis player prepares to serve during a match, with spectators in the background.
+* Action on the blue hard court.
+* The intensity of a tennis game.
+
+**Focusing on the Player:**
+
+* Player in yellow ready for the next point.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:58,gemini_cloud,Google Gemini,Cloud,000000005586,5,1213.705703,1200.713594,0.8239229638027004,0.3242645263671875,,,367,6.64E-5,"Here are a few caption options for the image, playing on different aspects:
+
+**Short & Sweet:**
+
+* Tennis match in progress.
+* On the court.
+* Ready to serve.
+
+**Descriptive:**
+
+* A tennis player in a yellow shirt prepares to serve on a blue court, with spectators in the background.
+* Action on the tennis court during a match.
+* The intensity of a tennis game captured from the stands.
+
+**More Evocative:**
+
+",gemini-2.5-flash-lite,1,""
+2025-12-12 21:23:59,gemini_cloud,Google Gemini,Cloud,000000005600,1,1498.469258,1484.111133,0.6673476914265798,0.7109832763671875,,,325,4.96E-5,"A close-up of two small metal bowls filled with food. One bowl contains a spicy, reddish-brown mixture, possibly a curry or pickle. The other bowl is filled with several round, pale orange and pinkish items, which appear to be pickled onions or a similar condiment.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:00,gemini_cloud,Google Gemini,Cloud,000000005600,2,791.921875,771.517578,1.2627508237476077,0.6992645263671875,,,309,4.3200000000000007E-5,"A close-up shot of two small metal bowls filled with food. The bowl in the foreground contains several pieces of pickled onions, while the bowl in the background holds a spicy, reddish-brown curry.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:02,gemini_cloud,Google Gemini,Cloud,000000005600,3,1569.787227,1553.690976,0.6370290080083573,0.6797332763671875,,,322,4.84E-5,"A close-up shot of two small metal bowls filled with food. The bowl in the foreground contains several round, orange-hued items, possibly pickled onions or fruit. The bowl behind it holds a reddish-brown, chunky mixture, likely a curry or relish.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:03,gemini_cloud,Google Gemini,Cloud,000000005600,4,939.418125,923.877031,1.0644887227399407,0.6758270263671875,,,323,4.880000000000001E-5,"A close-up shot of two small metal bowls filled with food. The bowl in the foreground contains several bright orange, round pieces of food, possibly pickled onions or fruit. The bowl in the background holds a reddish-brown, chunky mixture, likely a curry or relish.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:04,gemini_cloud,Google Gemini,Cloud,000000005600,5,668.416992,649.455664,1.4960720807049739,0.64459228515625,16.457031,,304,4.12E-5,"A close-up shot of two small metal bowls filled with Indian food. The bowl in the foreground contains several pickled onions, while the bowl in the background holds a spicy curry.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:05,gemini_cloud,Google Gemini,Cloud,000000005992,1,901.633203,877.426211,1.1090984634025285,1.0977020263671875,,,279,3.12E-5,"A flock of fluffy sheep gathered near a brick building.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:06,gemini_cloud,Google Gemini,Cloud,000000005992,2,847.406211,829.357383,1.1800715961474113,1.0312957763671875,,,283,3.28E-5,"A flock of fluffy sheep gather near a brick wall on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:06,gemini_cloud,Google Gemini,Cloud,000000005992,3,497.216641,473.790703,2.0111957596366934,1.0703582763671875,,,278,3.08E-5,"A flock of sheep gathered near a brick wall.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:07,gemini_cloud,Google Gemini,Cloud,000000005992,4,774.655117,757.748672,1.290897043154754,1.03131103515625,,,283,3.28E-5,"A flock of fluffy sheep gather near a brick wall on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:08,gemini_cloud,Google Gemini,Cloud,000000005992,5,496.524688,472.549609,2.0139985466342005,1.0625457763671875,,,283,3.28E-5,"A flock of fluffy sheep gather near a brick wall on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:09,gemini_cloud,Google Gemini,Cloud,000000006012,1,1399.73293,1380.563672,0.714422000488336,1.6016082763671875,,,285,3.3600000000000004E-5,"A symmetrical arrangement of green bananas cradles a vibrant pomegranate against a textured blue background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:10,gemini_cloud,Google Gemini,Cloud,000000006012,2,747.450547,732.517383,1.3378811534938913,1.6328582763671875,,,285,3.3600000000000004E-5,"A symmetrical arrangement of bananas cradles a vibrant pomegranate against a textured, blue background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:11,gemini_cloud,Google Gemini,Cloud,000000006012,3,744.194453,728.350117,1.3437348208775215,1.6406707763671875,,,286,3.4E-5,"A symmetrical arrangement of green bananas cradles a vibrant pomegranate against a textured, blue background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:12,gemini_cloud,Google Gemini,Cloud,000000006012,4,514.637539,503.179883,1.943115152351916,1.6641082763671875,,,285,3.3600000000000004E-5,"A symmetrical arrangement of green bananas cradles a vibrant pomegranate against a textured blue background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:12,gemini_cloud,Google Gemini,Cloud,000000006012,5,525.083438,510.931406,1.904459229963372,1.6016082763671875,,,285,3.3600000000000004E-5,"A symmetrical arrangement of green bananas cradles a vibrant pomegranate against a textured blue background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:13,gemini_cloud,Google Gemini,Cloud,000000006040,1,648.191055,639.139843,1.542755013797591,0.8672332763671875,,,282,3.24E-5,"A blue and white tram travels along its tracks on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:14,gemini_cloud,Google Gemini,Cloud,000000006040,2,882.9025,864.545586,1.1326278949261102,0.8711395263671875,,,282,3.24E-5,"A blue and white tram travels along its tracks on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:15,gemini_cloud,Google Gemini,Cloud,000000006040,3,760.91207,742.811211,1.314212297880884,0.9062957763671875,,,282,3.24E-5,"A blue and white tram travels along its tracks on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:15,gemini_cloud,Google Gemini,Cloud,000000006040,4,643.720429,622.702305,1.5534694176996517,0.87115478515625,,,283,3.28E-5,"A blue and white tram glides along its tracks on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:16,gemini_cloud,Google Gemini,Cloud,000000006040,5,799.021445,788.342071,1.2515308647316719,0.9102020263671875,,,282,3.24E-5,"A blue and white tram travels along its tracks on a sunny day.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:17,gemini_cloud,Google Gemini,Cloud,000000006213,1,674.604492,658.827774,1.4823500463735422,0.5781707763671875,,,281,3.2E-5,"A spacious bathroom with a shower, bathtub, and double vanity.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:18,gemini_cloud,Google Gemini,Cloud,000000006213,2,847.064648,830.524375,1.1805474379802001,0.5820770263671875,,,281,3.2E-5,"A spacious bathroom with a shower, bathtub, and double vanity.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:19,gemini_cloud,Google Gemini,Cloud,000000006213,3,927.379922,911.00207,1.0783067179666632,0.5781707763671875,,,281,3.2E-5,"A spacious bathroom with a shower, bathtub, and double vanity.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:20,gemini_cloud,Google Gemini,Cloud,000000006213,4,992.515235,973.369922,1.007541209178517,0.5898895263671875,,,281,3.2E-5,"A spacious bathroom with a shower, bathtub, and double vanity.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:21,gemini_cloud,Google Gemini,Cloud,000000006213,5,425.979141,410.561094,2.3475327868225357,0.5469207763671875,,,281,3.2E-5,"A spacious bathroom with a shower, bathtub, and double vanity.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:22,gemini_cloud,Google Gemini,Cloud,000000006460,1,996.658398,981.623711,1.0033528057423744,1.4687957763671875,,,281,3.2E-5,"A surfer soars through the air, catching a massive wave.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:22,gemini_cloud,Google Gemini,Cloud,000000006460,2,495.63375,474.827656,2.0176188566658344,1.4922332763671875,,,277,3.04E-5,"A surfer catches air above a powerful wave.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:23,gemini_cloud,Google Gemini,Cloud,000000006460,3,651.599687,631.058867,1.5346845923208676,1.5078582763671875,,,277,3.04E-5,"A surfer catches air above a powerful wave.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:24,gemini_cloud,Google Gemini,Cloud,000000006460,4,949.20668,929.460781,1.0535113385422024,1.4961395263671875,,,286,3.4E-5,"A surfer soars above a crashing wave, captured in a dramatic black and white shot.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:25,gemini_cloud,Google Gemini,Cloud,000000006460,5,456.181406,435.612305,2.192110390400261,1.5078582763671875,,,286,3.4E-5,"A surfer soars above a powerful wave, captured in a dramatic black and white shot.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:25,gemini_cloud,Google Gemini,Cloud,000000006471,1,700.482852,686.998828,1.4275866955840912,0.70709228515625,,,286,3.4E-5,"A baseball batter prepares to swing at a pitch, with the catcher and umpire in position.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:27,gemini_cloud,Google Gemini,Cloud,000000006471,2,1477.23625,1459.987851,0.6769397921287134,0.6680145263671875,,,282,3.24E-5,"A baseball player at bat, with the catcher and umpire in position.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:28,gemini_cloud,Google Gemini,Cloud,000000006471,3,896.758477,878.602304,1.1151274569997738,0.6719207763671875,,,282,3.24E-5,"A baseball player at bat, with the catcher and umpire in position.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:29,gemini_cloud,Google Gemini,Cloud,000000006471,4,442.921054,427.570313,2.257738689477606,0.6797332763671875,,,283,3.28E-5,"A baseball batter prepares to swing as the catcher and umpire await the pitch.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:29,gemini_cloud,Google Gemini,Cloud,000000006471,5,495.513594,479.931055,2.0181081046184173,0.6445770263671875,,,282,3.24E-5,"A baseball player at bat, with the catcher and umpire in position.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:30,gemini_cloud,Google Gemini,Cloud,000000006614,1,855.659687,834.964297,1.1686889252736292,0.6367645263671875,,,277,3.04E-5,"A still life drawing of fruits and nuts.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:31,gemini_cloud,Google Gemini,Cloud,000000006614,2,448.311328,427.32918,2.230592754506529,0.6445770263671875,,,277,3.04E-5,"A still life drawing of fruits and nuts.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:31,gemini_cloud,Google Gemini,Cloud,000000006614,3,652.708672,645.829609,1.5320770856863994,0.7383270263671875,,,277,3.04E-5,"A still life drawing of fruits and nuts.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:32,gemini_cloud,Google Gemini,Cloud,000000006614,4,409.866719,394.542813,2.439817515410418,0.6719207763671875,,,277,3.04E-5,"A still life drawing of fruits and nuts.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:33,gemini_cloud,Google Gemini,Cloud,000000006614,5,683.999257,667.821484,1.4619898921907748,0.6797332763671875,,,277,3.04E-5,"A still life drawing of fruits and nuts.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:34,gemini_cloud,Google Gemini,Cloud,000000006723,1,1004.420742,984.004414,0.9955987149456935,1.12115478515625,,,289,3.52E-5,"A modern street scene with contemporary buildings, a dedicated bike lane, and a few vehicles on the road.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:35,gemini_cloud,Google Gemini,Cloud,000000006723,2,701.895234,684.029297,1.4247140478517626,1.1289520263671875,,,289,3.52E-5,"A modern street scene with contemporary buildings, a dedicated bike lane, and a truck driving down the road.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:36,gemini_cloud,Google Gemini,Cloud,000000006723,3,1103.125078,1085.065546,0.9065155166384495,1.1445770263671875,,,286,3.4E-5,"A modern streetscape with contemporary buildings, a dedicated bike lane, and a clear road.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:37,gemini_cloud,Google Gemini,Cloud,000000006723,4,819.725,802.684141,1.2199213150751775,1.1250457763671875,,,289,3.52E-5,"A modern street scene with contemporary buildings, a dedicated bike lane, and a truck driving down the road.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:37,gemini_cloud,Google Gemini,Cloud,000000006723,5,532.508711,513.505742,1.8779035522669603,1.0898895263671875,,,286,3.4E-5,"A modern streetscape with contemporary buildings, a dedicated bike lane, and a clear sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:38,gemini_cloud,Google Gemini,Cloud,000000006763,1,631.394102,616.363516,1.5837968660657524,0.6133270263671875,,,278,3.08E-5,"A couple smiles for a photo at a bar.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:39,gemini_cloud,Google Gemini,Cloud,000000006763,2,860.586914,837.450742,1.1619976828976044,0.6133270263671875,,,279,3.12E-5,"A couple smiles for the camera in this candid shot.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:39,gemini_cloud,Google Gemini,Cloud,000000006763,3,399.322618,384.774297,2.5042408191363705,0.6133270263671875,,,280,3.16E-5,"A couple smiles for the camera in a dimly lit restaurant.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:40,gemini_cloud,Google Gemini,Cloud,000000006763,4,680.824961,660.67418,1.468806311876688,0.6367645263671875,,,278,3.08E-5,"A couple smiles for a photo at a bar.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:42,gemini_cloud,Google Gemini,Cloud,000000006763,5,1426.266445,1410.374727,0.7011312672366768,0.6797332763671875,,,278,3.08E-5,"A couple smiles for a photo at a bar.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:43,gemini_cloud,Google Gemini,Cloud,000000006771,1,1458.658008,1443.796679,0.6855616563413128,0.7656707763671875,,,284,3.32E-5,"A woman in a golden helmet and costume talks on her phone at a convention.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:44,gemini_cloud,Google Gemini,Cloud,000000006771,2,742.13375,727.607969,1.3474660059591685,0.7148895263671875,,,285,3.3600000000000004E-5,"A woman in a golden headdress and costume talks on her phone at a convention.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:45,gemini_cloud,Google Gemini,Cloud,000000006771,3,490.860469,474.870546,2.0372388146008964,0.7148895263671875,,,285,3.3600000000000004E-5,"A woman in a golden headdress and costume talks on her phone at a convention.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:45,gemini_cloud,Google Gemini,Cloud,000000006771,4,671.813242,655.243867,1.4885089151011406,0.7031707763671875,,,287,3.44E-5,"A woman in a golden headdress and costume talks on her phone while surrounded by a crowd.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:46,gemini_cloud,Google Gemini,Cloud,000000006771,5,482.227149,465.175156,2.07371153215598,0.7148895263671875,,,285,3.3600000000000004E-5,"A woman in a golden headdress and costume talks on her phone at a convention.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:47,gemini_cloud,Google Gemini,Cloud,000000006818,1,1052.974844,1037.957774,0.9496903042823309,0.8633270263671875,,,282,3.24E-5,"A utilitarian bathroom with a squat toilet, showerhead, and buckets.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:48,gemini_cloud,Google Gemini,Cloud,000000006818,2,756.811172,734.425039,1.3213335598063818,0.8320770263671875,,,282,3.24E-5,"A utilitarian bathroom with a squat toilet, shower head, and buckets.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:49,gemini_cloud,Google Gemini,Cloud,000000006818,3,492.038906,474.701602,2.0323596118230536,0.7695770263671875,,,282,3.24E-5,"A utilitarian bathroom with a squat toilet, shower head, and buckets.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:49,gemini_cloud,Google Gemini,Cloud,000000006818,4,529.710859,513.793867,1.8878223525336488,0.8047332763671875,,,282,3.24E-5,"A utilitarian bathroom with a squat toilet, showerhead, and buckets.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:50,gemini_cloud,Google Gemini,Cloud,000000006818,5,730.763399,709.687695,1.368431973150861,0.7930145263671875,,,282,3.24E-5,"A utilitarian bathroom with a squat toilet, shower head, and buckets.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:52,gemini_cloud,Google Gemini,Cloud,000000006894,1,1387.295586,1371.398789,0.7208269168384711,1.36334228515625,,,282,3.24E-5,"A man laughs as an elephant's trunk gently touches his neck.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:52,gemini_cloud,Google Gemini,Cloud,000000006894,2,704.008828,682.277421,1.420436733500734,1.32037353515625,,,282,3.24E-5,"A man laughs as an elephant's trunk gently touches his neck.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:53,gemini_cloud,Google Gemini,Cloud,000000006894,3,885.71,865.245937,1.1290377211502636,1.3164520263671875,,,282,3.24E-5,"A man laughs as an elephant's trunk gently touches his neck.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:55,gemini_cloud,Google Gemini,Cloud,000000006894,4,1416.799961,1395.451914,0.7058159426360967,1.3477020263671875,,,282,3.24E-5,"A man laughs as an elephant's trunk wraps around his neck.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:56,gemini_cloud,Google Gemini,Cloud,000000006894,5,657.345195,638.584531,1.5212707229114226,1.3633270263671875,,,282,3.24E-5,"A man laughs as an elephant's trunk wraps around his neck.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:56,gemini_cloud,Google Gemini,Cloud,000000006954,1,640.415274,621.428282,1.561486804888417,1.6680145263671875,,,279,3.12E-5,"Five children sit on the grass, holding frisbees.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:57,gemini_cloud,Google Gemini,Cloud,000000006954,2,493.876484,473.200469,2.0247977629969522,1.6680145263671875,,,279,3.12E-5,"Five children sit on the grass, holding frisbees.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:58,gemini_cloud,Google Gemini,Cloud,000000006954,3,748.857696,728.137383,1.3353671937158005,1.6680145263671875,,,279,3.12E-5,"Five children sit on the grass, holding frisbees.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:24:58,gemini_cloud,Google Gemini,Cloud,000000006954,4,590.0225,566.796875,1.6948506201034705,1.6758270263671875,,,279,3.12E-5,"Five children sit on the grass, holding frisbees.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:00,gemini_cloud,Google Gemini,Cloud,000000006954,5,1157.477695,1136.483711,0.8639475337794738,1.7031707763671875,,,279,3.12E-5,"Five children sit on the grass, holding frisbees.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:01,gemini_cloud,Google Gemini,Cloud,000000007088,1,1596.035508,1578.400742,0.62655247642523,1.5742645263671875,,,288,3.4800000000000006E-5,"A little girl in a red coat and jeans holds a patterned umbrella while standing on a wet sidewalk.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:02,gemini_cloud,Google Gemini,Cloud,000000007088,2,553.465937,533.669414,1.8067959257265003,1.57427978515625,,,288,3.4800000000000006E-5,"A little girl in a red coat and jeans holds a patterned umbrella while standing on a wet sidewalk.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:03,gemini_cloud,Google Gemini,Cloud,000000007088,3,566.86793,543.419257,1.7640793332584541,1.6094207763671875,,,288,3.4800000000000006E-5,"A little girl in a red coat and jeans holds a patterned umbrella while standing on a wet sidewalk.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:04,gemini_cloud,Google Gemini,Cloud,000000007088,4,877.835898,857.903633,1.139165078892684,1.5664520263671875,,,288,3.4800000000000006E-5,"A little girl in a red coat and jeans holds a patterned umbrella while standing on a wet sidewalk.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:04,gemini_cloud,Google Gemini,Cloud,000000007088,5,653.168399,633.444141,1.5309987463125876,1.5742645263671875,16.457031,,288,3.4800000000000006E-5,"A little girl in a red coat and jeans holds a patterned umbrella while standing on a wet sidewalk.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:05,gemini_cloud,Google Gemini,Cloud,000000007108,1,614.53039,597.25871,1.6272588244171293,0.8789520263671875,,,287,3.44E-5,"A young elephant, covered in red dust, walks towards the camera with a herd behind it.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:06,gemini_cloud,Google Gemini,Cloud,000000007108,2,1124.557579,1105.855547,0.8892385936247378,0.8125457763671875,,,289,3.52E-5,"A young elephant, covered in red dust, looks directly at the camera while its family walks behind it.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:07,gemini_cloud,Google Gemini,Cloud,000000007108,3,463.53043,442.278633,2.1573556670270815,0.7695770263671875,,,289,3.52E-5,"A young elephant, covered in red dust, looks directly at the camera while its family walks behind it.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:08,gemini_cloud,Google Gemini,Cloud,000000007108,4,700.184141,679.043243,1.428195729443121,0.8125457763671875,,,289,3.52E-5,"A young elephant, covered in red dust, looks directly at the camera while its family walks behind it.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:08,gemini_cloud,Google Gemini,Cloud,000000007108,5,485.898789,468.739922,2.058041762273254,0.8086395263671875,,,289,3.52E-5,"A young elephant, covered in red dust, looks directly at the camera while other elephants walk behind it.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:09,gemini_cloud,Google Gemini,Cloud,000000007278,1,1195.05711,1174.130664,0.8367800932961271,1.64068603515625,,,280,3.16E-5,"A surfer catches air, performing a trick on a wave.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:10,gemini_cloud,Google Gemini,Cloud,000000007278,2,658.113281,636.919375,1.5194952432512905,1.6641082763671875,,,278,3.08E-5,"A surfer performs an aerial maneuver on a wave.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:11,gemini_cloud,Google Gemini,Cloud,000000007278,3,862.623789,835.671602,1.1592539097017647,1.6016082763671875,,,278,3.08E-5,"A surfer performs an aerial maneuver on a wave.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:12,gemini_cloud,Google Gemini,Cloud,000000007278,4,507.572422,486.15586,1.9701622008139756,1.6719207763671875,,,278,3.08E-5,"A surfer performs an aerial maneuver on a wave.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:12,gemini_cloud,Google Gemini,Cloud,000000007278,5,437.444531,416.439922,2.286004119685748,1.6406707763671875,,,279,3.12E-5,"A surfer catches air as they ride a powerful wave.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:13,gemini_cloud,Google Gemini,Cloud,000000007281,1,809.852929,802.037773,1.2347921013693093,0.7891082763671875,,,292,3.6400000000000004E-5,"Two men in traditional attire ride horses along a sandy beach, with the ocean and a few beachgoers in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:14,gemini_cloud,Google Gemini,Cloud,000000007281,2,903.767109,888.431367,1.1064797446617411,0.7422332763671875,,,286,3.4E-5,"Two men in traditional attire ride horses along a sandy beach with the ocean in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:15,gemini_cloud,Google Gemini,Cloud,000000007281,3,447.534024,428.416914,2.234466982112627,0.7734832763671875,,,287,3.44E-5,"Two men in traditional attire ride horses along a sandy beach, with the ocean in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:15,gemini_cloud,Google Gemini,Cloud,000000007281,4,481.342188,461.041211,2.07752410848309,0.7305145263671875,,,286,3.4E-5,"Two men in traditional attire ride horses along a sandy beach with the ocean in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:16,gemini_cloud,Google Gemini,Cloud,000000007281,5,455.424258,438.954297,2.1957547988144275,0.7031707763671875,,,286,3.4E-5,"Two men in traditional attire ride horses along a sandy beach with the ocean in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:18,gemini_cloud,Google Gemini,Cloud,000000007386,1,1824.168789,1809.745313,0.5481948852705647,1.23443603515625,,,279,3.12E-5,"A DIY trike with a small dog looking on.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:19,gemini_cloud,Google Gemini,Cloud,000000007386,2,752.03418,734.275196,1.3297267951305085,1.2578582763671875,,,284,3.32E-5,"A custom-built trike sits in a driveway with a small dog nearby.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:19,gemini_cloud,Google Gemini,Cloud,000000007386,3,697.539804,680.031836,1.433609944931544,1.2812957763671875,,,284,3.32E-5,"A custom-built trike sits in a driveway with a small dog nearby.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:20,gemini_cloud,Google Gemini,Cloud,000000007386,4,845.108515,826.743125,1.1832799957056401,1.2539520263671875,,,279,3.12E-5,"A DIY trike with a small dog looking on.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:22,gemini_cloud,Google Gemini,Cloud,000000007386,5,1323.469649,1306.627539,0.7555896735188372,1.2109832763671875,,,284,3.32E-5,"A custom-built trike sits in a driveway with a small dog nearby.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:23,gemini_cloud,Google Gemini,Cloud,000000007511,1,1024.879023,1006.609649,0.9757249173398294,1.4414520263671875,,,281,3.2E-5,"A man flying a kite on a sunny day at the beach.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:23,gemini_cloud,Google Gemini,Cloud,000000007511,2,448.171953,429.714844,2.2312864366146536,1.3711395263671875,,,278,3.08E-5,"A man flying a kite on a sunny beach.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:24,gemini_cloud,Google Gemini,Cloud,000000007511,3,853.878633,835.606211,1.171126623097032,1.4453582763671875,,,285,3.3600000000000004E-5,"A man flies a kite on a sandy beach with a blue sky and scattered clouds.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:25,gemini_cloud,Google Gemini,Cloud,000000007511,4,470.267187,447.815,2.126450723426723,1.3789520263671875,,,286,3.4E-5,"A man flies a kite on a sandy beach with a lake and trees in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:26,gemini_cloud,Google Gemini,Cloud,000000007511,5,660.924258,640.861523,1.5130326779441647,1.3789520263671875,,,281,3.2E-5,"A man flying a kite on a sunny day at the beach.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:27,gemini_cloud,Google Gemini,Cloud,000000007574,1,1055.68211,1035.832929,0.9472548511786375,0.8359832763671875,,,281,3.2E-5,"A cluttered kitchen counter with a sink, refrigerator, and cabinets.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:27,gemini_cloud,Google Gemini,Cloud,000000007574,2,502.544063,486.272813,1.9898752639328265,0.86724853515625,,,281,3.2E-5,"A cluttered kitchen counter with a sink, refrigerator, and cabinets.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:28,gemini_cloud,Google Gemini,Cloud,000000007574,3,748.12414,727.130156,1.3366765574494093,0.8750457763671875,,,281,3.2E-5,"A cluttered kitchen counter with a sink, refrigerator, and cabinets.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:29,gemini_cloud,Google Gemini,Cloud,000000007574,4,761.495156,742.972617,1.3132059897174186,0.9023895263671875,,,281,3.2E-5,"A cluttered kitchen counter with a sink, refrigerator, and cabinets.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:30,gemini_cloud,Google Gemini,Cloud,000000007574,5,517.940078,498.502735,1.930725275907303,0.9102020263671875,,,281,3.2E-5,"A cluttered kitchen counter with a sink, refrigerator, and cabinets.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:30,gemini_cloud,Google Gemini,Cloud,000000007784,1,494.518789,481.299922,2.0221678574077395,0.3242645263671875,,,278,3.08E-5,"A kite soars against a clear blue sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:31,gemini_cloud,Google Gemini,Cloud,000000007784,2,404.921133,395.497227,2.4696167191649145,0.3008270263671875,,,278,3.08E-5,"A kite soars against a clear blue sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:32,gemini_cloud,Google Gemini,Cloud,000000007784,3,683.925469,678.818711,1.462147624743596,0.2969207763671875,,,278,3.08E-5,"A kite soars against a clear blue sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:32,gemini_cloud,Google Gemini,Cloud,000000007784,4,413.369727,394.715469,2.419141835222007,0.2930145263671875,,,278,3.08E-5,"A kite soars against a clear blue sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:33,gemini_cloud,Google Gemini,Cloud,000000007784,5,702.906328,684.10043,1.4226646711878796,0.2930145263671875,,,278,3.08E-5,"A kite soars against a clear blue sky.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:34,gemini_cloud,Google Gemini,Cloud,000000007795,1,675.578476,662.538789,1.4802129368017343,0.8984832763671875,,,279,3.12E-5,"Cozy twin beds with plush towels and modern decor.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:34,gemini_cloud,Google Gemini,Cloud,000000007795,2,442.759883,421.771796,2.2585605390089056,0.93756103515625,,,284,3.32E-5,"Cozy hotel room with two beds, modern decor, and a window view.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:35,gemini_cloud,Google Gemini,Cloud,000000007795,3,520.41418,502.523242,1.9215464113602747,0.8750457763671875,,,285,3.3600000000000004E-5,"Cozy room with two beds, modern decor, and a window overlooking the outdoors.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:36,gemini_cloud,Google Gemini,Cloud,000000007795,4,920.206679,902.512226,1.0867123906193688,0.8711395263671875,,,286,3.4E-5,"Cozy hotel room with two beds, modern decor, and a view of the sunset.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:36,gemini_cloud,Google Gemini,Cloud,000000007795,5,479.144532,461.985547,2.087052931243719,0.9062957763671875,,,283,3.28E-5,"Cozy room with two beds, modern decor, and a window view.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:38,gemini_cloud,Google Gemini,Cloud,000000007816,1,1178.953086,1162.0,0.8482101721221501,1.1211395263671875,,,283,3.28E-5,"A motorcycle racer leans into a turn on a white and green vintage bike.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:38,gemini_cloud,Google Gemini,Cloud,000000007816,2,495.21629,474.709883,2.0193196794879262,1.0898895263671875,,,283,3.28E-5,"A motorcycle racer leans into a turn on a white and green vintage bike.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:39,gemini_cloud,Google Gemini,Cloud,000000007816,3,720.622421,697.181992,1.387689268136163,1.0898895263671875,,,283,3.28E-5,"A motorcycle racer leans into a turn on a white and green vintage bike.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:40,gemini_cloud,Google Gemini,Cloud,000000007816,4,554.032852,533.717969,1.8049471189120025,1.0898895263671875,,,283,3.28E-5,"A motorcycle racer leans into a turn on a white and green vintage bike.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:40,gemini_cloud,Google Gemini,Cloud,000000007816,5,498.35375,478.080977,2.006606752733375,1.1211395263671875,,,283,3.28E-5,"A motorcycle racer leans into a turn on a white and green vintage bike.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:41,gemini_cloud,Google Gemini,Cloud,000000007818,1,604.250781,593.193398,1.654942006603712,0.4805145263671875,,,284,3.32E-5,"A table set for a special occasion, with delicate white orchids as a centerpiece.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:42,gemini_cloud,Google Gemini,Cloud,000000007818,2,711.760468,698.178321,1.404967042929392,0.4609832763671875,,,286,3.4E-5,"A table set for a formal dinner, with wine glasses and a vase of white orchids.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:42,gemini_cloud,Google Gemini,Cloud,000000007818,3,612.044961,597.541484,1.6338668949518564,0.3867645263671875,,,286,3.4E-5,"A table set for a formal dinner, with wine glasses and a vase of white orchids.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:43,gemini_cloud,Google Gemini,Cloud,000000007818,4,496.868125,479.80668,2.012606463737234,0.4258270263671875,,,283,3.28E-5,"A table set for a formal dinner, with white orchids as a centerpiece.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:44,gemini_cloud,Google Gemini,Cloud,000000007818,5,758.698946,743.406601,1.318045853723909,0.4492645263671875,,,284,3.32E-5,"A table set for a special occasion, with delicate white orchids as a centerpiece.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:45,gemini_cloud,Google Gemini,Cloud,000000007888,1,757.477461,735.471367,1.3201712941792734,0.7852020263671875,,,286,3.4E-5,"A solitary figure stands beneath a clock tower, its faces reflecting a hazy, inverted landscape.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:45,gemini_cloud,Google Gemini,Cloud,000000007888,2,516.425078,498.029414,1.9363893091187179,0.74615478515625,,,293,3.68E-5,"A solitary figure stands beneath a sky filled with the ethereal presence of a clock tower, its faces reflecting the vastness above.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:46,gemini_cloud,Google Gemini,Cloud,000000007888,3,514.216289,495.836407,1.944706967460535,0.7344207763671875,,,288,3.4800000000000006E-5,"A solitary figure stands beneath a clock tower, its faces reflecting the sky and a field of grass.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:47,gemini_cloud,Google Gemini,Cloud,000000007888,4,515.139258,496.843516,1.9412226586699006,0.7383270263671875,,,286,3.4E-5,"A lone figure stands beneath a clock tower, its faces reflecting a hazy, inverted landscape.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:47,gemini_cloud,Google Gemini,Cloud,000000007888,5,789.903516,772.55789,1.2659774007133298,0.7852020263671875,,,289,3.52E-5,"A solitary figure stands beneath a clock tower, its faces reflecting the sky and a hazy field of grass.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:48,gemini_cloud,Google Gemini,Cloud,000000007977,1,685.806367,667.042578,1.4581375270317372,1.2148895263671875,,,287,3.44E-5,"A skateboarder in a black t-shirt and cap balances on their board in a park.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:49,gemini_cloud,Google Gemini,Cloud,000000007977,2,504.117657,475.601054,1.9836639048729054,1.2578582763671875,,,280,3.16E-5,"A skateboarder in mid-trick at a skatepark.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:49,gemini_cloud,Google Gemini,Cloud,000000007977,3,486.205157,472.564922,2.056744947277472,1.2148895263671875,,,280,3.16E-5,"A skateboarder in mid-trick at a skatepark.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:50,gemini_cloud,Google Gemini,Cloud,000000007977,4,563.053516,541.095586,1.7760301136277783,1.2227020263671875,,,284,3.32E-5,"A skateboarder in a black shirt and cap performs a trick in a park.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:51,gemini_cloud,Google Gemini,Cloud,000000007977,5,500.912109,484.830039,1.9963582074235702,1.2539520263671875,,,279,3.12E-5,"A skateboarder balances on their board in a park.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:51,gemini_cloud,Google Gemini,Cloud,000000007991,1,678.658281,664.485274,1.4734956133247272,0.8906707763671875,,,292,3.6400000000000004E-5,"A plate of oddly shaped carrots, some fava beans, and a few beets sit next to a blue peeler.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:52,gemini_cloud,Google Gemini,Cloud,000000007991,2,652.503047,636.060312,1.5325598931647593,0.92584228515625,,,284,3.32E-5,"A plate of carrots, fava beans, and beets with a peeler.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:53,gemini_cloud,Google Gemini,Cloud,000000007991,3,581.126211,563.349024,1.7207965861309256,0.9336395263671875,,,292,3.6400000000000004E-5,"A plate of oddly shaped carrots, some fava beans, and a few beets sit next to a blue peeler.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:54,gemini_cloud,Google Gemini,Cloud,000000007991,4,755.655156,736.917891,1.3233549616645506,0.8945770263671875,,,284,3.32E-5,"A plate of carrots, fava beans, and beets with a peeler.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:54,gemini_cloud,Google Gemini,Cloud,000000007991,5,713.115039,694.788125,1.402298290332368,0.8945770263671875,,,284,3.32E-5,"A plate of carrots, fava beans, and beets with a peeler.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:56,gemini_cloud,Google Gemini,Cloud,000000008021,1,1028.773515,1007.19039,0.972031244408542,0.7734832763671875,,,278,3.08E-5,"A speaker addresses a large audience from a stage.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:56,gemini_cloud,Google Gemini,Cloud,000000008021,2,446.68289,426.94918,2.2387246576648594,0.8477020263671875,,,278,3.08E-5,"A speaker addresses a large audience from a stage.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:57,gemini_cloud,Google Gemini,Cloud,000000008021,3,570.961641,545.797422,1.7514311438655825,0.8086395263671875,,,280,3.16E-5,"A speaker addresses a large audience from a brightly lit stage.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:57,gemini_cloud,Google Gemini,Cloud,000000008021,4,571.017226,553.22375,1.7512606528616352,0.7969207763671875,,,278,3.08E-5,"A speaker addresses an audience from a large screen.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:58,gemini_cloud,Google Gemini,Cloud,000000008021,5,479.102461,447.959765,2.087236199773977,0.7734832763671875,,,278,3.08E-5,"A speaker addresses a large audience from a stage.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:59,gemini_cloud,Google Gemini,Cloud,000000008211,1,620.408828,604.707657,1.6118403782610264,1.4883270263671875,,,286,3.4E-5,"Two workers in blue uniforms take a break on a street corner, with scooters parked nearby.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:25:59,gemini_cloud,Google Gemini,Cloud,000000008211,2,621.392539,598.773203,1.6092887140378103,1.5273895263671875,,,285,3.3600000000000004E-5,"Two construction workers take a break on a street in China, with scooters parked nearby.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:00,gemini_cloud,Google Gemini,Cloud,000000008211,3,564.44957,540.560664,1.7716374555834988,1.5469207763671875,,,289,3.52E-5,"Two construction workers in blue uniforms take a break on a street corner in China, with scooters parked nearby.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:01,gemini_cloud,Google Gemini,Cloud,000000008211,4,665.056484,644.713164,1.5036316825083387,1.4883270263671875,,,292,3.6400000000000004E-5,"Two workers in blue uniforms take a break on a street corner, with scooters parked nearby and construction signs in the background.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:02,gemini_cloud,Google Gemini,Cloud,000000008211,5,1083.419102,1055.255586,0.9230038478682832,1.5273895263671875,,,286,3.4E-5,"Two workers in blue uniforms take a break on a street corner, with scooters parked nearby.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:03,gemini_cloud,Google Gemini,Cloud,000000008277,1,656.366757,635.979649,1.5235384628109678,1.7656707763671875,,,277,3.04E-5,"Shredded chicken with broccoli and cheese.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:04,gemini_cloud,Google Gemini,Cloud,000000008277,2,665.474609,643.432891,1.5026869342208067,1.7344207763671875,,,277,3.04E-5,"Shredded chicken with broccoli and cheese.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:04,gemini_cloud,Google Gemini,Cloud,000000008277,3,508.174375,482.593828,1.9678284643927588,1.72662353515625,,,277,3.04E-5,"Shredded chicken and broccoli with cheese.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:05,gemini_cloud,Google Gemini,Cloud,000000008277,4,666.498906,645.72875,1.5003775565086974,1.76959228515625,,,277,3.04E-5,"Shredded chicken and broccoli cheese casserole.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:05,gemini_cloud,Google Gemini,Cloud,000000008277,5,468.235899,446.181641,2.1356756330210382,1.7344207763671875,,,277,3.04E-5,"Shredded chicken and broccoli with cheese.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:06,gemini_cloud,Google Gemini,Cloud,000000008532,1,864.13957,849.117735,1.1572204707626106,0.5469207763671875,,,279,3.12E-5,"A man in a plaid cap and blue shirt smiles.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:07,gemini_cloud,Google Gemini,Cloud,000000008532,2,689.694492,674.996523,1.4499173352829966,0.5547332763671875,,,279,3.12E-5,"A man in a checkered cap and blue shirt smiles.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:08,gemini_cloud,Google Gemini,Cloud,000000008532,3,452.737773,437.120429,2.2087841122105796,0.5859832763671875,,,278,3.08E-5,"A man in a plaid cap and glasses smiles.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:09,gemini_cloud,Google Gemini,Cloud,000000008532,4,740.121485,733.803867,1.3511295378757988,0.5547332763671875,,,279,3.12E-5,"A man in a plaid cap and blue shirt smiles.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:09,gemini_cloud,Google Gemini,Cloud,000000008532,5,517.137461,511.708594,1.9337218349378096,0.5547332763671875,,,278,3.08E-5,"A man in a plaid cap and glasses smiles.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:10,gemini_cloud,Google Gemini,Cloud,000000008629,1,560.386524,549.225546,1.7844825975865186,1.3164520263671875,,,280,3.16E-5,"A collage of pizza slices, showcasing various toppings and cheese.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:10,gemini_cloud,Google Gemini,Cloud,000000008629,2,472.201406,457.075664,2.117740411810633,1.3242645263671875,,,280,3.16E-5,"A collage of pizza slices, showcasing various toppings and cheese.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:11,gemini_cloud,Google Gemini,Cloud,000000008629,3,678.323515,665.488945,1.4742228123994787,1.3203582763671875,,,281,3.2E-5,"A collage of delicious pizza slices, each with a unique topping.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:12,gemini_cloud,Google Gemini,Cloud,000000008629,4,813.493242,796.856445,1.229266511841533,1.38677978515625,,,280,3.16E-5,"A collage of pizza slices, showcasing various toppings and cheese.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:13,gemini_cloud,Google Gemini,Cloud,000000008629,5,498.787578,477.413633,2.0048614763216897,1.3164520263671875,,,280,3.16E-5,"A collage of pizza slices, showcasing various toppings and cheese.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:13,gemini_cloud,Google Gemini,Cloud,000000008690,1,600.084883,584.424492,1.6664309139078912,1.3828582763671875,,,278,3.08E-5,"Two girls interact with goats at an outdoor event.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:14,gemini_cloud,Google Gemini,Cloud,000000008690,2,720.162343,696.533125,1.3885757978322952,1.3125457763671875,,,278,3.08E-5,"Two girls interact with goats at a petting zoo.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:15,gemini_cloud,Google Gemini,Cloud,000000008690,3,665.838906,647.336289,1.5018647768834343,1.3516082763671875,,,278,3.08E-5,"Two girls interact with goats at a petting zoo.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:15,gemini_cloud,Google Gemini,Cloud,000000008690,4,520.409297,500.983789,1.9215644412286508,1.3164520263671875,,,280,3.16E-5,"Two girls in colorful dresses pet goats at a petting zoo.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:16,gemini_cloud,Google Gemini,Cloud,000000008690,5,608.43082,589.32289,1.6435722306111975,1.3125457763671875,,,281,3.2E-5,"Two young girls smile as they pet goats at a petting zoo.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:18,gemini_cloud,Google Gemini,Cloud,000000008762,1,1444.982891,1434.416953,0.6920497164557777,0.4180145263671875,,,278,3.08E-5,"Green lights glow at dusk on Avenida del Sol.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:18,gemini_cloud,Google Gemini,Cloud,000000008762,2,442.924531,429.9475,2.257720966012605,0.4219207763671875,,,278,3.08E-5,"Green lights glow at dusk on Avenida del Sol.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:19,gemini_cloud,Google Gemini,Cloud,000000008762,3,758.13625,740.001133,1.3190241200048145,0.41802978515625,,,282,3.24E-5,"Green lights glow at dusk on Julio Cesare Avenue and Avenida Del Sol.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:20,gemini_cloud,Google Gemini,Cloud,000000008762,4,612.122305,593.594453,1.633660449605737,0.4258270263671875,,,282,3.24E-5,"Green lights glow at dusk on Julio Cesar Avenue and Avenida Del Sol.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:21,gemini_cloud,Google Gemini,Cloud,000000008762,5,887.451953,872.653789,1.1268215666431691,0.4180145263671875,,,282,3.24E-5,"Green lights glow at dusk on Julio Cesar Avenue and Avenida Del Sol.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:22,gemini_cloud,Google Gemini,Cloud,000000008844,1,1592.410742,1569.991445,0.6279786826507102,0.7109832763671875,,,279,3.12E-5,"A smiling woman stands behind a display of ripe bananas.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:24,gemini_cloud,Google Gemini,Cloud,000000008844,2,1028.411757,1010.179531,0.9723731697867004,0.7422332763671875,,,279,3.12E-5,"A smiling woman stands behind a display of fresh bananas.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:24,gemini_cloud,Google Gemini,Cloud,000000008844,3,569.320547,551.649649,1.756479728809085,0.6992645263671875,,,279,3.12E-5,"A smiling woman stands behind a display of fresh bananas.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:25,gemini_cloud,Google Gemini,Cloud,000000008844,4,906.594531,889.768359,1.1030289349936526,0.6719207763671875,,,279,3.12E-5,"A smiling woman stands behind a display of fresh bananas.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:26,gemini_cloud,Google Gemini,Cloud,000000008844,5,456.160977,437.119609,2.192208563250249,0.7500457763671875,,,279,3.12E-5,"A smiling woman stands behind a display of fresh bananas.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:27,gemini_cloud,Google Gemini,Cloud,000000008899,1,702.043594,669.89207,1.4244129688618739,1.7383270263671875,,,284,3.32E-5,"A fire hydrant stands in front of a graffiti-covered storefront in a city.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:27,gemini_cloud,Google Gemini,Cloud,000000008899,2,676.466796,654.536406,1.4782691566135642,1.7070770263671875,,,286,3.4E-5,"A red brick building with a green awning and metal roll-down shutters covered in graffiti.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:28,gemini_cloud,Google Gemini,Cloud,000000008899,3,673.721523,653.073125,1.4842927914001047,1.73052978515625,,,285,3.3600000000000004E-5,"A fire hydrant stands in front of a graffiti-covered storefront on a brick building.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:29,gemini_cloud,Google Gemini,Cloud,000000008899,4,513.217695,493.716719,1.948490883581089,1.7773895263671875,,,283,3.28E-5,"Graffiti-covered storefronts and a fire hydrant on a city street.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:29,gemini_cloud,Google Gemini,Cloud,000000008899,5,544.994648,520.714961,1.8348804041833453,1.7070770263671875,,,283,3.28E-5,"Graffiti-covered storefronts on a brick building with a fire escape.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:30,gemini_cloud,Google Gemini,Cloud,000000009378,1,751.164883,737.849961,1.3312656417139777,0.7461395263671875,,,302,4.04E-5,"A man with long, dark, curly hair and a bandana on his head, wearing a black t-shirt, balances a bright yellow frisbee on his outstretched hand.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:31,gemini_cloud,Google Gemini,Cloud,000000009378,2,720.033164,708.55832,1.3888249180700236,0.7461395263671875,,,292,3.6400000000000004E-5,"A man with long, dark curly hair and a bandana on his head is about to throw a bright yellow frisbee.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:32,gemini_cloud,Google Gemini,Cloud,000000009378,3,1036.249453,1016.825312,0.9650186034887105,0.7344207763671875,,,285,3.3600000000000004E-5,"A man in a bandana and black shirt balances a yellow frisbee on his finger.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:33,gemini_cloud,Google Gemini,Cloud,000000009378,4,872.015937,856.041953,1.146768032061781,0.7461395263671875,,,300,3.96E-5,"A man with long, dark, curly hair and a bandana on his head is captured mid-throw, holding a bright yellow frisbee on his outstretched hand.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:34,gemini_cloud,Google Gemini,Cloud,000000009378,5,796.79039,780.704649,1.2550352169784578,0.7344207763671875,,,273,2.8800000000000002E-5,"Focused on the throw.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:35,gemini_cloud,Google Gemini,Cloud,000000009400,1,1306.052266,1289.630078,0.7656661421848489,1.1211395263671875,16.457031,,283,3.28E-5,"A group of people gathered around a table, engrossed in their laptops.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:36,gemini_cloud,Google Gemini,Cloud,000000009400,2,807.275195,786.275586,1.2387349520878068,1.0664520263671875,,,285,3.3600000000000004E-5,"A group of people are gathered around a table, each engrossed in their laptops.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:37,gemini_cloud,Google Gemini,Cloud,000000009400,3,623.49457,605.821953,1.6038632060580738,1.0312957763671875,,,284,3.32E-5,"A group of people gathered around a table, each engrossed in their laptops.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:37,gemini_cloud,Google Gemini,Cloud,000000009400,4,394.744532,376.661757,2.5332839822591895,1.0312957763671875,,,285,3.3600000000000004E-5,"A group of people are gathered around a table, each engrossed in their laptops.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:38,gemini_cloud,Google Gemini,Cloud,000000009400,5,456.046289,438.405664,2.192759866970434,1.0703582763671875,,,284,3.32E-5,"A group of people gathered around a table, each engrossed in their laptops.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:39,gemini_cloud,Google Gemini,Cloud,000000009448,1,941.260586,918.554727,1.0624050500718618,2.12115478515625,,,279,3.12E-5,"A young girl holds a blue umbrella and a cookie.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:40,gemini_cloud,Google Gemini,Cloud,000000009448,2,560.810312,538.89125,1.7831341161216023,2.1523895263671875,,,283,3.28E-5,"A young girl stands under a large blue umbrella, holding its wooden handle.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:40,gemini_cloud,Google Gemini,Cloud,000000009448,3,578.003203,556.1375,1.7300942188723478,2.1445770263671875,,,279,3.12E-5,"A young girl holds a blue umbrella and a cookie.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:41,gemini_cloud,Google Gemini,Cloud,000000009448,4,860.758008,840.879023,1.1617667110916963,2.1211395263671875,,,279,3.12E-5,"A young girl holds a blue umbrella and a cookie.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:43,gemini_cloud,Google Gemini,Cloud,000000009448,5,1475.613281,1452.939453,0.6776843315765738,2.1211395263671875,,,284,3.32E-5,"A young girl holds a blue umbrella, her hand resting on the wooden handle.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:44,gemini_cloud,Google Gemini,Cloud,000000009483,1,650.3425,636.178242,1.5376513144996675,1.0312957763671875,,,292,3.6400000000000004E-5,"A man in a suit stands next to a control panel and computer setup in a room with a one-way mirror.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:44,gemini_cloud,Google Gemini,Cloud,000000009483,2,662.888008,642.337187,1.5085504458243268,1.0703582763671875,,,291,3.6E-5,"A man in a suit stands next to a control panel and computer in a room with a one-way mirror.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:45,gemini_cloud,Google Gemini,Cloud,000000009483,3,453.894649,434.803047,2.2031544152440534,1.0625457763671875,,,291,3.6E-5,"A man in a suit stands next to a control panel and computer in a room with a one-way mirror.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:46,gemini_cloud,Google Gemini,Cloud,000000009483,4,761.28,743.806406,1.3135771332492645,1.0312957763671875,,,288,3.4800000000000006E-5,"A man stands beside a control panel and computer setup in a room with a one-way mirror.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:46,gemini_cloud,Google Gemini,Cloud,000000009483,5,455.717852,433.008945,2.1943401945114056,1.0312957763671875,,,294,3.72E-5,"A man in a suit stands next to a control panel and computer setup, with a reflection of him visible in a large window.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:48,gemini_cloud,Google Gemini,Cloud,000000009590,1,1238.333594,1222.298672,0.8075368421281802,0.83209228515625,,,282,3.24E-5,"A group of friends enjoys a meal and conversation around a low table.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:48,gemini_cloud,Google Gemini,Cloud,000000009590,2,567.79832,550.564609,1.7611887263069042,0.8711395263671875,,,282,3.24E-5,"A group of friends enjoys a meal and conversation around a low table.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:49,gemini_cloud,Google Gemini,Cloud,000000009590,3,451.3775,430.010195,2.215440512652935,0.8672332763671875,,,282,3.24E-5,"A group of friends enjoys a meal and conversation around a low table.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:49,gemini_cloud,Google Gemini,Cloud,000000009590,4,507.625937,486.688672,1.9699545021475133,0.9062957763671875,,,279,3.12E-5,"Friends gather around a table for a meal and conversation.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:50,gemini_cloud,Google Gemini,Cloud,000000009590,5,769.015703,743.696133,1.3003635635773225,0.86724853515625,,,280,3.16E-5,"Friends gather for a meal and conversation around a low table.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:51,gemini_cloud,Google Gemini,Cloud,000000009769,1,903.568125,884.96,1.1067234139097148,1.6328582763671875,,,290,3.56E-5,"A red pickup truck with a snowplow attachment clears a snowy street in front of a row of houses.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:52,gemini_cloud,Google Gemini,Cloud,000000009769,2,552.940859,532.926679,1.8085116766529274,1.5703582763671875,,,286,3.4E-5,"A red pickup truck with a snow plow attachment clears a snowy street in front of houses.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:53,gemini_cloud,Google Gemini,Cloud,000000009769,3,730.77336,709.302539,1.3684133203761013,1.5703582763671875,,,289,3.52E-5,"A red pickup truck with a snow plow attachment clears a snowy street in front of a row of houses.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:53,gemini_cloud,Google Gemini,Cloud,000000009769,4,600.054844,577.078828,1.6665143361462473,1.5391082763671875,,,286,3.4E-5,"A red pickup truck with a snow plow attachment clears a snowy street in front of houses.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:55,gemini_cloud,Google Gemini,Cloud,000000009769,5,988.943633,965.396641,1.0111799769279672,1.5391082763671875,,,289,3.52E-5,"A red pickup truck with a snow plow attachment clears a snowy street in front of a row of houses.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:55,gemini_cloud,Google Gemini,Cloud,000000009772,1,555.466328,539.108281,1.8002891437192572,1.1523895263671875,,,287,3.44E-5,"A luxurious bathroom with a double vanity, a TV, and a person taking a mirror selfie.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:56,gemini_cloud,Google Gemini,Cloud,000000009772,2,513.767656,494.931992,1.9464051275349261,1.2266082763671875,,,282,3.24E-5,"A luxurious bathroom with a double vanity and a mirror reflecting the photographer.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:56,gemini_cloud,Google Gemini,Cloud,000000009772,3,502.769961,483.113125,1.9889811992964312,1.1641082763671875,,,289,3.52E-5,"A luxurious bathroom with a double vanity, a TV, and a person taking a selfie in the mirror.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:57,gemini_cloud,Google Gemini,Cloud,000000009772,4,514.376602,495.680469,1.9441008710578944,1.1641082763671875,,,287,3.44E-5,"A luxurious hotel bathroom with a double vanity, a TV, and a selfie in the mirror.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:58,gemini_cloud,Google Gemini,Cloud,000000009772,5,502.17961,482.387421,1.9913194006423318,1.15240478515625,,,287,3.44E-5,"A luxurious bathroom with a double vanity, a TV, and a photographer taking a mirror selfie.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:26:59,gemini_cloud,Google Gemini,Cloud,000000009891,1,927.706758,910.03543,1.0779268248038352,1.2930145263671875,,,281,3.2E-5,"Two men load luggage into a white SUV in a parking garage.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:27:00,gemini_cloud,Google Gemini,Cloud,000000009891,2,1026.026875,1005.298047,0.9746333398918035,1.2891082763671875,,,282,3.24E-5,"Two men load luggage into a white SUV at an airport parking garage.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:27:00,gemini_cloud,Google Gemini,Cloud,000000009891,3,513.474063,493.585742,1.9475180385109345,1.2773895263671875,,,281,3.2E-5,"Two men load luggage into a white SUV in a parking garage.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:27:01,gemini_cloud,Google Gemini,Cloud,000000009891,4,503.898008,485.945078,1.9845285834112685,1.2539520263671875,,,282,3.24E-5,"Two men load luggage into a white SUV at an airport parking garage.",gemini-2.5-flash-lite,1,""
+2025-12-12 21:27:02,gemini_cloud,Google Gemini,Cloud,000000009891,5,1069.528242,1047.929336,0.934991672711715,1.2852020263671875,,,282,3.24E-5,"Two men load luggage into a white SUV at an airport parking garage.",gemini-2.5-flash-lite,1,""

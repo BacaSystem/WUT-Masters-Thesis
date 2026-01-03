@@ -1,0 +1,55 @@
+======================================================================
+BENCHMARK RESULTS SUMMARY
+======================================================================
+
+Benchmark Information:
+  Name: florence2
+  Description: Batch test via BatchTestActivity - MERGED from 99 runs
+  Dataset: COCO_val2017
+  Start Time: 2025-12-22 00:26:52
+  End Time: 2025-12-21 19:47:10
+  Duration: 3277.02 seconds
+  Status: COMPLETED
+
+Device Information:
+  Manufacturer: samsung
+  Model: SM-S921B
+  Android: 16 (SDK 36)
+  CPU ABI: arm64-v8a
+  Total RAM: 7225 MB
+  Available RAM: 3702 MB
+
+Overall Statistics:
+  Total Images: 100
+  Total Runs: 500
+  Successful: 495 (99.0%)
+  Failed: 5
+  Providers Tested: 1
+
+----------------------------------------------------------------------
+PROVIDER RESULTS
+----------------------------------------------------------------------
+
+
+Provider: Florence-2 (Local) (florence2_onnx_local)
+  Category: Local
+  Success Rate: 100.0%
+  Images: 100/100
+  Duration: 3254.33 seconds
+
+  Performance Metrics:
+    Latency (p50): 6359.53 ms
+    Latency (p90): 7064.25 ms
+    Latency (mean): 6326.65 ± 701.49 ms
+    Latency (range): [5403.80, 7296.54] ms
+    Throughput (median): 0.16 img/s
+
+    Inference Time (median): 6234.87 ms
+    RAM Peak (mean): 37.8 MB
+    RAM Peak (max): 76.4 MB
+    Energy (mean): 31.337 mWh per image
+    Energy (total sum): 34.55 mWh
+
+======================================================================
+END OF REPORT
+======================================================================

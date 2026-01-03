@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "name": null,
+    "description": "Batch test via BatchTestActivity",
+    "dataset": "COCO_val2017",
+    "start_time": "2025-12-12 21:53:05",
+    "end_time": "2025-12-12 22:00:13",
+    "duration_ms": 427949,
+    "status": "COMPLETED"
+  },
+  "device": {
+    "manufacturer": "samsung",
+    "model": "SM-S921B",
+    "android_version": "16",
+    "sdk_int": 36,
+    "cpu_abi": "arm64-v8a",
+    "total_memory_mb": 7225,
+    "available_memory_mb": 2619
+  },
+  "statistics": {
+    "total_images": 100,
+    "total_runs": 500,
+    "successful_runs": 500,
+    "failed_runs": 0,
+    "success_rate": 1.0
+  },
+  "providers": [
+    {
+      "provider_id": "vit_gpt2_onnx_local",
+      "provider_name": "ViT-GPT2 (Local)",
+      "category": "Local",
+      "success_rate": 1.0,
+      "total_images": 100,
+      "successful_images": 100,
+      "duration_ms": 427939,
+      "performance_metrics": {
+        "latency": {
+          "p50_ms": 772.359355,
+          "p90_ms": 919.6170860000001,
+          "mean_ms": 759.9561318660001,
+          "std_ms": 132.58107754724787,
+          "min_ms": 405.19875,
+          "max_ms": 1192.223789
+        },
+        "throughput": {
+          "median_img_per_s": 1.294734107286109
+        },
+        "inference_time": {
+          "median_ms": 769.2841605
+        },
+        "ram": {
+          "peak_mean_mb": 17.617278503417968,
+          "peak_max_mb": 39.07215881347656
+        },
+        "energy": {
+          "mean_mwh_per_image": 40.942334681818174,
+          "total_mwh": 491.3080161818181
+        }
+      }
+    }
+  ]
+}
