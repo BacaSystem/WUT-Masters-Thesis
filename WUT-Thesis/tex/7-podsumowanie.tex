@@ -2,4 +2,59 @@
 \section{Podsumowanie i wnioski}\label{s:Podsumowanie}
 
 \noindent
-TODO | Niniejsza praca miała na celu zbadanie efektywności lokalnych i chmurowych modeli AI do generowania opisów obrazów w aplikacjach mobilnych....
+Niniejsza praca podejmuje zagadnienie dotyczące analizy porównawczej modeli sztucznej inteligencji działających w 
+warunkach lokalnych oraz chmurowych w zadaniu automatycznego generowania opisów obrazów na platformie mobilnej Android 
+oraz optymalnego wyboru strategii wdrożeniowej systemów AI w aplikacjach mobilnych.
+
+Realizacja tego celu wymagała zbudowania dedykowanej platformy badawczej CaptionLab, która umozliwia przeprowadzenie kompleksowych
+badań porównawczych sześciu reprezentatywnych modeli AI, obejmujących trzy modele lokalne uruchamiane przez środowisko ONNX Runtime (BLIP, ViT-GPT2, Florence-2)
+oraz trzy usługi chmurowe dostępne przez interfejsy API (Azure Computer Vision, Google Gemini 2.5 Flash Lite, OpenAI GPT-4o mini) w komplementarnych aspektach wydajnościowych i jakościowych.
+Badania zostały przeprowadzone na zestawie stu wyselekcjonowanych obrazów z kolekcji COCO, obejmując łącznie 3,018 przebiegów inferencji z 99-procentowym wskaźnikiem sukcesu.
+
+Przeprowadzone badania przyniosły szereg istotnych odkryć, które znacząco odbiegają od początkowych założeń i przewidywań. 
+Najważniejszym wnioskiem jest stwierdzenie, że specjalizacja modelu do konkretnego zadania image captioning'u ma większe znaczenie
+dla osiąganych wyników niż sama strategia wdrożeniowa. To kluczowe odkrycie ujawnia się we wszystkich aspektach przeprowadzonej analizy
+i stanowi główny motyw przewodni dla pozostałych wniosków.
+
+Proces weryfikacji postawionych hipotez badawczych dostarczył mieszanych rezultatów, częściowo potwierdzając początkowe założenia, a częściowo je obalając.
+Największym zaskoczeniem okazały się wyniki dotyczące jakości generowanych opisów oraz czasów inferencji, które nie zawsze korelowały z przewidywaniami opartymi na strategii wdrożeniowej,
+tym samym podważając pierwotne założenia badawcze w tych zakresach.
+
+Uzyskane wyniki badań niosą ze sobą istotne implikacje dla praktyki projektowania aplikacji mobilnych wykorzystujących systemy sztucznej inteligencji.
+Najważniejszą rekomendacją jest piorytetyzacja specjalizacji modelu nad strategią wdrożeniową. Twórcy aplikacji powinni w pierwszej kolejności poszukiwać 
+modeli dedykowanych do konkretnego zadania, niezależnie od tego, czy są dostępne lokalnie czy w chmurze.
+
+Dla aplikacji priorytetyzujących responsywność systemów rekomendowane jest wykorzystanie Azure Computer Vision jako najszybszego rozwiązania lub lokalnego ViT-GPT2 w scenariuszach wymagających działania offline. 
+W przypadku aplikacji wymagających najwyższej jakości opisów lokalny BLIP stanowi optymalny wybór pomimo wyższych wymagań zasobowych.
+Z perspektywy ekonomicznej modele lokalne oferują przewagę w scenariuszach wysokiej częstotliwości użytkowania ze względu na zerowe koszty operacyjne.
+W rozwiązaniach wymagających maksymalnej niezawodności rekomendowane są modele lokalne osiągające stuprocentowy wskaźnik sukcesu przez eliminację zależności sieciowych.
+Z kolei w przypadku aplikacji mobilnych o znacznych ograniczeniach zasobowych modele chmurowe oferują optymalną strategię minimalizacji zużycia pamięci i energii urządzenia.
+
+Przeprowadzone badania charakteryzują się jednak pewnymi ograniczeniami, które należy uwzględnić przy interpretacji wyników. 
+Pierwszym ograniczeniem jest zawężenie analizy do platformy Android oraz konkretnego zestawu modeli AI. Wybór ten, choć uzasadniony reprezentatywnością badanych rozwiązań, 
+nie wyczerpuje pełnego spektrum dostępnych technologii.
+
+Drugim istotnym ograniczeniem jest oparcie oceny jakościowej wyłącznie na automatycznych metrykach porównujących generowane opisy z referencyjnymi opisami z zestawu COCO. 
+Podejście to może niedoszacowywać rzeczywistej użyteczności opisów, szczególnie w przypadku modeli generujących semantycznie poprawne, lecz stylistycznie odmienne opisy od referencji.
+Pełna ocena jakości wymagałaby uzupełnienia o ewaluację ludzką uwzględniającą inne aspekty w tym przydatność oraz satysfakcję użytkownika końcowego. 
+Takie badania mogą w znaczący sposób zmienić postrzeganie jakości generowanych opisów i wpłynąć na ostateczne rekomendacje dotyczące wyboru modeli.
+
+Uzyskane wyniki otwierają kilka perspektywicznych kierunków dla przyszłych badań w obszarze efektywności systemów sztucznej inteligencji na platformach mobilnych. 
+Potencjalnymi kierunkami rozwoju jest rozszerzenie zakresu badań o inne platformy, integrację nowszych technologii oraz pogłębienie analizy jakościowej o ludzką ewaluację.
+Możliwym obszarem eksploracji są również hybrydowe strategie wdrożeniowe łączące zalety podejścia lokalnego i chmurowego oraz badanie wpływu technik optymalizacyjnych na efektywność modeli lokalnych.
+
+Przeprowadzone badania jednoznacznie dowodzą, że nie istnieje uniwersalnie optymalne rozwiązanie dla wszystkich scenariuszy 
+zastosowań systemów sztucznej inteligencji w zadaniu generowania opisów obrazów na platformach mobilnych. 
+Wybór między strategią lokalną a chmurową powinien być podejmowany w oparciu o szczegółową analizę wymagań konkretnej aplikacji, 
+uwzględniającą priorytety wydajnościowe, jakościowe, ekonomiczne oraz operacyjne.
+
+Kluczowym odkryciem badań jest stwierdzenie, że specjalizacja modelu do konkretnego zadania ma większe znaczenie niż strategia wdrożeniowa. 
+Modele dedykowane do image captioning'u osiągają lepsze wyniki niż uniwersalne modele językowe adaptowane do przetwarzania obrazów,
+niezależnie od miejsca wykonywania obliczeń.
+
+Praktyczne implikacje tych odkryć sugerują, że twórcy aplikacji mobilnych powinni koncentrować się na identyfikacji najbardziej 
+wyspecjalizowanych rozwiązań dostępnych dla ich konkretnych przypadków użycia, traktując strategię wdrożeniową jako wtórny czynnik decyzyjny. 
+Takie podejście może prowadzić do znacząco lepszych rezultatów w zakresie wydajności, jakości oraz efektywności kosztowej implementowanych systemów AI.
+
+Uzyskane wyniki stanowią solidną podstawę dla podejmowania świadomych decyzji architektonicznych w projektowaniu aplikacji mobilnych
+wykorzystujących sztuczną inteligencję oraz otwierają perspektywiczne kierunki dla dalszych badań w tym dynamicznie rozwijającym się obszarze technologii.

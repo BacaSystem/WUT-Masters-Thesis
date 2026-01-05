@@ -1,29 +1,360 @@
 \newpage % Rozdziały zaczynamy od nowej strony.
-\section{Interpratacja wyników badań}\label{s:Interpretacja wynikow badan}
+\section{Interpretacja wyników badań}\label{s:Interpretacja wynikow badan}
 
 \noindent
-TODO | Na podstawie przeprowadzonych eksperymentów i zebranych danych, można wyciągnąć kilka kluczowych wniosków dotyczących wydajności i jakości generowanych opisów obrazów przez różne modele AI, zarówno lokalne, jak i chmurowe....
+Bazując na przeprowadzonych eksperymentach badawczych oraz zebranych danych przedstawionych w rozdziale \ref{s:Wyniki badan}.
+\textit{Wyniki badań}, wyciągnięte zostały wnioski oraz na ich podstawie przedstawiono interpretację uzyskanych wyników w kontekście analizy efektywności lokalnych oraz chmurowych rozwiązań sztucznej 
+inteligencji w zadaniu generowania opisów obrazów na platformie mobilnej Android, która była przedmiotem badań niniejszej pracy.
 
-\subsection{Porównanie modeli AI}\label{ss:Porownanie modeli AI}
-\noindent
-TODO | Analiza porównawcza wykazała istotne różnice między modelami lokalnymi a chmurowymi pod względem opóźnień, zużycia zasobów oraz kosztów operacyjnych....
+Struktura interpretacji została podzielona na kilka etapów.
+Pierwszy etap w rozdziale \ref{ss:wydajnosc_modeli_ai} obejmuje szczegółową analizę porównawczą modeli AI w różnych wymiarach wydajnościowych.
+Drugi etap w rozdziale \ref{ss:jakosc_generowanych_opisow} skupia się na wymiarze jakościowym generowanych opisów obrazów, identyfikując kluczowe czynniki wpływające na obserwowane różnice.
+Trzeci etap w rozdziale \ref{ss:wnioski_i_analiza_hipotez} zawiera zestawienie końcowe badanych modeli AI wraz z formułowaniem rekomendacji praktycznych w oparciu o empiryczne dane.
 
+\subsection{Wydajność modeli AI}\label{ss:wydajnosc_modeli_ai}
+\noindent   
+Analiza wydajnościowa modeli AI umożliwiła identyfikację kluczowych różnic między strategiami wdrożeniowymi oraz zrozumienie czynników wpływających na obserwowane wyniki. 
+Każdy z wymiarów wydajnościowych dostarcza unikalnych informacji o charakterystyce poszczególnych modeli. Wskazane metryki wydajnościowe obejmują całkowity czas inferencji end-to-end, szczytowe zużycie pamięci RAM, zużycie energii, koszty operacyjne oraz wskaźnik sukcesu inferencji.
+Taka definicja zestawu metryk wydajnościowych pozwoliła na efektywne porównanie modeli AI w kontekście ich zastosowania w zadaniu image captioning'u na platformie mobilnej Android,
+co potwierdza słuszność hipotezy H3 mówiącej o metodzie oceny efektywności modeli, przedstawionej w rozdziale \ref{ss:Wymagania Projektowe} \textit{Wymagania projektowe}. 
+
+Wyniki badań ze wszystkich przebiegów testowych jasno wskazują znaczące różnice pomiędzy różnymi strategiami wdrożeniowymi poszczególnych modeli AI oraz
+częściowo potwierdzają zakładane hipotezy badawcze. Porównanie poszczególnych metryk wydajnościowych przedstawiono w tabeli \ref{tab:ranking_czas}, w której 
+modele zostały uszeregowane według czasu inferencji end-to-end (E2E) od najszybszych do najwolniejszych.
 
 \begin{table}[!h] \centering
-\caption{Przykładowa tabela}
-\begin{tabular}{|l|c|c|c|c|} \hline
-\label{tab:example_table}
-\textbf{Model} & \textbf{metric 1} & \textbf{metric 2} & \textbf{+} & \textbf{-} \\ \hline\hline
-ViT-GPT2 (local)       & 8.4  & 2.1 & 4  & 15 \\ \hline
-BLIP (local)           & 10.2 & 2.8 & 5  & 18 \\ \hline
-Florence-2 (local)     & 12.6 & 3.4 & 6  & 24 \\ \hline
-\hline
-Azure Vision (cloud)   & 14.8 & 3.9 & 7  & 27 \\ \hline
-Gemini Pro (cloud)     & 22.4 & 5.6 & 12 & 38 \\ \hline
-GPT-4o Vision (cloud)  & 26.7 & 6.8 & 14 & 45 \\ \hline
+\caption{Porównanie metryk wydajnościowych modeli AI, uszeregowane według czasu E2E}
+\begin{tabular}{|c|l|c|c|c|c|} \hline
+\label{tab:ranking_czas}
+\textbf{Nr} & \textbf{Model (sukces)} & \textbf{Czas E2E} & \textbf{Zużycie RAM} & \textbf{Zużycie energii} & \textbf{Koszt} \\ \hline\hline
+1. & \textbf{Azure CV} (99.4\%)     & 471 ms  & 0.34 MB  & 16.73 mWh & \$0.0015  \\ \hline
+2. & \textbf{Google Gemini} (98\%)    & 657 ms  & 1.00 MB  & 16.46 mWh & \$0.000032    \\ \hline
+3. & \textbf{ViT-GPT2} (100\%)      & 772 ms  & 19.72 MB & 31.89 mWh & \$0   \\ \hline
+4. & \textbf{BLIP} (100\%)          & 1091 ms & 17.08 MB & 32.22 mWh & \$0   \\ \hline
+5. & \textbf{OpenAI GPT-4o} (97.8\%)  & 1518 ms & 1.20 MB  & 14.74 mWh & \$0.002148    \\ \hline
+6. & \textbf{Florence-2} (99\%)   & 6408 ms & 33.46 MB & 30.72 mWh & \$0    \\ \hline
 \end{tabular}
 \end{table}
 
-\subsection{Wnioski}\label{ss:Wnioski}
+Zgodnie z zakładaną hipotezą H4, modele lokalne charakteryzują się dużo wyższym zużyciem pamięci RAM i energii w porównaniu do modeli chmurowych,
+ze względu na konieczność lokalnego przetwarzania danych na urządzeniu mobilnym. 
+Szczytowe zużycie pamięci operacyjnej podczas inferencji modeli lokalnych było wielokrotnie wyższe niż w przypadku modeli chmurowych, co jest zgodne z oczekiwaniami wynikającymi z architektury tych rozwiązań.
+Dodatkowe obciążenie stanowi również sama waga modeli lokalnych, które muszą być przechowywane i ładowane w pamięci urządzenia, co dodatkowo zwiększa wymagania pamięciowe. Dobrze obrazuje to przypadek modelu Florence-2,
+który ze względu na swoją architekturę opartą na transformerach wizyjnych oraz dekoderach tekstowych wymaga przechowywania w pamięci zarówno wag enkodera wizyjnego, jak i dekodera językowego, co tłumaczy wysokie wymagania pamięciowe \cite{transformer_vaswani2017}.
+
+W kontekście zużycia energii modele lokalne wykazały prawie dwukrotnie wyższe wartości w porównaniu do modeli chmurowych. Było to spowodowane intensywnym wykorzystaniem zasobów obliczeniowych urządzenia mobilnego podczas inferencji,
+co doprowadziło do większego zużycia baterii. Różnica w wartościach, pomiędzy zużyciem pamięci RAM a zużyciem energii nie jest aż tak znacząca, gdyż ze względów architektonicznych systemu Android niemożliwym był pomiar zużycia energii jedynie przez samą aplikację podczas pojedynczej inferencji,
+prowadząc do pomiarów obejmujących całkowite zużycie energii przez system operacyjny w czasie badania \cite{android_power_profiling}.
+
+Zakładane niższe zużycie zasobów przez modele chmurowe zostało zatem potwierdzone, zarówno w aspekcie pamięciowym jak i energetycznym, prowadząc do wniosku że chmurowe rozwiązania
+bazujące na komunikacji sieciowej mają mniejsze wymagania systemowe niż lokalne modele sztucznej inteligencji \cite{mobile_energy_pathak2012}.
+
+Jednak w kontekście czasów inferencji sytuacja okazała się znacznie bardziej złożona niż przewidywała hipoteza H4. Zgodnie z przedstawionymi w tabeli \ref{tab:ranking_czas} wynikami,
+czasy end-to-end nie wykazały jednoznacznego podziału na korzyść którejkolwiek ze strategii wdrożeniowych. Kluczowym czynnikiem determinującym wydajność czasową
+okazała się nie tyle strategia wdrożeniowa (lokalna vs. chmurowa), ile specjalizacja modelu do konkretnego zadania- image captioning'u.
+
+Azure Computer Vision osiągnął najkrótszy czas inferencji wynoszący zaledwie 471 milisekund, co jednoznacznie przeczy założeniu hipotezy H4 
+o dłuższych czasach odpowiedzi modeli chmurowych.
+W przeciwieństwie do uniwersalnych modeli językowych, Azure Computer Vision został zaprojektowany i wytrenowany specyficznie do zadania image captioning'u,
+co pozwala na efektywne przetwarzanie wizualne bez nadmiarowych operacji charakterystycznych dla ogólnych modeli AI \cite{azurecv_florence}.
+
+Podobny wzorzec obserwujemy w przypadku lokalnych modeli wyspecjalizowanych. ViT-GPT2 z czasem 772 milisekund uplasował się na trzeciej pozycji,
+wyprzedzając Google Gemini 2.5 Flash Lite (657 ms) oraz dramatycznie przewyższając OpenAI GPT-4o (1518 ms). Ten wynik potwierdza, że specjalizacja modelu
+do konkretnego zadania jest znacznie ważniejsza niż strategia wdrożeniowa czy dostępność zaawansowanych zasobów obliczeniowych.
+
+Szczególnie wyraźne różnice widoczne są przy porównaniu wyspecjalizowanych modeli z uniwersalnymi rozwiązaniami językowymi.
+OpenAI GPT-4o mini, mimo zaawansowanej technologii i dostępu do potężnej infrastruktury chmurowej, osiągnął jeden z najgorszych czasów inferencji (1518 ms).
+Przyczyna leży w fundamentalnej niezgodności między architekturą ogólnego modelu językowego a specyfiką zadania image captioning'u.
+GPT-4o wykorzystuje API Chat Completions, gdzie obrazy muszą być konwertowane do reprezentacji base64 i przetwarzane jako część promptu tekstowego,
+co wprowadza znaczący narzut obliczeniowy oraz wymaga przetwarzania przez model nieoptymalizowany do analizy wizualnej \cite{openai_completions2025}.
+
+Dodatkowym czynnikiem wpływającym na wydłużone czasy inferencji modeli lokalnych okazało się również zjawisko dławienia termicznego (thermal throttling) procesora urządzenia mobilnego
+podczas długotrwałego obciążenia \cite{panchal2024thermal}. Jak przedstawiono na rysunku \ref{fig:e2e_individual}. w rozdziale \ref{s:Wyniki badan}. \textit{Wyniki badań},
+modele lokalne wykazywały wyraźny trend wzrostowy czasów inferencji podczas początkowej fazy eksperymentu, pomimo przeprowadzenia przebiegów rozgrzewkowych na początku każdej serii pomiarów.
+
+Szczególnie dramatyczny przypadek stanowi Florence-2 z medianą czasu inferencji wynoszącą 6408 milisekund oraz bardzo wysoką wariancją wyników
+wahającą się w zakresie od 5 do 9 sekund. Ta obserwacja dostarcza ważnej lekcji o ograniczeniach modeli uniwersalnych w środowisku mobilnym.
+Florence-2, mimo że został zaprojektowany jako zaawansowany model wizyjno-językowy o szerokich możliwościach, reprezentuje ogólne podejście do przetwarzania obrazów.
+Jego architektura, choć imponująca w kontekście laboratoryjnym, 
+nie została odpowiednio zoptymalizowana pod kątem ograniczonych zasobów urządzeń mobilnych \cite{florence2_xiao2024}, co prowadzi do nadmiernego obciążenia procesora oraz pamięci operacyjnej urządzenia
+powodując znaczne wydłużenie czasów inferencji, bądź w skrajnych przypadkach nawet awarie aplikacji, które były obserwowane podczas eksperymentów.
+
+W przeciwieństwie do wyspecjalizowanych modeli jak BLIP czy ViT-GPT2, które zostały zaprojektowane z myślą o efektywnym generowaniu opisów obrazów,
+Florence-2 próbuje realizować szeroki zakres zadań wizyjno-językowych, co skutkuje znacznym narzutem obliczeniowym niekoniecznie potrzebnym 
+dla prostego image captioning'u. Ta obserwacja potwierdza hipotezę H1 i podkreśla, że specjalizacja modelu do konkretnego zadania 
+jest kluczowa dla wydajności w środowisku mobilnym, przeważając nad ogólnym zaawansowaniem technologicznym.
+
+Analiza czasów inferencji prowadzi zatem do wniosku, że specjalizacja oraz optymalizacja modelu do konkretnego zadania są kluczowymi czynnikami determinującymi wydajność czasową,
+przeważającymi nad samą strategią wdrożeniową (lokalna vs. chmurowa) czy dostępem do zaawansowanych zasobów obliczeniowych.
+
+Analiza kosztów operacyjnych modeli AI również dostarcza interesujących wniosków dotyczących różnych strategii wdrożeniowych.
+Modele lokalne charakteryzują się zerowym kosztem operacyjnym, co stanowi ich fundamentalną przewagę ekonomiczną
+w scenariuszach wysokiej częstotliwości użytkowania. Wszystkie koszty związane z modelami lokalnymi ograniczają się do jednorazowych nakładów inwestycyjnych
+na wdrożenie, optymalizację oraz aktualizację modeli, co czyni je szczególnie atrakcyjnymi dla aplikacji o przewidywalnym, intensywnym wykorzystaniu.
+
+W przeciwieństwie do tego, modele chmurowe generują koszty proporcjonalne do liczby przeprowadzonych inferencji, co może stanowić znaczące obciążenie finansowe
+przy dużej skali użytkowania. Analiza kosztów jednostkowych ujawnia duże dysproporcje między poszczególnymi dostawcami chmurowych usług AI.
+
+Google Gemini 2.5 Flash Lite okazał się najbardziej ekonomicznym rozwiązaniem z kosztem jedynie 0.0000032 USD za pojedynczą inferencję.
+Ta atrakcyjna cena wynika z dwóch głównych czynników: agresywnej polityki cenowej Google mającej na celu zdobycie udziału w rynku AI
+oraz, co istotniejsze, dedykowanej architektury multimodalnej, która nie wymaga konwersji obrazów do reprezentacji tekstowej.
+Model ten przetwarza obrazy natywnie jako dane wizualne, co minimalizuje liczbę tokenów oraz eliminuje narzut obliczeniowy związany z kodowaniem base64 \cite{gemini_pricing2024}.
+
+Azure Computer Vision reprezentuje odmienną filozofię cenową, oferując stałą opłatę wynoszącą 0.0015 USD za inferencję,
+niezależną od liczby przetwarzanych tokenów czy złożoności obrazu. Takie podejście zapewnia przewidywalność kosztów, co jest szczególnie wartościowe
+dla aplikacji biznesowych wymagających precyzyjnego planowania budżetowego. Model cenowy Azure odzwierciedla specjalizację usługi do konkretnego zadania
+image captioning'u, gdzie złożoność przetwarzania jest względnie stała i przewidywalna \cite{azure_pricing2024}.
+
+Odmienny obraz przedstawia przypadek OpenAI GPT-4o mini z kosztem 0.002148 USD za inferencję, co czyni go najdroższym rozwiązaniem
+w badanym zestawieniu. Ta różnica wynika bezpośrednio z fundamentalnej niezgodności
+między architekturą ogólnego modelu językowego a specyfiką zadania image captioning'u.
+
+Model OpenAI przetwarza średnio 14,218 tokenów na pojedynczą inferencję, co stanowi wartość o kilka rzędów wielkości wyższą od pozostałych modeli.
+Ta astronomiczna liczba tokenów jest konsekwencją konwersji obrazów do formatu base64, który dramatycznie zwiększa rozmiar danych wejściowych.
+Dodatkowo, ogólny charakter modelu językowego wymusza generowanie obszerniejszych, bardziej opisowych tekstów niż wyspecjalizowane modele
+image captioning'u, co dalej podnosi liczbę tokenów wyjściowych i łączny koszt inferencji \cite{openai_completions2025}.
+
+Ten wzorzec kosztowy potwierdza postawioną wcześniej tezę o przewadze specjalizacji nad uniwersalnością. Modele wyspecjalizowane do zadania image captioning'u
+(Google Gemini, Azure Computer Vision) oferują nie tylko lepszą wydajność czasową, ale także znacznie lepszą efektywność kosztową
+niż uniwersalne modele językowe adaptowane do przetwarzania obrazów.
+
+Analiza kosztowa prowadzi do wniosku, że wybór między strategiami lokalnymi a chmurowymi powinien uwzględniać nie tylko koszty jednostkowe,
+ale przede wszystkim przewidywaną skalę użytkowania. Przykładowo, w przeliczeniu na milion użytkowników model OpenAI dziennie 
+będzie generować koszty na poziomie ponad 2 tysięcy dolarów, podczas gdy rozwiązanie firmy Google tylko 32 dolary. Punkt równowagi ekonomicznej między modelami lokalnymi a chmurowymi zależy od częstotliwości inferencji
+oraz wybranego dostawcy chmurowego. Dla aplikacji o wysokiej częstotliwości użytkowania, nawet relatywnie tanie rozwiązania chmurowe mogą generować
+znaczące koszty operacyjne w długim okresie, podczas gdy modele lokalne oferują przewidywalność kosztową niezależną od skali użytkowania.
+
+Na podstawie analizy wszystkich wymiarów wydajnościowych, przeprowadzono zbiorcze porównanie rankingowe badanych modeli AI.
+Każdy model został oceniony i uszeregowany w pięciu kluczowych kategoriach: czas inferencji end-to-end, zużycie pamięci RAM, zużycie energii, wskaźnik sukcesu inferencji oraz koszt operacyjny.
+Modele otrzymały pozycje rankingowe od 1 (najlepszy) do 6 (najgorszy) w każdej kategorii, a następnie obliczono średnią pozycję w rankingu dla każdego modelu, co pozwoliło na wielowymiarowe porównanie ich wydajności.
+
+\begin{table}[!h] \centering
+\caption{Zbiorcze porównanie pozycji rankingowych modeli AI}
+\begin{tabular}{|c|l|c|c|c|c|c|c|} \hline
+\label{tab:ranking_zbiorczy}
+\textbf{Nr} & \textbf{Model} & \textbf{Czas E2E} & \textbf{RAM} & \textbf{Energia} & \textbf{Sukces} & \textbf{Koszt} & \textbf{Średnia} \\ \hline\hline
+1. & \textbf{Azure CV}     & \textbf{1} & \textbf{1} & 3 & 3 & 5 & 2.6 \\ \hline
+2. & \textbf{ViT-GPT2}     & 3 & 5 & 5 & \textbf{1} & \textbf{1} & 3.0 \\ \hline
+3. & \textbf{Google Gemini} & 2 & 2 & 2 & 5 & 4 & 3.0 \\ \hline
+4. & \textbf{BLIP}         & 4 & 4 & 6 & \textbf{1} & \textbf{1} & 3.2 \\ \hline
+5. & \textbf{OpenAI GPT-4o} & 5 & 3 & \textbf{1} & 6 & 6 & 4.2 \\ \hline
+6. & \textbf{Florence-2}   & 6 & 6 & 4 & 4 & \textbf{1} & 4.2 \\ \hline
+\end{tabular}
+\end{table}
+
+Zbiorcze porównanie modeli przedstawione w tabeli \ref{tab:ranking_zbiorczy} ujawnia wyraźne wzorce wydajnościowe badanych modeli AI.
+Azure Computer Vision dominuje w kluczowych kategoriach czasowych i pamięciowych, osiągając najlepszą średnią pozycję rankingową (2.6), 
+co potwierdza przewagę wyspecjalizowanych modeli chmurowych w scenariuszach wymagających wysokiej responsywności.
+
+Modele lokalne ViT-GPT2 i BLIP wykazują zrównoważony profil wydajnościowy ze szczególną przewagą w zakresie niezawodności 
+(100\% wskaźnika sukcesu inferencji) oraz braku kosztów operacyjnych. Google Gemini prezentuje najbardziej stabilną wydajność we wszystkich kategoriach, 
+zajmując wysokie pozycje w większości metryk przy zachowaniu konkurencyjnego modelu kosztowego.
+
+OpenAI GPT-4o, pomimo najniższego zużycia energii,
+plasuje się na przedostatniej pozycji ze względu na niekorzystny profil czasowo-kosztowy wynikający z architektury dużego modelu językowego.
+Florence-2 zajmuje ostatnią pozycję, odzwierciedlając ograniczenia niezoptymalizowanych uniwersalnych modeli w środowisku mobilnym o ograniczonych zasobach.
+
+Ogólna analiza wskazuje, że specjalizacja modelu do konkretnego zadania przeważa nad strategią wdrożeniową, a najlepsze wyniki 
+osiągają modele dedykowane do image captioning'u niezależnie od tego, czy są wdrażane lokalnie czy w chmurze, obalając tym samym częściowe założenia hipotezy H4, w zakresie czasów inferencji.
+
+\subsection{Jakość generowanych opisów}\label{ss:jakosc_generowanych_opisow}
+
 \noindent
-TODO | Na podstawie przeprowadzonych badań można wyciągnąć następujące wnioski....
+Analiza jakościowa generowanych opisów obrazów stanowi ważny element oceny efektywności modeli AI w zadaniu image captioning'u.
+Wykorzystanie czterech komplementarnych metryk (CIDEr, SPICE, BLEU oraz METEOR) pozwoliło na wielowymiarową ocenę poprawności semantycznej,
+zgodności leksykalnej oraz użyteczności generowanych opisów w odniesieniu do referencyjnego zbioru danych.
+
+Wyniki metryk jakościowych przedstawione w tabeli \ref{tab:jakosc_table_sr} ujawniają zaskakujące wnioski, które znacząco odbiegają od założeń hipotezy H5
+o przewadze modeli chmurowych w aspekcie jakościowym. Lokalny model BLIP osiągnął najwyższe wyniki we wszystkich czterech metrykach,
+uzyskując średnią ocenę jakościową na poziomie 0.5679, co jednoznacznie czyni go liderem rankingu jakościowego.
+
+\begin{table}[!h] \centering
+\caption{Wyniki metryk jakościowych dla badanych modeli AI}
+\begin{tabular}{|c|l|c|c|c|c|c|} \hline
+\label{tab:jakosc_table_sr}
+\textbf{Nr} & \textbf{Model} & \textbf{CIDEr} & \textbf{SPICE} & \textbf{BLEU} & \textbf{METEOR} & \textbf{Średnia} \\ \hline\hline
+1. & BLIP (local)           & 1.3579 & 0.2243 & 0.4079 & 0.2813 & 0.5679 \\ \hline
+2. & Azure Vision (cloud)   & 1.2573 & 0.2014 & 0.3201 & 0.2634 & 0.5106 \\ \hline
+3. & Florence-2 (local)     & 1.1560 & 0.2010 & 0.3216 & 0.2775 & 0.4890 \\ \hline
+4. & ViT-GPT2 (local)       & 1.0761 & 0.1914 & 0.3000 & 0.2455 & 0.4533 \\ \hline
+5. & Gemini Pro (cloud)     & 0.6960 & 0.1848 & 0.1383 & 0.2428 & 0.3155 \\ \hline
+6. & GPT-4o Vision (cloud)  & 0.0337 & 0.1522 & 0.0484 & 0.2040 & 0.1096 \\ \hline
+\end{tabular}
+\end{table}
+
+Ta obserwacja przeczy założeniu hipotezy H5, która przewidywała wyższą jakość opisów generowanych przez modele chmurowe
+ze względu na dostęp do zaawansowanych architektur i większych zbiorów treningowych. Przewaga BLIP wynika z jego specjalizacji
+w zadaniu image captioning'u, zoptymalizowanej architektury, a także unikalnemu podejściu do treningu modelu które pozwala na efektywne uczenie się
+z ograniczonych danych wizyjno-tekstowych \cite{blip_li2022}.
+
+Drugie miejsce w rankingu jakościowym zajmuje Azure Computer Vision z średnią oceną 0.5106, potwierdzając wysoką jakość
+wyspecjalizowanych rozwiązań chmurowych. Podobnie jak w przypadku analizy wydajnościowej, Azure CV potwierdza przewagę
+modeli dedykowanych do konkretnego zadania nad uniwersalnymi rozwiązaniami językowymi.
+
+Szczególnie interesujący jest przypadek Florence-2, który zajmuje trzecie miejsce z wynikiem 0.4890, niemal dorównując Azure CV.
+Zbieżność ta nie jest przypadkowa, gdyż zgodnie z dokumentacją firmy Microsoft, Azure Computer Vision wykorzystuje modele bazujące na architekturze Florence
+w swoich usługach image captioning'u \cite{azurecv_florence}. Różnica między tymi modelami wynika prawdopodobnie
+z różnic w procesie fine-tuningu, optymalizacji modeli oraz znacznie potężniejszej infrastruktury, na której działa Azure CV.
+
+ViT-GPT2 uplasował się na czwartej pozycji z średnią oceną 0.4533, wykazując się stabilną jakością generowanych opisów
+pomimo prostszej architektury w porównaniu do nowszych rozwiązań. Model ten potwierdza skuteczność podejścia łączącego
+transformer wizyjny z generatywnym modelem językowym w zadaniach multimodalnych.
+
+Przypadek dużych modeli językowych w kontekście jakości generowanych opisów jest nieco bardziej skomplikowany i ujawnia szereg problemów
+zarówno samych modeli jak i wykorzystanej strategii ewaluacji wyników.
+W ich przypadku zaobserwowano znaczący spadek metryk jakościowych. 
+
+Google Gemini 2.5 Flash Lite zajął piąte miejsce
+z oceną 0.3155, co wynika z tendencji do generowania niekompletnych opisów skupiających się jedynie na wybranych aspektach sceny.
+Podczas analizy szczegółowej zidentyfikowano przypadki, gdzie Gemini pomijał istotne elementy obrazu lub generował
+opisowe listy wariantów zamiast pojedynczego, zwartego opisu.
+
+Najgorszą pozycję w rankingu jakościowym zajął OpenAI GPT-4o mini z katastrofalną średnią oceną 0.1096.
+Ten zaskakująco niski wynik wynika z fundamentalnej niezgodności między architekturą ogólnego modelu językowego
+a specyfiką zadania image captioning'u oraz problemów automatycznej ewaluacji. GPT-4o wykazuje tendencję do generowania długich, ornamentacyjnych opisów
+zawierających 20-30 słów, podczas gdy referencyjne opisy COCO składają się przeciętnie z 10-12 słów.
+
+Ta rozbieżność w długości i stylu opisów bezpośrednio wpływa na wyniki metryk BLEU i CIDEr, które są wrażliwe
+na dokładne dopasowanie słownictwa oraz struktury zdań. Dodatkowo, GPT-4o ma tendencję do używania kwiecistego języka
+nieobecnego w prostych, technicznych opisach
+referencyjnego zbioru danych, co dodatkowo obniża oceny wszystkich metryk jakościowych. 
+Wyniki te podkreślają, że uniwersalne modele językowe, mimo swojej zaawansowanej architektury i wielkości klastrów obliczeniowych,
+nie są automatycznie skuteczne we wszystkich domenach, bez odpowiedniej adaptacji do specyfiki zadania \cite{transfer_learning_limitations_kenton2019}.
+
+Istotną obserwacją jest też występowanie halucynacji w generowanych opisach, szczególnie widocznych u uniwersalnych modeli językowych.
+Google Gemini oraz OpenAI GPT-4o wykazywały tendencję do dodawania szczegółów nieobecnych na obrazach
+lub przypisywania nieistniejących cech obiektom, bądź jak w przypadku Gemini, tworzenia listy wariantów opisów. 
+Zjawisko to jest charakterystyczne dla dużych modeli językowych,
+które mają skłonność do generowania wiarygodnie brzmiącego tekstu nawet w sytuacjach niepewności co prowadzi do halucynacji modelu \cite{hallucination_ji2023}.
+
+Ważnym ograniczeniem przeprowadzonej analizy jakościowej jest oparcie się wyłącznie na automatycznych metrykach,
+które porównują generowane opisy z referencyjnymi opisami z zestawu COCO. Podejście to może niedoszacowywać
+rzeczywistej użyteczności opisów, szczególnie w przypadku modeli generujących semantycznie poprawne, lecz stylistycznie
+odmienne opisy od referencji. Pełna ocena jakości wymagałaby uzupełnienia o oceny ludzkie uwzględniające aspekty
+takie jak naturalność, przydatność oraz ogólna satysfakcja użytkownika końcowego \cite{human_evaluation_necessity_belz2009}.
+
+Analiza jakościowa utwierdza postawioną wcześniej tezę o przewadze specjalizacji nad uniwersalnością. Modele dedykowane
+do zadania image captioning'u osiągają znacznie lepsze wyniki ewaluacji jakościowej niż uniwersalne duże modele językowe,
+niezależnie od strategii wdrożeniowej \cite{domain_adaptation_pan2009}. Ta obserwacja zgadza się z wnioskami z analizy wydajnościowej i podkreśla
+znaczenie dopasowania architektury modelu do domeny zadania.
+
+Podsumowując, rezultaty jednoznacznie obalają hipotezę H5 i potwierdzają hipotezę H1 o kluczowym znaczeniu optymalizacji i
+specjalizacji modelu. Lokalne wyspecjalizowane modele osiągają lepszą jakość opisów niż uniwersalne modele chmurowe,
+co w połączeniu z wnioskami z analizy wydajnościowej, bezsprzecznie wskazuje na przewagę rozwiązań dedykowanych
+niezależnie od strategii wdrożeniowej.
+
+\subsection{Wnioski i analiza hipotez}\label{ss:wnioski_i_analiza_hipotez}
+
+\noindent
+Przeprowadzona analiza wydajnościowa i jakościowa badanych modeli sztucznej inteligencji w zadaniu generowania opisów obrazów
+jednoznacznie wskazuje, że specjalizacja modelu
+do konkretnego zadania przeważa nad strategią wdrożeniową. To kluczowe odkrycie przenika przez wszystkie wymiary analizy i stanowi podstawę dla pozostałych wniosków.
+
+W wymiarze wydajnościowym, wyspecjalizowane modele osiągają lepsze wyniki czasowe niezależnie od strategii wdrożenia.
+Azure Computer Vision (471 ms) i ViT-GPT2 (772 ms) znacząco przewyższają bardziej uniwersalne modele językowe, 
+takie jak OpenAI GPT-4o mini (1518 ms) czy Florence-2 (6408 ms). Potwierdza to, że optymalizacja architektury
+pod kątem konkretnego zadania ma większy wpływ na wydajność niż dostęp do zaawansowanej infrastruktury chmurowej,
+czy sam rozmiar sieci modelu.
+
+Analiza jakościowa dostarcza jeszcze bardziej przekonujących dowodów tej tezy. BLIP i Azure CV
+dominują w rankingu ewaluacji jakościowej, podczas gdy zaawansowane modele językowe osiągają katastrofalnie niskie wyniki.
+Różnica wynika z dopasowania modeli do specyfiki generowania opisów obrazów
+w przeciwieństwie do ogólnego przetwarzania języka naturalnego, a także ograniczeniami automatycznych metryk ewaluacyjnych
+w ocenie semantycznej poprawności opisów generowanych przez uniwersalne modele.
+
+Wymiar ekonomiczny również częściowo potwierdza tę tezę. Uniwersalny model OpenAI GPT-4o mini okazuje się najdroższym rozwiązaniem
+ze względu na niezoptymalizowaną architekturę wymagającą przetwarzania treści graficznych w postaci tekstowej, co prowadzi generowania 
+dużej liczby tokenów wprowadzających znaczne koszty operacyjne. Google Gemini 2.5 Flash Lite oraz Azure Computer Vision, dzięki możliwości 
+natywnego przetwarzania obrazów oferują znacznie lepszą efektywność kosztową. 
+
+Drugim istotnym wnioskiem jest potwierdzenie założeń hipotezy H4 w zakresie zużycia zasobów.
+Modele lokalne wykazują wielokrotnie wyższe zużycie pamięci RAM oraz energii, co wynika bezpośrednio z konieczności lokalnego przechowywania
+wag modeli oraz intensywnego wykorzystania zasobów obliczeniowych urządzenia mobilnego podczas samej inferencji.
+
+Trzecim kluczowym odkryciem jest przewaga lokalnych rozwiązań w zakresie niezawodności. 
+Modele lokalne osiągają 100\% wskaźnika sukcesu inferencji, eliminując zewnętrzne zależności sieciowe
+i infrastrukturalne, podczas gdy modele chmurowe wykazują nieznacznie niższe wskaźniki (97.8-99.4\%)
+ze względu na problemy komunikacyjne i przeciążenia serwerów.
+
+\subsubsection{Weryfikacja hipotez badawczych}\label{sss:weryfikacja hipotez}
+
+\noindent
+Przeprowadzone eksperymenty badawcze oraz wyniki z danych pomiarowych stanowią solidną podstawę dla szczegółowej weryfikacji hipotez sformułowanych na początku pracy. 
+Weryfikacja uwzględnia zarówno wymiar wydajnościowy, obejmujący aspekty czasowe, zasobowe i ekonomiczne, jak i wymiar jakościowy związany z oceną generowanych opisów obrazów.
+Przedstawione poniżej wnioski bazują na ocenie porównawczej wszystkich zebranych metryk i stanowią fundament dla sformułowania rekomendacji dotyczących doboru optymalnych strategii wdrożenia:
+
+\textbf{Hipoteza H1} została w pełni \textbf{potwierdzona}. Analiza architektur rzeczywiście ujawnia fundamentalne różnice
+między strategiami wdrożeniowymi. Modele lokalne (BLIP, ViT-GPT2) wykorzystują wyspecjalizowane i zoptymalizowane architektury
+pod kątem ograniczonych zasobów mobilnych, podczas gdy modele chmurowe dzielą się na dwa podtypy:
+wyspecjalizowane (Azure CV) oraz uniwersalne duże modele językowe (GPT-4o, Gemini). Ta klasyfikacja okazała się
+kluczowa dla zrozumienia obserwowanych różnic wydajnościowych.
+
+\textbf{Hipoteza H2} została \textbf{potwierdzona}. Opracowana platforma badawcza \textquote{CaptionLab} umożliwiła efektywny pomiar
+i porównanie modeli przez implementację ujednoliconego interfejsu, automatyzację zbierania metryk oraz kontrolę
+zmienności środowiskowej. Przeprowadzenie 3 018 przebiegów inferencji z 99\% wskaźnikiem sukcesu potwierdza
+skuteczność zastosowanej metodologii.
+
+\textbf{Hipoteza H3} również została \textbf{potwierdzona}. Zdefiniowany zestaw metryk wydajnościowych (czas E2E, RAM, energia, 
+koszt, niezawodność) oraz jakościowych (CIDEr, SPICE, BLEU, METEOR) umożliwił kompleksową ocenę modeli.
+Wielowymiarowe porównanie pozwoliło na identyfikację różnych profili wydajnościowych oraz obiektywne porównywanie rozwiązań sztucznej inteligencji.
+
+\textbf{Hipoteza H4} została \textbf{częściowo potwierdzona}. Założenia dotyczące wyższego zużycia zasobów przez modele lokalne
+zostały w pełni potwierdzone empirycznie. Jednak przewidywania dotyczące czasów inferencji okazały się błędne.
+Specjalizacja modelu przeważyła nad strategią wdrożeniową - Azure CV osiągnął najkrótszy czas (471 ms), 
+podczas gdy uniwersalne modele chmurowe (GPT-4o: 1518 ms) wykazały gorsze wyniki niż wyspecjalizowane modele lokalne.
+
+\textbf{Hipoteza H5} została częściowo \textbf{obalona}. Przewidywana przewaga modeli chmurowych w aspekcie jakościowym
+nie została potwierdzona. Lokalny BLIP osiągnął najlepsze wyniki jakościowe (0.5679), przewyższając wszystkie modele chmurowe.
+Uniwersalne modele językowe (GPT-4o, Gemini) osiągnęły najgorsze wyniki ze względu na nieoptymalizowaną architekturę
+do zadania image captioning'u. Weryfikacja hipotezy H5 podkreśla znaczenie specjalizacji modelu
+dla jakości generowanych opisów.
+
+\textbf{Hipoteza wiodąca (HG)} wymaga \textbf{istotnej modyfikacji}. Założenie o wyższej jakości modeli chmurowych
+zostało obalone, jednak główna teza o braku uniwersalnego rozwiązania pozostaje aktualna.
+Wybór optymalnej strategii rzeczywiście zależy od specyficznych wymagań aplikacji, ale kluczowym czynnikiem
+jest specjalizacja modelu, a nie strategia wdrożeniowa jak początkowo zakładano.
+
+\subsubsection{Rekomendacje doboru strategii wdrożenia}\label{sss:rekomendacje doboru}
+\noindent
+Uzyskane wyniki badawcze pozwalają na sformułowanie konkretnych wytycznych dotyczących doboru optymalnej strategii wdrożenia modeli 
+sztucznej inteligencji w zależności od specyficznych wymagań i ograniczeń projektowych aplikacji mobilnych. 
+Rekomendacje te uwzględniają wielowymiarowy charakter porównania, obejmując aspekty wydajnościowe, jakościowe oraz ekonomiczne badanych rozwiązań.
+
+W kontekście aplikacji, których priorytetem jest responsywność systemu oraz minimalizacja czasów odpowiedzi,
+najlepszym wyborem okazuje się Azure Computer Vision, osiągający najkrótszy czas inferencji wynoszący 472 milisekund przy jednoczesnym minimalnym zużyciu 
+pamięci operacyjnej na poziomie 0.34 MB. Rozwiązanie to szczególnie rekomendowane jest w scenariuszach wymagających natychmiastowej odpowiedzi systemu 
+przy ograniczonych zasobach urządzenia mobilnego. Alternatywną opcją dla aplikacji wymagających funkcjonowania w trybie offline jest lokalny model ViT-GPT2 
+z czasem inferencji 772 milisekundy, który pomimo wyższego zużycia pamięci operacyjnej wynoszącego 19.72 MB, zapewnia niezależność od połączenia internetowego 
+przy zachowaniu akceptowalnej wydajności czasowej.
+
+W przypadku gdy najważniejszym czynnikiem jest jakość generowanych opisów obrazów, wedle wyników automatycznej ewaluacji, 
+lokalny model BLIP stanowi bezkonkurencyjny wybór, osiągając najwyższą średnią ocenę jakościową we wszystkich badanych metrykach. 
+Dla aplikacji wymagających wysokiej jakości przy jednoczesnym dostępie do infrastruktury chmurowej, Azure Computer Vision stanowi kompromisowe rozwiązanie
+oferując porównywalną jakość przy znacznie niższych wymaganiach zasobowych.
+
+Warto jednak zauważyć, że badane w pracy metryki jakościowe opierają się wyłącznie na automatycznych ocenach porównawczych z referencyjnym zbiorem COCO.
+Pełna ocena jakości generowanych opisów wymagałaby uzupełnienia o subiektywne oceny ludzkie, które mogą ujawnić dodatkowe aspekty użyteczności i naturalności opisów
+nieuchwytne dla metryk automatycznych, w których duże modele językowe mogą wykazywać przewagę. Rekomenduje się zatem przeprowadzenie dodatkowych badań z udziałem użytkowników końcowych
+w celu pełnej oceny jakości generowanych opisów.
+
+Z perspektywy ekonomicznej, modele lokalne prezentują fundamentalną przewagę w scenariuszach wysokiej częstotliwości użytkowania ze względu na zerowe koszty operacyjne
+po jednorazowej inwestycji w wdrożenie rozwiązania. Modele BLIP, ViT-GPT2 oraz Florence-2 eliminują bieżące koszty inferencji, co czyni je szczególnie atrakcyjnymi
+dla aplikacji o przewidywalnym, intensywnym wykorzystaniu. Wśród rozwiązań chmurowych Google Gemini wyróżnia się najniższym kosztem jednostkowym wynoszącym jedynie 0.0000032 USD 
+za pojedynczą inferencję, jednak jego wybór wiąże się z kompromisem w zakresie jakości generowanych opisów oraz zależności od zewnętrznego dostawcy usługi.
+
+Kryterium niezawodności i stabilności działania jednoznacznie wskazuje na przewagę modeli lokalnych, które osiągają niemal stuprocentowy wskaźnik sukcesu inferencji 
+przez całkowitą eliminację zależności sieciowych oraz infrastrukturalnych. Modele ViT-GPT2 oraz BLIP rekomendowane są szczególnie w aplikacjach o charakterze krytycznym 
+lub funkcjonujących w środowiskach o niestabilnej łączności internetowej, gdzie niezawodność systemu stanowi podstawowe wymaganie funkcjonalne.
+
+Dla aplikacji mobilnych charakteryzujących się znacznymi ograniczeniami zasobowymi, modele chmurowe takie jak Azure Computer Vision, Google Gemini 2.5 Flash Lite, czy OpenAI GPT-4o mini oferują optymalną strategię wdrożenia 
+przez minimalizację zużycia pamięci operacyjnej oraz energii urządzenia. Takie podejście przenosi obciążenie obliczeniowe na zewnętrzną infrastrukturę przy akceptowaniu kompromisu w postaci zależności od połączenia internetowego
+oraz ponoszenia kosztów operacyjnych proporcjonalnych do częstotliwości użytkowania.
+
+W przypadku zastosowań uniwersalnych wymagających zrównoważonego podejścia do wszystkich analizowanych czynników, Azure Computer Vision prezentuje się jako najbardziej wszechstronne rozwiązanie. 
+Jego średnia pozycja rankingowa wynosząca 2.6 odzwierciedla optymalne połączenie najkrótszych czasów inferencji, minimalnego zużycia zasobów systemowych, wysokiej jakości generowanych opisów oraz przewidywalnych kosztów operacyjnych na poziomie 0.0015 USD za inferencję. 
+Taka kombinacja charakterystyk czyni go rekomendowanym wyborem dla szerokiej gamy aplikacji mobilnych.
+
+Najważniejszą rekomendacją wynikającą z przeprowadzonych badań jest piorytetyzacja specjalizacji modelu nad strategią wdrożeniową. 
+Niezależnie od wyboru między podejściem lokalnym a chmurowym, modele dedykowane do zadania image captioning'u
+osiągają lepsze rezultaty w porównaniu do uniwersalnych modeli językowych adaptowanych do przetwarzania obrazów. 
+Obserwacja ta podkreśla kluczowe znaczenie dopasowania architektury oraz procesu treningowego modelu do specyfiki domenowej realizowanego zadania.

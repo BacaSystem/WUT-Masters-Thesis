@@ -9,6 +9,7 @@ dostarczać odpowiednich narzędzi do zbierania danych w trakcie inferencji, a t
 
 W tym rozdziale opisano architekturę systemu badawczego, jego kluczowe komponenty odpowiedzialne za generowanie opisów obrazów 
 i pomiar parametrów wydajności, a także mechanizm dostarczania modeli AI, system zbierania metryk oraz moduł testów automatycznych.
+Cały kod źródłowy aplikacji CaptionLab jest dostępny w publicznym repozytorium GitHub pod adresem: https://github.com/BacaSystem/WUT-Masters-Thesis
 
 \subsection{Architektura systemu}\label{ss:Architektura systemu}
 \noindent
@@ -356,7 +357,7 @@ gdzie $\Delta Q$ to różnica pojemności baterii między początkiem a końcem 
 
 Warto jednak zaznaczyć, że dokładność pomiarów energetycznych jest ograniczona przez kilka czynników.
 Po pierwsze, \texttt{BatteryManager} nie zawsze udostępnia pomiary prądu chwilowego na wszystkich urządzeniach, co wymusza
-wykorzystanie mniej precyzyjnych metod obliczeniowych. 
+wykorzystanie mniej precyzyjnych metod obliczeniowych \cite{android_power_profiling}. 
 Po drugie, pomiary obejumą całkowite zużycie energii przez urządzenia, a nie tylko przez sam proces inferencji, co wprowadza 
 stały narzut związany z działaniem systemu operacyjnego i innych procesów w tle.
 
