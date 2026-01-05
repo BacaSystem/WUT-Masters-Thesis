@@ -1,7 +1,7 @@
 # CaptionLab - Dokumentacja 
 
-**Wersja:** 1.1  
-**Data:** 13 listopada 2025  
+**Wersja:** 1.3  
+**Data:** 6 stycznia 2026  
 **Autor:** Dominik Baczyński  
 **Temat pracy:** Analiza efektywności lokalnych i chmurowych modeli AI do generowania opisów obrazów w aplikacjach mobilnych
 
@@ -14,9 +14,10 @@
 CaptionLab to aplikacja badawcza na platformę Android służąca do kompleksowej analizy i porównania wydajności różnych rozwiązań AI w zadaniu generowania opisów obrazów (image captioning). Aplikacja umożliwia:
 
 - Porównanie modeli lokalnych (działających na urządzeniu) z rozwiązaniami chmurowymi
-- Zbieranie szczegółowych metryk wydajnościowych (latencja, zużycie pamięci, energia)
-- Automatyzację testów batchowych na dużych zbiorach danych
-- Eksport wyników do formatów CSV i JSON dla dalszej analizy statystycznej
+- Precyzyjny pomiar metryk wydajnościowych (czasy preprocessing/inference/postprocessing, zużycie pamięci, energia)
+- Automatyzację testów batchowych na dużych zbiorach danych z wielokrotnym powtarzaniem pomiarów
+- Kalkulację kosztów finansowych dla modeli chmurowych
+- Eksport szczegółowych wyników do formatów CSV i JSON dla dalszej analizy statystycznej
 
 ### 1.2. Zakres funkcjonalny
 
@@ -110,7 +111,10 @@ CaptionLab to aplikacja badawcza na platformę Android służąca do kompleksowe
                         ┌───────────────────────┐
                         │   Storage & Assets    │
                         ├───────────────────────┤
-                        │ • ONNX Models (843MB) │
+                        │ • ONNX Models (684MB) │
+                        │   - Florence-2: 213MB │
+                        │   - ViT-GPT2: 232MB   │
+                        │   - BLIP: 239MB       │
                         │ • Tokenizer Configs   │
                         │ • Test Datasets       │
                         │ • Exported Results    │
@@ -147,10 +151,12 @@ Komponenty otrzymują zależności przez konstruktor (np. `Context`, `ProviderMa
 **Odpowiedzialność:** Interaktywne testowanie pojedynczych obrazów
 
 **Funkcjonalność:**
-- Wybór obrazu z galerii
+- Wybór obrazu z galerii urządzenia lub nowe zdjęcie aparatem
 - Wybór providera AI (spinner z lokalnymi i chmurowymi)
-- Generowanie opisu przez wybrany model
-- Wyświetlanie wyniku z metrykami (czas preprocessing, inference, postprocessing)
+- Interaktywne testowanie pojedynczych obrazów
+- Generowanie opisu przez wybrany model z pełnym pomiarem metryk
+- Wyświetlanie wyniku z szczegółowymi metrykami wydajnościowymi
+- Wstępna kalibracja i weryfikacja poprawności modeli
 - Możliwość przejścia do testów batchowych
 
 **Kluczowe komponenty:**
@@ -177,14 +183,16 @@ class MainActivity : AppCompatActivity() {
 **Odpowiedzialność:** Automatyczne testy wydajnościowe
 
 **Funkcjonalność:**
-- Wczytywanie zestawów obrazów (dataset loader lub custom folder)
-- Wybór wielu providerów jednocześnie (checkboxy)
-- Konfiguracja parametrów testu:
-  - Liczba powtórzeń (warmup + actual runs)
-  - Timeout na obraz
+- Wczytywanie zestawów obrazów (np. podzbiór COCO lub własne katalogi)
+- Wybór wielu providerów jednocześnie do testowania równoległego
+- Konfiguracja parametrów eksperymentu:
+  - Liczba serii rozgrzewkowych (warm-up runs)
+  - Liczba właściwych powtórzeń pomiarów
+  - Maksymalny timeout na obraz
   - Format eksportu (CSV/JSON/oba)
-- Wizualizacja postępu (progress bar, log tekstowy)
-- Eksport wyników po zakończeniu
+- Wizualizacja postępu na żywo (aktualny model, obraz, iteracja)
+- Automatyczny eksport szczegółowych wyników z metrykami
+- Obsługa błędów z kontynuowaniem testów
 
 **Kluczowe komponenty:**
 ```kotlin
@@ -269,7 +277,7 @@ init {
 - `blip_onnx_local` - BLIP (ONNX Runtime)
 - `openai_cloud` - OpenAI GPT-4o
 - `azure_vision_cloud` - Azure Computer Vision
-- `gemini_cloud` - Google Vertex AI Gemini
+- `gemini_cloud` - Google Gemini 2.5 Flash Lite
 
 ### 4.2. BenchmarkRunner
 
@@ -345,14 +353,14 @@ MetricsCollector
 
 | Kategoria | Metryka | Opis |
 |-----------|---------|------|
-| **Czas** | `pre_ms` | Preprocessing (resize, normalizacja) |
-| | `infer_ms` | Czysta inferencja (model forward pass) |
-| | `post_ms` | Postprocessing (detokenizacja) |
+| **Czas** | `pre_ms` | Preprocessing (resize, normalizacja, alokacja tensorów) |
+| | `infer_ms` | Czysta inferencja (model forward pass / HTTP request) |
+| | `post_ms` | Postprocessing (detokenizacja, parsowanie JSON) |
 | | `e2e_ms` | End-to-end całkowity czas |
 | **Pamięć** | `ram_peak_mb` | Szczytowe zużycie RAM podczas inference |
-| | `model_size_mb` | Rozmiar pliku modelu (tylko local) |
-| **Energia** | `energy_mwh` | Rzeczywiste zużycie energii (mWh) |
-| **Koszt** | `cost_usd` | Koszt wywołania API (tylko cloud) |
+| | `model_size_mb` | Rozmiar plików modelu (tylko lokalne) |
+| **Energia** | `energy_mwh` | Rzeczywiste zużycie energii w mWh (BatteryManager API) |
+| **Koszt** | `cost_usd` | Koszt wywołania API (tylko chmurowe) |
 | | `tokens_input` | Liczba tokenów wejściowych (LLM) |
 | | `tokens_output` | Liczba tokenów wyjściowych (LLM) |
 | **Jakość** | `caption_length` | Długość wygenerowanego opisu |
@@ -370,12 +378,13 @@ class PowerMonitor(private val context: Context) {
 
 **Algorytm pomiaru:**
 1. Próbkowanie parametrów baterii (prąd, napięcie, pojemność) co 50ms
-2. Obliczenie energii metodą numerycznej integracji prądu chwilowego:
+2. Obliczenie energii metodą numerycznej integracji mocy chwilowej:
    ```
-   E = Σ[(V₁ * I₁ + V₂ * I₂) / 2] * Δt / 3600
+   E = Σ[(Pᵢ + Pᵢ₊₁) / 2] * Δtᵢ
+   gdzie Pᵢ = Uᵢ * Iᵢ (moc chwilowa)
    ```
    gdzie:
-   - V = napięcie w woltach (EXTRA_VOLTAGE)
+   - U = napięcie w woltach (EXTRA_VOLTAGE)
    - I = prąd w amperach (BATTERY_PROPERTY_CURRENT_NOW)
    - Δt = czas między próbkami w sekundach
    - Wynik w mWh (milliwatt-hours)
@@ -406,14 +415,28 @@ class MemoryMonitor {
 - Tracking `Runtime.getRuntime().totalMemory() - freeMemory()`
 - Zwraca różnicę między szczytową a początkową pamięcią
 
-### 4.4. DataExporter
+### 4.4. DataExporter - system eksportu danych
 
-**Odpowiedzialność:** Eksport wyników do plików
+**Odpowiedzialność:** Zapis wyników eksperymentów w formatach CSV i JSON zgodnie z rozdziałem 3 pracy dyplomowej
 
-**Obsługiwane formaty:**
-- **CSV** - dla analizy w Excel/Python pandas
-- **JSON** - dla dalszego przetwarzania programistycznego
-- **BOTH** - oba formaty jednocześnie
+**Formaty eksportu:**
+
+**1. CSV (Comma Separated Values)** - szczegółowe metryki wydajnościowe:
+- Każdy wiersz = pojedyncza inferencja
+- Kolumny: `provider_id`, `provider_type`, `image_id`, `iteration`, `pre_ms`, `infer_ms`, `post_ms`, `e2e_ms`, `ram_peak_mb`, `energy_mwh`, `cost_usd`, `caption`, `caption_length`, `timestamp`, `status`
+- Idealny do importu do narzędzi analitycznych (pandas, R, Excel)
+
+**2. JSON (JavaScript Object Notation)** - zagregowane statystyki eksperymentu:
+- `metadata` - informacje o eksperymencie (nazwa, zbiór danych, czas)
+- `device` - szczegóły urządzenia testowego (producent, model, Android)
+- `statistics` - ogólne statystyki (liczba obrazów, iteracji, współczynnik sukcesu)
+- `providers` - szczegółowe metryki dla każdego modelu AI
+- Hierarchiczna struktura, łatwa do automatycznego przetwarzania
+
+**Lokalizacja plików:**
+- Katalog: `/data/thesis.wut.application.captionlab/files/exports`
+- Automatyczne nazwy z timestampem: `benchmark_20241215_143022.csv`
+- Dodatkowy tekstowy raport z podsumowaniem
 
 **Struktura CSV:**
 ```csv
@@ -796,14 +819,14 @@ app/src/main/assets/models/
 | Komponent | Rozmiar |
 |-----------|---------|
 | APK base (bez modeli) | ~15 MB |
-| Florence-2 modele | **215 MB** (INT8) |
-| ViT-GPT2 modele | **387 MB** (FP32) |
-| BLIP modele | **241 MB** (INT8) |
-| **Modele razem** | **843 MB** |
-| **APK z modelami (total)** | **~1716 MB** |
+| Florence-2 modele | **213 MB** (INT8) |
+| ViT-GPT2 modele | **232 MB** (INT8) |
+| BLIP modele | **239 MB** (INT8) |
+| **Modele razem** | **684 MB** |
+| **APK z modelami (total)** | **~1400 MB** |
 
 **Optymalizacje rozmiaru:**
-- **Kwantyzacja INT8** - Florence-2 i BLIP używają INT8, co daje ~50% redukcję vs FP32
+- **Kwantyzacja INT8** - Wszystkie lokalne modele używają INT8, co daje ~50% redukcję vs FP32
 - **On-demand download** - możliwość dynamicznego pobierania modeli (nie zaimplementowane w v1.0)
 - **Model compression** - dodatkowa kompresja ONNX graph (możliwa optymalizacja)
 - **Selective inclusion** - użytkownicy mogą wybrać tylko wybrane modele podczas instalacji
